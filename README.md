@@ -1,6 +1,6 @@
-This guides in this repo are meant to help you:
+The guides in this repo are meant to help you:
 1. Make your CLI experience much cooler.
-2. Get paste your fear and frustration with using vim.
+2. Get past your fear and frustration with using vim.
 3. Assimilate tmux into your workflow
 
 ## First, do this:
