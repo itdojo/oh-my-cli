@@ -30,7 +30,7 @@ The list below are setup steps for some cool CLI tools, including:
 
 ### Just enough vim: A crash course
 
-A hand-on, [step-by-step guide](vim/just-enough-vim-a-crash-course.md) for getting started with some of vim's most useful functionality.  This guide is not even close to comprehensive but it is enough to make you dangerous.
+A hands-on, [step-by-step guide](vim/just-enough-vim-a-crash-course.md) for getting started with some of vim's most useful functionality.  This guide is not even close to comprehensive but it is enough to make you dangerous.
 
 ***
 
