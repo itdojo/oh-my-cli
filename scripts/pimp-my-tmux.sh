@@ -66,6 +66,10 @@ source ~/.zshrc
 
 mkdir -p ~/.config/tmux/plugins/catppuccin
 
+
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+
+
 # Check the repo page for the most up-to-date release (v2.1.2 at the time of writing)
 git clone -b v2.1.2 https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux
 

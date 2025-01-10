@@ -2,7 +2,7 @@
 
 - [ ] Run the following commands.
 
-> Note: The script below will change your shell to zsh.
+> Note: The `install_zsh.sh` script below will install required fonts, any necessary tools (git, curl, wget, etc.), install oh-my-zsh, PowerLevel10k and change your shell to zsh.
 
 > When needed, the script will prompt you to enter your password.
 
@@ -20,51 +20,17 @@ cd && rm -rf qol
 
 *** 
 
-- [ ] Reboot  your computer.  Log back in to a terminal.  The PowerLevel10k wizard will run.  Answer the questions to your liking.  
+- [ ] After the script completes, reboot  your computer.  Log back in to a terminal.  The PowerLevel10k wizard will run.  Answer the questions to your liking.  
 
-<img src=assets/p10k-configure.png> 
+<img src=../assets/p10k-configure.png> 
 
 Change your layout any time by running `p10k configure` and going through the setup wizard again.
 
 ***
 
-## Suggested Layouts
+## My layout
 
-For reference, here are the answers I use:
-
-## Non-tmux Optimized p10k Layout
-
-```
-y
-y
-y
-1
-y
-2
-1
-3
-n
-4
-5
-5
-2
-2
-4
-2
-2
-1
-y
-1
-y
-```
-
-The answers above produce this layout:
-
-<img src=assets/p10k-layout-colin.png>
-
-***
-
-## tmux Optimized p10k Layout
+<img src=../assets/p10k-layout-colin.png>
 
 ***
 

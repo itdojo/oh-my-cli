@@ -1073,7 +1073,7 @@ tmux ls
 tmux
 ```
 
-<img src=assets/tmux-custom-bg-color.png>
+<img src=../assets/tmux-custom-bg-color.png>
 
 ***
 
@@ -1123,7 +1123,7 @@ tmux source /path/to/tmux.conf
 bind r source-file ~/.config/tmux/tmux.conf \; display "tmux Config Reloaded!"
 ```
 
-<img src=assets/tmux-bind-r-reload-config.png>
+<img src=../assets/tmux-bind-r-reload-config.png>
 
 ***
 
@@ -1135,7 +1135,7 @@ bind r source-file ~/.config/tmux/tmux.conf \; display "tmux Config Reloaded!"
 prefix r
 ```
 
-<img src=assets/tmux-tmux-config-reloaded.png>
+<img src=../assets/tmux-tmux-config-reloaded.png>
 
 ***
 
@@ -1160,7 +1160,7 @@ prefix %        # Split vertically
 prefix ⬅️, prefix ⬆️, prefix ⬇️, prefix ➡️     # Move between panes
 ```
 
-<img src=assets/tmux-custom-inactive-bg-color.png>
+<img src=../assets/tmux-custom-inactive-bg-color.png>
 
 ***
 
@@ -1173,7 +1173,7 @@ set -g pane-active-border-style 'fg=yellow'
 set -g pane-border-style 'fg=brightblack'
 ```
 
-<img src=assets/tmux-conf-pane-border-config.png>
+<img src=../assets/tmux-conf-pane-border-config.png>
 
 Reload the `tmux.conf` file.
 
@@ -1185,7 +1185,7 @@ prefix r
 
 - [ ] Move from pane-to-pane or create new panes and you should now see additional highlighting around the border of the active pane.  This further helps to identify which pane is active.
 
-<img src=assets/tmux-conf-pane-border-color.png>
+<img src=../assets/tmux-conf-pane-border-color.png>
 
 ***
 
@@ -1200,7 +1200,7 @@ bind-key '-' split-window -v      # '-' horizontal window split
 bind-key '\' split-window -h      # '\' vertical window split
 ```
 
-<img src=assets/tmux-conf.split-window-bindings.png
+<img src=../assets/tmux-conf.split-window-bindings.png
 
 ***
 
@@ -1245,7 +1245,7 @@ bind -r K resize-pane -U                # Resize pane up
 bind -r L resize-pane -R                # Resize pane right
 ```
 
-<img src=assets/tmux-conf-resize-pane-keys.png>
+<img src=../assets/tmux-conf-resize-pane-keys.png>
 
 Reload `tmux.conf`.
 
