@@ -9,7 +9,7 @@ The guides in this repo are meant to help you:
 
 ## First, do this:
 
-In a hurry? An installer script that installs all the cool tools for you for you is available [here](scripts/install-cool-tools.sh).  Please note the script will alias `ls`, `cd` and `cat` to their new, cooler, replacements.  If you don't like that, you can undo this by removing the alias entries from your `~/.bashrc` or `~/.zshrc` file.
+(Linux users only) In a hurry? An installer script that installs all the cool tools for you for you is available [here](scripts/install-cool-tools.sh).  Please note the script will alias `ls`, `cd` and `cat` to their new, cooler, replacements.  If you don't like that, you can undo this by removing the alias entries from your `~/.bashrc` or `~/.zshrc` file.
 
 The list below are setup steps for some cool CLI tools, including:
 
