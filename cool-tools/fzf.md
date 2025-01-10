@@ -4,13 +4,13 @@
 
 Project Page: https://github.com/junegunn/fzf
 
-### MacOS
+#### MacOS Install
 
 ```shell
 brew install fzf
 ```
 
-### Linux
+#### Linux Install
 
 ```shell
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
