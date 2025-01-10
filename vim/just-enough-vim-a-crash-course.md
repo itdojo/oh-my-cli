@@ -157,7 +157,7 @@ In vim:
 ```bash
 cd
 
-git clone git@github.com:itdojo/oh-my-cli.git
+git clone https://github.com/itdojo/oh-my-cli.git
 
 cd oh-my-cli
 ```
