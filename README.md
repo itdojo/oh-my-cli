@@ -26,7 +26,7 @@ The list below are setup steps for some cool CLI tools, including:
 
 ***
 
-## Then do this:
+## Then do this: 
 
 ### Just enough vim: A crash course
 
