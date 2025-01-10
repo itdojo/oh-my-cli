@@ -9,7 +9,9 @@ if ! command -v tmux >/dev/null 2>&1; then sudo apt update && sudo apt install -
 if ! command -v tmux >/dev/null 2>&1; then brew install tmux; else echo "tmux is already installed."; fi
 ```
 
-- [ ] Start a new tmux session.
+- [ ] Open a terminal and start a new tmux session.
+
+> MacOS users: Don't use the builtin terminal.  Use iTerm2 (my choice) or Alacritty.
 
 > You can visually tell the tmux session is running because the bottom of the terminal shows a green bar with `[0] 0:bash*` on the left-hand side.
 
@@ -66,11 +68,18 @@ prefix %
 
 - [ ] Move between the panes using `prefix` and arrow keys. Try it.
 
+```
+prefix ⬅️
+prefic ➡️
+prefix ⬆️
+prefix ⬇️
+```
+
 ***
 
 ### Closing a Pane
 
-- [ ] Select the bottom pane and use `prefix x` to kill (close) it.  You will be prompted to confirm.
+- [ ] Using `prefix x` kill each of the bottom panes.  You will be prompted to confirm.
 
 ```
 prefix x
@@ -201,7 +210,7 @@ Test the zoom feature as follows:
 ping 1.1.1.1
 ```
 
-- [ ] Use the arrow keys to move to the bottom pane (`prefix ⬇️`).  Once in the bottom pane, run `htop`.
+- [ ] Use the arrow keys to move to the bottom pane (`prefix ⬇️`).  Once in the bottom pane, run `top` or `htop`.
 
 ```bash
 htop
@@ -243,6 +252,8 @@ Zoomed in on ***htop*** pane:
 
 <img src=../assets/tmux-zoom-top-pane.png>
 
+- [ ] Press `q` to stop `htop` and Press CTRL-c to stop ping.
+
 ***
 
 ## Renaming tmux Sessions
@@ -269,7 +280,7 @@ rename-session ssh-comms
 
 ***
 
-## Detaching from a tmux Session (returning to the CLI)
+## Detaching from a tmux Session
 
 Answers the question: *How do I detach from this session to return to the CLI?*
 
