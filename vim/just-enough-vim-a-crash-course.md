@@ -1,5 +1,14 @@
 # Just Enough Vim: A Crash Course
 
+> Note: This document is part of a GitHub repo.  Unless in PDF format, it is meant to be read as part of the repo.  Images included are relative references within the repo.
+
+The overview section is comprised of tables describing various keystrokes used with vim.  They are intended to be a reference as you work through this lab exercise.
+
+Please also refer to the quick reference guide located at `reference-guides/vim-qrq-concise.md`.
+The lab steps begin with the **Lab Steps** section.
+
+## Overview
+
 **Vim** is massive in its command syntax.  That makes it simultaneously both powerful and confusing.  The learning curve is legitimate and scares many away, sending them running to the relative comfort and familiarity of **nano**.
 
 This "brief" **vim** tutorial covers the basics; just enough to make you competent with `vim` without trying to scare you with excessive syntax.
@@ -139,9 +148,21 @@ In vim:
 
 - [ ] Open a terminal.
 
+> MacOS users: use [iTerm2](https://iterm2.com/) (`brew install --cask iterm2`) or [Alacritty](https://github.com/alacritty/alacritty).  Avoid the built-in MacOS terminal.  This lab was written using iTerm2 (MacOS) and/or the built-in Ubuntu Linux terminal.
+
 ***
 
-- [ ] In the `assets` folder of this lab, use `vim` to open `constitution.md`.  The document opens in vim **Normal Mode**.
+- [ ] (Recommended) Clone this repo to your computer.
+
+```bash
+cd
+
+git clone git@github.com:itdojo/oh-my-cli.git
+
+cd oh-my-cli
+```
+
+- [ ] Use `vim` to open `assets/constitution.md`.  The document opens in vim **Normal Mode**.
 
 ***
 
