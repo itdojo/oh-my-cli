@@ -32,6 +32,8 @@ _fzf_comprun() {
 }
 ```
 
+Then run:
+
 ```shell
 source ~/.zshrc
 
