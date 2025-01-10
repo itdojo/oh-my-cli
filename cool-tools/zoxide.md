@@ -33,6 +33,8 @@ eval "$(zoxide init zsh)"
 # eval "$(zoxide init bash)"
 ```
 
+then run:
+
 ```shell
 source ~/.zshrc
 
@@ -52,16 +54,64 @@ cd path/to/some/directory
 z path/to/some/directory
 ```
 
-zoxide remembers the directories you have been to
+zoxide remembers the directories you have been to.  To test this, run the following `mkdir` commands to make a sample folder structure.
 
 ```shell
+cd
 mkdir -p ~/ztest/{apple,linux,windows}/tools/{fzf,eza,bat}
 mkdir -p ~/ztest/windows/office/{word,excel,powerpoint,outlook}
 mkdir -p ~/ztest/{windows,apple}/crypto/{bitcoin,ethereum,cardano}/wallet
 mkdir -p ~/ztest/linux/{tmux,screen}/tutorial
 ```
 
-Now, navigate:
+The commands above create the following test folder structure:
+
+```
+❯ tree ztest
+ztest
+├── apple
+│   ├── crypto
+│   │   ├── bitcoin
+│   │   │   └── wallet
+│   │   ├── cardano
+│   │   │   └── wallet
+│   │   └── ethereum
+│   │       └── wallet
+│   └── tools
+│       ├── bat
+│       ├── eza
+│       └── fzf
+├── linux
+│   ├── screen
+│   │   └── tutorial
+│   ├── tmux
+│   │   └── tutorial
+│   └── tools
+│       ├── bat
+│       ├── eza
+│       └── fzf
+└── windows
+    ├── crypto
+    │   ├── bitcoin
+    │   │   └── wallet
+    │   ├── cardano
+    │   │   └── wallet
+    │   └── ethereum
+    │       └── wallet
+    ├── office
+    │   ├── excel
+    │   ├── outlook
+    │   ├── powerpoint
+    │   └── word
+    └── tools
+        ├── bat
+        ├── eza
+        └── fzf
+```
+ 
+ *** 
+
+Now, navigate to test how zoxide works:
 
 ```bash
 # Home directory
