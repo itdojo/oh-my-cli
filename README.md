@@ -22,7 +22,7 @@ The list below are setup steps for some cool CLI tools, including:
 * **[fzf](cool-tools/fzf.md)** - a fuzzy finder for the CLI
   * [integrating eza & bat with fzf](cool-tools/integrating-eza-and-bat-with-fzf.md)
 * **[tldr](cool-tools/tldr.md)** - a more concise **`man`** page
-* (coming soon) - **[thefuck](cool-tools/tldr.md)** - a CLI typo fixer
+* (coming soon) - **[thefuck](cool-tools/thefuck.md)** - a CLI typo fixer
 
 ***
 
