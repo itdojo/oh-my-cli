@@ -11,8 +11,8 @@ Install and setup steps for some cool CLI tools, including:
 * **[oh-my-zsh](cool-tools/install-zsh-powerlevel10k-and-plugins.md)** - a framework for configuring zsh
 * **[Powerlevel10k](cool-tools/install-zsh-powerlevel10k-and-plugins.md)** - a great zsh theme
 * **[bat](cool-tools/bat.md)** - a better **cat**
-* **[eza](cool-tools/eza.md)** - a better **cd**
-* **[zoxide](cool-tools/zoxide.md)** - a better **ls**
+* **[eza](cool-tools/eza.md)** - a better **ls**
+* **[zoxide](cool-tools/zoxide.md)** - a better **cd**
 * **[fzf](cool-tools/fzf.md)** - a fuzzy finder for the CLI
   * [integrating eza & bat with fzf](cool-tools/integrating-eza-and-bat-with-fzf.md)
 * **[tldr](cool-tools/tldr.md)** - a more concise **man** page
