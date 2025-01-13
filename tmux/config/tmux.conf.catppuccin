@@ -18,6 +18,7 @@ set -g window-style 'bg=#0c0c0c,fg=#ffffff'         # Inactive panes: light blac
 set -g window-active-style 'bg=#010101,fg=#ffffff'  # Active pane: black
 set -g pane-active-border-style 'fg=yellow'
 set -g pane-border-style 'fg=brightblack'
+set -g status-position bottom           # position status bar on top/bottom of window
 
 ###########################################################################################
 # KEY BINDINGS
