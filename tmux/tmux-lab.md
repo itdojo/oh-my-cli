@@ -442,7 +442,9 @@ Ues `prefix (` again to move to the next session. This will take you to the **lo
 
 Use `prefix )` to move to the 'right' a session.
 
-Stop when are once again at your **local** session.
+- [ ] Stop when are once again at your **local** session.
+
+- [ ] Practice moving between windows to get the feel for it.  Notice that the sessions 'wrap around' when you get to the leftmost or rightmost session.
 
 ***
 
@@ -453,6 +455,8 @@ Stop when are once again at your **local** session.
 <img src=../assets/tmux-session-manager.png>
 
 ***
+
+- [ ] Practice moving between the different sessions using the session manager.
 
 - [ ] Using the tmux Session Manager, navigate to the **server** session.
 
@@ -473,7 +477,7 @@ Stop when are once again at your **local** session.
 
 ***
 
-- [ ] Leave the **server** tasks running.  Use tmux Session Manager to switch the **local** session.
+- [ ] Leave the **server** tasks running.  Use tmux Session Manager (`prefix s`) to switch the **local** session.
 
 - [ ] Divide the **local** session window into two vertical panes.  Task the panes as follows:
 * Top pane: `watch ss -tn`
@@ -487,23 +491,23 @@ Stop when are once again at your **local** session.
 
 ***
 
-- [ ] Go to the top pane of the **local** session (the one running `watch ss -tn`) and divide the pane into two vertical panes (you do not have to stop the `watch` command).  Leave the new pane free (no command running.)
+- [ ] Go to the top pane of the **local** session (the one running `watch ss -tn`) and divide the pane into two vertical panes (`prefix %`) (you do not have to stop the `watch` command).  Leave the new pane free (no command running.)
 
 Your **local** session should look like this:
 
 <img src=../assets/tmux-local-session-3-panes.png>
 
-Leave the tasks in the **local** session running.
+- [ ] Leave the tasks in the **local** session running.
 
 ***
 
-- [ ] Bring up the tmux Session Manager (`prefix s`).  Select the **server** session and press the right arrow key ➡️.  A sub-option will appear labeled `+ 0: bash*`.  The `0` means this is ***window*** zero (0) in the **server** session. The preview window at the bottom will show you one of the panes (pane 0) in the **server** session.
+- [ ] Bring up the tmux Session Manager (`prefix s`).  Select the **server** session and press the right arrow key ➡️.  A sub-option will appear labeled `+ 0: bash*` (or possible `+ 0: htop`).  The `0` means this is ***window*** zero (0) in the **server** session. The word (`bash`, `htop`, etc.) is the name of the ***pane*** currently selected in that ***window***.  The preview window at the bottom will show you the panes (pane 0, 1, 2) in the **server** session.
 
 <img src=../assets/tmux-session-manager-layout.png>
 
 ***
 
-- [ ] Arrow down ⬇️ to the **server** window zero (0) and press the right arrow ➡️.  This will expand each of the avaiable panes in this window.  At the bottom you will see a preview of the different panes currently open in the **server** session.
+- [ ] Arrow down ⬇️ to the **server** window zero (0) and press the right arrow ➡️.  This will expand each of the available panes in this window.  At the bottom you will see a preview of the different panes currently open in the **server** session.
 
 <img src=../assets/tmux-local-session-manager-3-panes.png>
 
@@ -549,10 +553,11 @@ You can also use `prefix q` to identify pane numbers and navigate between them.
 
 - [ ] Try that now.  With the **local** session displayed, press `prefix q`.  A number will briefly appear over each of the panes.  If you press the number of the desired pane (while it is displayed, you have to be quick), your focus will be moved to that pane.
 
-> Note: By default, numbers appear for one (1) second.  This can be annoying.  You can set the value using `tmux set-option display-panes-time <milliseconds>`.  For example, `tmux set-option display-panes-time 4000`.
+> Note: By default, numbers appear for one (1) second.  This can be annoying.  You can set the value using `tmux set-option display-panes-time <milliseconds>`.  For example, `tmux set-option display-panes-time 4000`.  Type it in the terminal window in any pane for the session.  Note that setting it this way is only for the session you are using.  The other session continue to have a one (1) second timer.  Later in the lab you will make this setting change a default value.
 
 <img src=../assets/tmux-display-pane-numbers.png>
 
+- [ ] Try it:
 ```
 prefix q, then 0
 
@@ -565,9 +570,11 @@ prefix q, then 2
 
 ## Swapping Panes in a tmux Window
 
-Sometimes your panes are not aligned in an optimal way.  This can crowd the output, making it difficult to read, etc.  You can swap the position of panes.
+Sometimes your panes are not aligned in an optimal way.  This can crowd the output, making it difficult to read, etc.  You can swap the position of panes.  For example, `htop` looks better in a horizontal pane.  If it is open in a vertical pane, it can be difficult to use.  Being able to move it from a vertical pane to a horizontal one would be helpful.
 
 - [ ] Close all but the last pane in your **server** session.  You can close a pane by running `exit` from the pane or by using `prefix x` when the pane is selected.
+
+- [ ] In the remaining pane, stop any command that is running, returning you to a command prompt.
 
 <img src=../assets/tmux-server-session-single-pane.png>
 
@@ -615,10 +622,10 @@ prefix %
 
 <img src=../assets/tmux-top-pane0-ss-pane1.png>
 
-- [ ] Move to pane 0 and swap pane 0 with pane 1.  From pane 0, `prefix }`.
+- [ ] Move to pane 0 and swap pane 0 with pane 1.  From pane 0, `prefix }` <--- curly brace, not a parenthesis.
 
-`prefix }` - Moves a pane to the right
-`prefix {` - Moves a pane to the left
+* `prefix }` - Moves a pane to the right
+* `prefix {` - Moves a pane to the left
 
 After the pane swap:
 
@@ -659,7 +666,13 @@ After swap:
 
 ***
 
-- [ ] Using `prefix {`, attempt to swap pane 0 with pane 2 using `prefix {`.  
+- [ ] Using `prefix {`, attempt to swap pane 0 with pane 2.  To do this:
+
+```
+prefix q, then 0
+
+prefix {
+```
 
 > Note: The pane does not go where you want.  Instead of going to pane 2, it swaps with pane 3.  This is because the panes swap in a loop based on their numbers.  Pane 0 moved left with `prefix {` loops back around to pane 3.
 
@@ -680,6 +693,8 @@ After swap:
 **Choice #2** - Use `prefix {` to move `htop` back to pane 3 then go to pane 2 and run `tmux swap-pane -s 0 -t 2`.
 
 **Choice #3** - Return to pane 0 and use `prefix {` to move `htop` back to pane 3.
+
+**Choice #4** - Arguably the least confusing.  Pick a pane with an available prompt and use `tmux swap-pane -s <src> -t <target>` to move panes exactly where you want them to be.  Despite the extra keystrokes, this is my preferred method.
 
 - [ ] Pick one of those options and do it.  The end result should look like the screen shot below.
 
@@ -707,7 +722,9 @@ There are a variety of ways to kill tmux sessions.  In the steps below you will 
 tmux attach -t ssh-comms
 ```
 
-- [ ] Open the tmux command line (`prefix :`) and run `kill-session`.  The session will be killed and you will be returned to the CLI.  Run `tmux ls` to confirm the **ssh-comms** session is gone.
+- [ ] Open the tmux command line (`prefix :`) and run `kill-session`.  The session will be killed and you will be returned to the CLI.  This is much faster than killing panes one-by-one.  
+
+- [ ] Back at the CLI, run `tmux ls` to confirm the **ssh-comms** session is gone.  Only the ***local*** session should remain.
 
 ```
 prefix :
@@ -727,9 +744,15 @@ tmux ls
 
 - [ ] From the CLI, use `tmux ls` to determine the session name/number you want to kill.  The **local** session is the only only one remaining.
 
-- [ ] Kill the **local** session using `tmux kill-session -t local`.
+- [ ] From the CLI, kill the **local** session using `tmux kill-session -t local`.
 
 <img src=../assets/tmux-kill-session-local.png>
+
+- [ ] Confirm there are no sessions left running.
+
+```bash
+tmux ls
+```
 
 ***
 
@@ -743,11 +766,11 @@ When you run `tmux` a new **session** is created.  A session is the outermost po
 
 You can run multiple different tmux **sessions** on your computer, each independent of the other.
 
-A **session** can have one for more **windows**.  A session always has at least one (1) window.
+A **session** can have one or more **windows**.  A session always has at least one (1) window.
 
 A **window** can be divided into multiple **panes**.  By default, every **window** has a single pane.  The number of panes a **window** can be divided into is limited more by screen real estate than anything else.
 
-How you use **sessions**, **windows** and **panes** is mostly a matter of personal preference for your workflows.  The more you use tmux, the more you will develop your own personal style for managing your **sessions**.
+How you use **sessions**, **windows** and **panes** is mostly a matter of personal preference for your workflows.  The more you use tmux, the more you will develop your own personal style for managing your **sessions**.  Everybody uses it a little different.
 
 ***
 
@@ -760,7 +783,7 @@ The image below is a single tmux **session**, showing one **window** that has th
 
 *** tmux session *************************************************************************
 *  --- tmux window --------------------------------------------------------------------  *
-*  | +++ tmux pane ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ |  *
+*  | +++ tmux pane 0 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ |  *
 *  | +                                                                              + |  *
 *  | +                                                                              + |  *
 *  | +                                                                              + |  *
@@ -771,7 +794,7 @@ The image below is a single tmux **session**, showing one **window** that has th
 *  | +                                                                              + |  *
 *  | +                                                                              + |  *
 *  | ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ |  *
-*  | +++ tmux pane ++++++++++++++++++++++++++++ tmux pane +++++++++++++++++++++++++++ |  *
+*  | +++ tmux pane 1 ++++++++++++++++++++++++++ tmux pane 2 +++++++++++++++++++++++++ |  *
 *  | +                                      +                                       + |  *
 *  | +                                      +                                       + |  *
 *  | +                                      +                                       + |  *
@@ -786,6 +809,10 @@ The image below is a single tmux **session**, showing one **window** that has th
 *  ------------------------------------------------------------------------------------  * 
 ******************************************************************************************
 ```
+
+## tmux Visual Hierarchical
+
+<img src=../assets/tmux-session-window-pane.png width=75%>
 
 - A tmux **session** is a collection of one or more **windows**.
   - You can have multiple **sessions**.
