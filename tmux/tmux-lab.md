@@ -917,7 +917,7 @@ tmux new -s RPis
 
 To reiterate, what you are looking at right now is a **session** with a single **window** that has one **pane**.  But it looks like a regular CLI session running in tmux.
 
-- [ ] Divide the window into two (2) vertical panes.
+- [ ] Divide the window into two (2) vertical panes (`prefix %`).
 
 ```
 prefix %
@@ -963,6 +963,10 @@ Pick one and rename the window.
 
 - [ ] Mark the window using `echo gateworks window`.
 
+```bash
+echo gateworks window
+```
+
 ***
 
 - [ ] Split the **gateworks*** window into two horizontal panes.
@@ -975,7 +979,7 @@ prefix "
 
 ***
 
-- [ ] Create a third **window** and name it ***digitalocean***.  Split the window into four (4) panes.
+- [ ] Create a third **window** and name it ***digitalocean***.  Split the window into four (4) panes, forming a grid.
 
 ```
 prefix c    # creates window
@@ -997,6 +1001,10 @@ prefix %    # splits vertically
 
 - [ ] Mark the window using `echo digitalocean window`.
 
+```bash
+echo digitalocean window
+```
+
 ***
 
 ## Navigating Between Windows
@@ -1010,7 +1018,9 @@ There are at least four (4) ways to move between windows.
 
 <img src=../assets/tmux-rpi-session-prefix-manager.png>
 
-- [ ] Try each option above, moving from window to window.
+- [ ] Try each option above, moving from window to window.  You should find one you prefer.
+
+> Note: Later, you will enable the mouse to be able to click between windows.  Exciting!
 
 ***
 
@@ -1049,6 +1059,8 @@ There are at least three (3) ways to close a **window**.
 ***
 
 # Customizing tmux
+
+- [ ] Create a tmux folder in your `.config` directory.  In the `tmux` folder, create a `tmux.conf` file.
 
 ```bash
 mkdir -p ~/.config/tmux
@@ -1119,13 +1131,13 @@ tmux
 
 ### tmux Window Numbering
 
-By default, tmux indexes (numbers) its **windows** starting at zero (0).  Because you can use `prefix <window #>` to cycle between windows (`prefix 0`, `prefix 1`, etc.), this creates an unnatural keyboard flow (because 0 is on the far right in the number row on the keyboard).  To fix this, `set -g base-index 1` starts window numbering at one (1).  Notice that your default window numbered one (1) in your new tmux session.
+By default, tmux indexes (numbers) its **windows** starting at zero (0).  Because you can use `prefix <window #>` to cycle between windows (`prefix 0`, `prefix 1`, etc.), this creates an unnatural keyboard flow (because 0 is on the far right in the number row on the keyboard).  To fix this, you set `set -g base-index 1` in `~/.config/tmux/tmux.conf` to start window numbering at one (1).  Notice that your default window numbered one (1) in your new tmux session bar (green bar at bottom of screen).
 
 ***
 
 ### Changing the tmux Prefix
 
-- [ ] With the `set -g prefix ^A` setting in `tmux.conf`, your prefix key is now `C-a` rather than `C-b`.   This is personal preference.  Many people choose to switch to `C-a` or `C-s`; it's up to you.  Set the `set -g prefix ^<value>` to whatever you want your prefix key to be.  If you prefer the default `C-b`, remove the `set -g prefic ^A` line from `tmux.conf` and refresh the config.
+- [ ] With the `set -g prefix ^A` setting in `tmux.conf`, your prefix key is now `C-a` (CTRL+a) rather than `C-b`.   This is personal preference.  Many people choose to switch to `C-a` or `C-s`; it's up to you.  If you don't like `prefix a`, set the `set -g prefix ^<value>` in `~/.config/tmux/tmux.conf` to whatever you want your prefix key to be.  If you prefer the default `C-b`, remove the `set -g prefic ^A` line from `tmux.conf` and refresh the config.
 
 > Note: It is good to always remember what the defaults are so you can still use tmux on remote/new systems.
 
@@ -1141,7 +1153,7 @@ Example using the tmux command-line:
 prefix :
 
 # then
-source-file tmux.conf
+source-file .config/tmux/tmux.conf
 ```
 
 Example using the CLI:
@@ -1167,11 +1179,14 @@ bind r source-file ~/.config/tmux/tmux.conf \; display "tmux Config Reloaded!"
 
 ***
 
-- [ ] Test your ability to refresh the `tmux.conf` file using the newly mapped `prefix r` mapping.
+- [ ] Fully exit and restart tmux or use the reload options above to get tmux to read the new key binding.
+
+- [ ] Test your ability to refresh the `tmux.conf` file using the newly mapped `prefix r` mapping.  The message will display in the status bar at the bottom of the screen.
 
 > Note: The 'tmux Config Reloaded!' message will be displayed in the status bar for the duration defined by the `set -g display-time 5000` setting (5000 ms, 5s).
 
 ```
+# Reload the tmux.conf file using your newly configured key binding
 prefix r
 ```
 
@@ -1182,6 +1197,8 @@ prefix r
 ### Highlighting the Active Pane
 
 - [ ] Split the tmux window horizontally, then vertically.  You should see the active pane is a different color than the inactive pane(s).  Switch from pane to pane and see that the active pane is always a different color.
+
+> Note: These color difference may not show up very well if doing from the terminal windows of a virtual machine.  When doing them from an interface that supports more colors (iTerm, Alacritty, Terminator, etc.) you will see the difference.
 
 This change comes from the following added to `tmux.conf`:
 
@@ -1254,13 +1271,15 @@ bind-key '\' split-window -h      # '\' vertical window split
 
 ### Enabling Mouse Control
 
+> Note: This will not work if being done in the CLI window of a virtual machine (no mouse support).  It also will not work if your systemd target is multi-user.target (again, no mouse support).
+
 - [ ] The `set -g mouse on` setting you added to `tmux.conf` enables the ability to use your mouse to do the following:
 
 * Resize frames
 * Select frames
 * Change between windows
 
-Try it now.  Create two or more windows (`prefix c`) and divide them into some panes (`prefix "`, `prefix %` or your newly bound `prefix \` and `prefix -`) then use your mouse to move between the windows (click on the window name in the status bar) and frames (click from frame to frame in a window).  Also try resizing the frames by clicking and dragging the frame borders.
+Try it now.  In a terminal window with mouse support, create two or more windows (`prefix c`) and divide them into some panes (`prefix "`, `prefix %` or your newly bound `prefix \` and `prefix -`) then use your mouse to move between the windows (click on the window name in the status bar) and frames (click from frame to frame in a window).  Also try resizing the frames by clicking and dragging the frame borders.
 
 ***
 
@@ -1327,7 +1346,7 @@ The `setw -g  mode-keys vi` option set in `tmux.conf` enables `vi`-style key bin
 
 - [ ] Create a new window and split it into two vertical panes (`prefix %`).
 - [ ] In the right pane, run `ping localhost` and leave it running.
-- [ ] Move to the left pane (`prefix ⬅️`) and run the following in sequence:
+- [ ] Move to the left pane (`prefix ⬅️`) and run the following commands in sequence:
 
 > `diskutil list` is a MacOS-only command
 
@@ -1335,8 +1354,11 @@ The `setw -g  mode-keys vi` option set in `tmux.conf` enables `vi`-style key bin
 dig aaaa itdojo.com
 dig mx itdojo.com
 ifconfig
+ip addr show
+ip link
 diskutil list
-ls ~
+sudo fdisk -l
+ls .alh ~
 ```
 <img src=../assets/tmux-ls-ping-localhost.png>
 
