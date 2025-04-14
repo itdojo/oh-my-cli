@@ -1398,15 +1398,15 @@ Here is a visual representation of the steps to take to copy text from the CLI t
 
 ### Searching Command History  
 
-The `setw -g mode-keys vi` option also enables the ability to search your command history output.  To do so, type `?<somestring>`.
+The `setw -g mode-keys vi` option also enables the ability to search your command history output.  Here is how:
 
-- [ ] Press `prefix [` to enter copy mode.
-- [ ] Type `?MX` to search backward through your history for any instances of `MX` in your command history output.  Use vim navigation keys to mode down to the beginning of the line for `alt4.aspmx.l.google.com`.
+- [ ] Return to the tmux window pane where you ran the list of commands. Press `prefix [` to enter copy mode.
+- [ ] Type `?MX` then **Enter** (e.g. `?<string>`) to search backward through your history for any instances of `MX` in your command history output.  Use vim navigation keys to mode down to the line for `alt4.aspmx.l.google.com`.  Place your cursor on the `a` in `alt4`.
 - [ ] Press SPACE to begin copying.  
 - [ ] Press `SHIFT $` to highlight to the end of the line.
 - [ ] Press `y` to yank the string to the clipboard.
 - [ ] Press `Enter` to exit copy mode.
-- [ ] At the terminal prompt, type `ping` then press `prefix ]` to paste the copied string.  If all went well you should now have: `ping alt4.aspmx.l.google.com.`.  Press enter to ping the server.
+- [ ] At the terminal prompt, type `ping -c 4 ` then press `prefix ]` to paste the copied string.  If all went well you should now have: `ping -c 4 alt4.aspmx.l.google.com.`.  Press enter to ping the server.
 
 <img src=../assets/tmux-ping-google-mx.png>
 <br/>
@@ -1431,7 +1431,7 @@ The Linux script below has commented out sections that allow for downloading and
 
 If you ran the `install_zsh.sh` script from ITdojo's ***qol*** GitHub repo, Homebrew and Nerd Fonts are already installed and you can skip the font installation steps here.
 
-Install Homebrew if necessary.  Visit https://brew.sh for install instructions.
+MacOS users, install Homebrew if necessary.  Visit https://brew.sh for install instructions.
 
 > Visit nerdfonts.com for a list of available Nerd Fonts.  There are more than 70 of them.
 
@@ -1470,7 +1470,7 @@ mkdir -p ~/.fonts
 for FONT in "${FONTS[@]}"; do
   wget -q "${BASE_URL}/${FONT}.zip" -O "${TMP_DIR}/${FONT}.zip"
   unzip -oq "${TMP_DIR}/${FONT}.zip" -d ~/.fonts/
-  # Global install
+  # For global install (all users)
   # sudo unzip -oq "${TMP_DIR}/${FONT}.zip" -d /usr/share/fonts/truetype/
   
 done
@@ -1494,7 +1494,7 @@ sudo fc-cache -f
 
 `$XDG_CONFIG_HOME` defines the base location of user-specific configuration files.  If it is not set, the default is usually `$HOME/.config`.  Setting this variable  allows you to specify an alternate location for your config files (based on your personal preferences).  However, unless you have a specific reason for doing so, leave `~/.config/` as your default config file location, many different programs use it.
 
-In this lab, we will set `${XDG_CONIFG_HOME}` but still point it to the default location of `$HOME/.config`.
+In this lab, you will set `${XDG_CONIFG_HOME}` but still point it to the default location of `$HOME/.config`.
 
 ***
 
@@ -1507,6 +1507,8 @@ echo $XDG_CONFIG_HOME   # Should return nothing
 ***
 
 - [ ] Add an export for the variable to your `~/.bashrc` or `~/.zshrc`.
+
+> Note: If your shell is bash, change `.zshrrc` to `.bashrc` in the code snippet below.
 
 ```shell
 cat >> ~/.zshrc << 'EOL'
@@ -1540,7 +1542,7 @@ tmux Plugin Manager (tpm) is a script that installs a wide array of tmux plugins
 git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 ```
 
-- [ ] Edit `.tmux.conf`, adding the following.
+- [ ] Edit `~/.config/tmux/tmux.conf`, adding the following.
 
 > Note: The [`tmux-sensible` plugin](https://github.com/tmux-plugins/tmux-sensible) is almost universally installed.  It is a set of options that are considered essential improvements that "everyone can agree on".
 
@@ -1570,14 +1572,16 @@ run '~/.config/tmux/plugins/tpm/tpm'
 - [ ] Reload the tmux environment using `prefix I`.
 
 ```
+prefix r
+
 prefix I
 ```
 
 <img src=../assets/tmux-reload-tmux-config.png>
 
-https://github.com/catppuccin/tmux/discussions/317
-
 ***
+
+## For You, Moving Forward with tmux Plugins
 
 The tmux Plugin Manager simplifies the installation of a lot of different plugins.  The GitHub project page for tpm is here: https://github.com/tmux-plugins/tpm
 
@@ -1590,6 +1594,7 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 ```
 
 ```
+# reload
 prefix I
 ```
 
@@ -1622,7 +1627,7 @@ Project Page: https://github.com/catppuccin/tmux
 mkdir -p ~/.config/tmux/plugins/catppuccin
 
 # Check the repo page for the most up-to-date release (v2.1.2 at the time of writing)
-git clone -b v2.1.2 https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux
+git clone -b v2.1.3 https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux
 ```
 
 - [ ] Add the following at the bottom of your `tmux.conf` file (just above the tpm run script):
@@ -1808,7 +1813,7 @@ Your tmux session should now look like this:
 
 To illustrate how the labels are being displayed, do the following:
 
-- [ ] Name the session `kismet`.
+- [ ] Name the session `kismet` (`prefix $`).
 
 ```
 prefix :
@@ -1832,7 +1837,7 @@ prefix ,
 * remote1 window: `python3`
 * remote2 window: `vim`
 
-- [ ] Switch between the windows usinf either your mouse to click on the window names, the window manager (`prefix w`) or `prefix 1`, `prefix 2` and `prefix 3`, you should see that the name of each program running is displayed along with the window names.  The active window is squared in the number on the status bar (rather than rounded).
+- [ ] Switch between the windows using either your mouse to click on the window names, the window manager (`prefix w`) or `prefix 1`, `prefix 2` and `prefix 3`, you should see that the name of each program running is displayed along with the window names.  The active window is squared in the number on the status bar (rather than rounded).
 
 <img src=../assets/catppuccin-window1.png>
 <br/><br/>
@@ -1852,7 +1857,7 @@ prefix "
 prefix -
 ```
 
-- [ ] Move between the panes and notice the name of the app changes from **bash** (or **zsh**) to **python** depending on the pane that is active within the window.
+- [ ] Move between the panes and notice the name of the app changes (on the status bar) from **bash** (or **zsh**) to **python** depending on the pane that is active within the window.
 
 ***
 
@@ -1878,10 +1883,12 @@ set -g status-position top
 
 ***
 
-- [ ] Save the changes and reload the config.  The bar is now on top.  Some poeple prefer this layout.  You decide.  Leave it or change it.
+- [ ] Save the changes and reload the config (`prefix r`).  The bar is now on top.  Some people prefer this layout.  You decide.  Leave it or change it back to the bottom.
 
 ```
 prefix r
+
+Enter
 ```
 
 <img src=../assets/catppuccin-status-bar-top.png>
@@ -1895,13 +1902,15 @@ prefix r
 My suggestion:  Make a GitHub repo that holds your personal config preferences like this tmux config file.  Add to a README.md or other markdown file to document the few steps involved in installing the required fonts & packages (font install, repos to clone, .zshrc entries, etc.) and save it all in a concise script that you can clone to any computer, run the script to download and install everything and place this `tmux.conf` file in `/.config/tmux/`.  Everything you need is in this document.  Once you have this available you can install tmux with all of your preferred settings on any new device in a few seconds.
 
 
+Catppuccin is one choice for a tmux theme.  There are others.  In the next steps you will test out a different theme you have more than one to choose from.
+
 ***
 
-## Installing the tmux Powerline Theme
+## Installing tmux Powerline Theme
 
 Project Page: https://github.com/erikw/tmux-powerline 
 
-- [ ] Copy your `tmux.conf.base` file to `tmux.conf`.
+- [ ] Copy your `tmux.conf.base` file to `tmux.conf`.  This serves to reset your tmux config to what it was before you set up catppuccin.
 
 ***
 
@@ -1930,6 +1939,7 @@ Your theme should change to something similar to what you see below.
 - [ ] Generate a custom config file for the theme.
 
 ```
+# Run this script
 ~/.config/tmux/plugins/tmux-powerline/generate_config.sh
 
 mv ~/.config/tmux-powerline/config.sh.default ~/.config/tmux-powerline/config.sh
@@ -1939,9 +1949,9 @@ vim ~/.config/tmux-powerline/config.sh
 
 ***
 
-This theme has a lot of different options available.  Each is in th form of a 'segment' you can configure.  This includes:
+This theme has a lot of different options available.  Each is in the form of a 'segment' you can configure.  This includes:
 * Weather
-* Now playing integration with your music player
+* Now playing integration with your music player (Apple Music, etc.)
 * IP address info
 * Realtime upload/download data stats
 * Email integration (notifications)
@@ -1955,11 +1965,13 @@ This theme has a lot of different options available.  Each is in th form of a 's
 
 > This theme can get really busy if you want it to.  Do you really need to see all of this information?
 
+- [ ] Close the `config.sh` file without making any changes.
+
 ***
 
 The network info (which will show tunnel/wireguard addresses, too) combined with the upload/download data rates is interesting for some use-cases.
 
-- [ ] To enable the network up/down stats go to `~/.config/tmux/plugins/tmux-powerline/themes/default.sh` and search for and uncomment these lines:
+- [ ] To enable the network up/down stats edit `~/.config/tmux/plugins/tmux-powerline/themes/default.sh` and search for and uncomment these lines:
 
 ```
 "ifstat 30 255"
@@ -1993,7 +2005,12 @@ The documentation on how to configure this theme is mostly by reading the config
 
 > Note: I have used the "Now Playing" feature with Apple Music and it works quite well.  I have not used it with any other music services.
 
+- [ ] One other setting that may be of great use is changing how many rows your status bar has.  In `~/.config/tmux-powerline/config.sh` find `export TMUX_POWERLINE_STATUS_VISIBILITY="on"`.  Read the comment on setting the value to make the status bar two rows (you can fit way more stuff!!!).  Reload your tmux config (`prefix r`) and see if you like it.  If not, change it back.
+
 ***
+
+- [ ] Once your Powerline theme is set up the way you want it, make a copy of the `tmux.conf` and name it `tmux.conf.powerline`.
+
 
 - [ ] If you like the Powerline theme, keep it.  If you prefer catppuccin, replace your `tmux.conf` with the `tmux.conf.catppuccin` back up you made earlier and reload your config (`prefix r`).  If you don't like either theme, find another one on the Interwebs or go back to the backup `tmux.conf.base` you made.
 
