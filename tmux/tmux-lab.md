@@ -70,7 +70,7 @@ prefix %
 
 ```
 prefix ⬅️
-prefic ➡️
+prefix ➡️
 prefix ⬆️
 prefix ⬇️
 ```
@@ -100,7 +100,7 @@ You once again have a single pane in your window.
 tmux has its own command line, which you access using `prefix :`
 
 - [ ] Open the tmux command line using `prefix :`.
-- [ ] From the tmux command line, use a command to turn the status bar off with `set status off`.  The green status bar will disappear.
+- [ ] From the tmux command line, use a command to turn the status bar off with `set status off`.  The green status bar disappears.
 
 > Note: This is just to demonstrate how the tmux command-line works: `prefix :`, then type a command.
 
@@ -420,6 +420,8 @@ Detach from a session (`tmux detach` or `prefix d`) then attach to the desired s
 
 - [ ] Do that now.  Detach from the **local** session and then use `tmux ls` (to show available sessions) and `tmux attach -t server` to attach to the **server** session.
 
+- [ ] Now switch back to the **local** session.
+
 <img src=../assets/tmux-detaching-server-session.png>
 
 <img src=../assets/tmux-switch-between-sessions.png>
@@ -485,7 +487,7 @@ Stop when are once again at your **local** session.
 
 ***
 
-- [ ] Go to the top pane of the **local** session (the one running `watch ss -tn`) and divide the pane into two vertical panes (you do not have to stop the atch command).  Leave the new pane free (no command running.)
+- [ ] Go to the top pane of the **local** session (the one running `watch ss -tn`) and divide the pane into two vertical panes (you do not have to stop the `watch` command).  Leave the new pane free (no command running.)
 
 Your **local** session should look like this:
 
@@ -535,7 +537,7 @@ In the screen shot below the index numbers are from `(0)` thru `(6)`.  You can p
 
 <img src=../assets/tmux-dynamic-index-values.png>
 
-- [ ] Try that now.  Select the index number that will take you to the **bash** pane in window 0 in the **local** session.  In the image above, that number is ***5***.  Your number may be different.  The end result is that you are taken to the **session** **window** and the desired **pane** is selected for your use.
+- [ ] Try that now.  Select the index number that will take you to the **bash** pane in window 0 in the **local** session.  In the image above, that number is ***5***.  Your index number may be different.  The end result is that you are taken to the **session** **window** and the desired **pane** is selected for your use.
 
 ***
 
@@ -1338,6 +1340,12 @@ ls ~
 - [ ] After selecting all the values, use `y` to yank/copy the data.
 - [ ] Press `Enter` to leave copy mode.
 - [ ] Press `prefix ]` to paste the yanked text.
+
+Here is a visual representation of the steps to take to copy text from the CLI to a buffer then paste the text in an editor.
+
+<img src=../assets/tmux-cli-buffer-copy.png width=45%>
+
+***
 
 ### Searching Command History  
 
