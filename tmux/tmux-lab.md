@@ -1895,6 +1895,8 @@ Enter
 
 ***
 
+- [ ] Other catppuccin users share their settings here: https://github.com/catppuccin/tmux/discussions/317.  You can take a look to get some inspiration on how you might like to set up your environment.
+
 - [ ] Once your catppuccin theme is set up the way you want it, make a copy of the `tmux.conf` and name it `tmux.conf.catppuccin`.
 
 ***
