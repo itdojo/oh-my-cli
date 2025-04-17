@@ -713,6 +713,329 @@ The entries you entered into `~/.vimrc` set new mappings for yanking to, cutting
 
 ***
 
-You now know enough to be dangerous with vim.
+## File Navigation using `:Explore`
 
-If you commit to using vim for a brief period you will quickly internalize all of these commands and you will have a better, faster workflow as a result. 
+vim has its own built-in file explorer.  You do not need to quit vim to move to or edit a different file.
+
+- [ ] Open vim.
+
+```bash
+cd && vim
+```
+
+*** 
+
+- [ ] Open the vim explorer.
+
+```vim
+:Explore
+
+# or
+
+:Ex
+```
+
+![vim explorer](../assets/vim-explorer.png)
+
+***
+
+- [ ] Use the ⬆️ and ⬇️ arrow keys or `j` and `k` to move up and down through the files and folder.  When you to open one, press **Enter**.  Test that now by navigating the `.bashrc` and opening it.
+
+***
+
+- [ ] From the `.bashrc` file, return to the explorer.
+
+```vim
+:Ex
+
+# or
+
+:Explore
+```
+
+***
+
+- [ ] The `../` means go to the parent directory (much like `cd ../` will do from the shell).  Navigate to `../` and move up to the parent directory.  Repeat that until you are at the root (`/`) of the filesystem.
+
+![alt text](../assets/vim-explorer-root.png)
+
+***
+
+- [ ] Now navigate back to your home folder and into the `.ssh` folder.  Open the `authorized_keys` file.  Review its contents then return to the vim explorer and go to your home directory.
+
+***
+
+In the vim explorer view of the home folder, press `d` to create a new director named `vimexplore`.  Navigate to that director and press `%` to create a new file named `fileA.txt`.  Edit `fileA.txt`, adding some dummy text (`"This is fileA.txt!"`).  Save the file (ESC to enter command mode, then `:w`) but do not close it.  Return to the vim explorer.
+
+```vim
+d
+
+vimexplore
+
+%
+
+fileA.txt
+```
+
+![](../assets/vim-explorer-filea.png)
+
+***
+
+- [ ] In the `vimexplore` folder, create another file (`%`) named `fileB.txt` and add some dummy text.  Save it and return to the vim explorer.
+
+***
+
+![](../assets/vim-exploer-fileb.png)
+
+***
+
+- [ ] From vim explorer, open `fileA.txt`.  Now switch to `fileB.txt` using vim explorer.  Make an edit to `fileB.txt` by adding some additional text.  ***DO NOT*** save `fileB.txt` and switch to `fileA.txt` using vim explorer.
+
+![](../assets/vim-explorer-split-window.png)
+
+
+Because `fileB.txt` is not saved, a split window is opened.  `fileB.txt` is on the bottom, vim explorer is on top.  In the vim explorer pane, navigate to `fileA.txt` and open it.
+
+![](../assets/vim-explorer-filea-fileb.png)
+
+***
+
+- [ ] Add some text to `fileA.txt` and save it (`:w`) but ***DO NOT*** close the file.
+
+***
+
+- [ ] Use `CTRL-w` + ⬇️ or `CTRL-w` + `j` to move down to the `fileB.txt` window.  Add some text and save (`:w`) but don't close the file.
+
+![alt text](../assets/vim-exploere-filea-fileb-edits.png)
+
+***
+
+- [ ] Navigate back to the `fileA.txt` window and close it (`:q`).  The window will close leaving only `fileB.txt`.  Save `fileB.txt` and return to the vim explorer (`Ex:`).
+
+If you leave a file with unsaved changes, the screen will open in a split window.  If the changes are saved before moving to the new file the window does not split.
+
+***
+
+## Using Buffers to Work on Multiple Files Simultaneously
+
+- [ ] Exit vim (back to the shell) (`:q`) then re-open vim and open vim explorer (`Ex:`).
+
+***
+
+- [ ] From vim explorer, create two new files in `~/vimexplore` named `fileC.txt` and `fileD.txt`.  Add some dummy text to each then save and close them.
+
+![](../assets/vim-explorere-4-files.png)
+
+***
+
+- [ ] Open `fileA.txt`.  
+
+***
+
+All files in vim live in buffers, which I think of as separate rooms.
+
+`fileA.txt` resides in a buffer, which you can see by enter `:ls`.
+
+```vim
+:ls
+```
+
+![](../assets/vim-single-buffer.png)
+
+Press Enter to return to the file.
+
+***
+
+- [ ] Using vim explorer, switch to `fileB.txt`.  With `fileB.txt` open, view the buffers (`:ls`).  There are now two (2).
+
+![](../assets/vim-buffers-2-files.png)
+
+***
+
+The leftmost number is the buffer number (**3** and **5** in the screenshot above, yours may be different).  The table below describes the other values you will see.
+
+| Flag | Meaning
+|:--:|:--|
+| **%** | Current buffer
+| **#** | Alternate buffer (last one used before current)
+| **a** | Active (loaded in memory)
+| **+** | Buffer has unsaved changes
+| **h** | Hidden (not visible, but not deleted)
+| **u** | Unlisted
+| **=** | Buffer is read-only
+
+***
+
+- [ ] If you know a file's name, you do not need to use vim explorer to open it.  You can open it manually with `:e path/to/filename`.  The full path to the file is relative to where you are in the filesystem.  If you specify an incorrect path to an existing file a new one will be created in the incorrect location you entered.  Pay attention to what you are doing.  Note that this is true even if you use vim explorer to navigate to the folder where the file is located.  The `:e` command uses the path from where you started vim, not the current location of vim explorer in the file system.
+
+Do that now.  Open `fileC.txt`.  It is likely at `vimexplore/fileC.txt` assuming you opened vim from your home folder.  After opening it, view the buffers.
+
+```vim
+:e vimexplore/fileC.txt
+```
+
+![](../assets/vim-buffer-filec.png)
+
+***
+
+There are three ways to switch between buffers (between files).
+
+> Note: If you have unsaved changes in a buffer you will get a warning and you will have to force the switch by adding a `!` (`bnext!`, `bprev!`, and `b!#`).
+
+* `:bnext` - Goes to the next buffer
+* `:bprev` - Goes to the previous buffer
+* `:b #` -  Goes to buffer #.  Buffer number comes from the left column in `:ls` output.
+
+- [ ] Do that now.  Use the three options above to cycle through the available buffers.
+
+***
+
+- [ ] using `:bd#`, close the buffer for `fileA.txt` (`#`) is the buffer number for `fileA.txt`.  View your buffers after closing the file to confirm it is closed.
+
+> Like above, if you are closing a file with unsaved edits, you have to add a `!` (`bd!#`).
+
+***
+
+- [ ] Exit vim (`:q`).
+
+***
+
+## Shell Interactions Within vim
+
+Sometimes you want to run a shell command but would rather not leave your file editing to do so.  Normally this means you would open a new tmux window or a terminal window.  vim, however, can run shell commands from within vim, no need to leave the editor (buffer).  Moreso, you can automatically add the command results to your file or to a buffer.  You also have the ability to pass data in your file (or your entire file) to a shell command to run it.  In the steps below you will examine how this works.
+
+***
+
+- [ ] Open vim.
+
+```bash
+cd && vim
+```
+
+***
+
+- [ ] Enter the following text into the buffer:
+
+```
+"The DNS Server IP is 8.8.8.8" 
+"Google"
+```
+
+***
+
+- [ ] Save the file as `dnsinfo.txt` but don't close it.
+
+```
+:w dnsinfo.txt
+```
+
+![](../assets/vim-dns-info.png)
+
+***
+
+- [ ] Using command mode in vim, run `ip route` without leaving the editor (buffer).
+
+> Running the command this way provides read-only output.
+
+```
+:!ip route
+```
+
+![](../assets/vim-ip-route.png)
+
+***
+
+> Note: Change the interface as appropriate for your computer.
+
+- [ ] Run another command: `resolvectl -i ens160`
+
+```
+:!resolvect -i ens160
+```
+The output should be similar to this (your DNS server will be different):
+
+```
+Link 2 (ens160): 192.168.86.53
+```
+
+***
+
+Using `:r !<command>` you can take the results of the command you run and paste them into your document (buffer) at the position of your mouse.
+
+- [ ] Add a new line to your document (buffer) as shown below. 
+
+```
+My DNS server IP is:  
+```
+
+- [ ] Run the `resolvectl` command from above again, this time using `awk` to extract just the IP address and paste into the file (buffer) at the position of the cursor.
+
+```
+:r !resolvectl -i ens160 dns | awk '{print $4}'
+```
+
+![](../assets/vim-resolvectl-paste.png)
+
+***
+
+- [ ] Repeat that again, this time adding the entire output of `ip addr show` to your document (buffer).
+
+> Note: `:r path/to/file` also works, copying the contents of another file into this file (buffer).
+
+```
+:r !ip addr show
+```
+
+![](../assets/vim-ip-addr-show.png)
+
+***
+
+- [ ] Move to the top of the document (`gg`) and press `w` four (4) times to jump to the first **8** in the DNS IP address.
+
+```
+gg
+
+w w w w
+```
+
+***
+
+- [ ] Press CTRL-v to enter copy mode and use either the right arrow key or `l` (lowercase L) to select the enter ip address.  With the entire address selected, press `y` to yank (copy) the address to a buffer.
+
+***
+
+- [ ] Run the following command.  You should run 4 successful pings to 8.8.8.8.
+
+> Note `<C-r>` is pressing CTRL-r followed by a `"`.
+
+```
+:! ping -c 4 <C-r>"
+```
+
+***
+
+Below is a table with some additional actions you can test out on your own.
+
+| Command | What It Does
+|:--|:--|
+| `:!<command>` | Run a shell command temporarily (view-only)
+| `:r !<command>` | Read shell command output into the current buffer
+| `:w !<command>` | Write the buffer (or a selection) as input to a shell command
+| `:!ls %` | Pass the current file (%) to a shell command
+| `:n, m !<command>` | Run shell command on lines n to m and replace with output
+| `:w >> output.txt` | Append current file to output.txt (shell redirection)
+| `:r /path/to/file.txt` | Read and insert contents of a file into the buffer
+| `:!chmod +x %` | Make the current file executable
+| `:!python3 %` | Run the current Python script
+| `:!make` | Run Makefile from within vim
+
+
+***
+
+That's it! You now know enough to be dangerous with vim.
+
+If you commit to using vim for a brief period you will quickly internalize all of these commands (and more) and you will have a better, faster workflow as a result. 
+
+***
+
+End.
