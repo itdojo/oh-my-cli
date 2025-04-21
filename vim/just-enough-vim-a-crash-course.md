@@ -118,7 +118,7 @@ In vim:
 |:--:|:--|:--|
 | `d` | cut | delete
 | `y` | copy | yank
-| `p` | paste | paste
+| `p` | paste | put
 
 ***
 
