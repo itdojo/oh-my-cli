@@ -695,7 +695,7 @@ The entries you entered into `~/.vimrc` set new mappings for yanking to, cutting
 
 ***
 
-- [ ] Using your mouse. select the entire `check_for_of_my_zsh` function.  You ***DO NOT*** need to right-click to choose Copy; just highlighting the text automatically copies it to the clipboard.
+- [ ] Using your mouse. select the entire `check_for_oh_my_zsh` function.  You ***DO NOT*** need to right-click to choose Copy; just highlighting the text automatically copies it to the clipboard.
 
 <img src=../assets/vim-mouse-selected-text.png>
 
