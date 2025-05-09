@@ -67,10 +67,10 @@ tmux kill-server
 tmux ls
 ```
 
-- [ ] Create a new tmux session named **opconsole**.
+- [ ] Create a new tmux session named **myconsole**.
 
 ```bash
-tmux new -s opconsole
+tmux new -s myconsole
 ```
 
 > Note: If you have not modified your tmux.conf as indicated above, your numbering will start at the default of `0` rather than `44`.  This entire document assumes you are using a modified **tmux.conf**.
@@ -78,7 +78,7 @@ tmux new -s opconsole
 Enter `prefix s` to open Session Manager.  You see:
 
 ```
-(0) + opconsole: 1 windows (attached)
+(0) + myconsole: 1 windows (attached)
 ```
 
 Press the right arrow key (or Enter key) to expand the session.  You see.
@@ -118,10 +118,10 @@ tmux kill-session
 You can create a new tmux session, give it a name, and name the first window in a single command using:
 `tmux new -s <session_name> -n <window_name>`.
 
-- [ ] Re-create the **opconsole** session with the **working** window using the syntax described above.
+- [ ] Re-create the **myconsole** session with the **working** window using the syntax described above.
 
 ```bash
-tmux new -s opconsole -n working
+tmux new -s myconsole -n working
 ```
 
 ***
@@ -131,12 +131,12 @@ tmux new -s opconsole -n working
 > Note: While tmux `split-window -h` works when you're in the right window, we'll use the `-t` flag to specify exactly which window to split. This is especially important when scripting or working with detached sessions or multiple windows.
 
 ```bash
-tmux split-window -h -t opconsole:working
+tmux split-window -h -t myconsole:working
 ``` 
 
 ***
 
-Notice that when you create this new pane you are connected to it (i.e., your cursor moves to the new pane).  If you want to create a new pane but not switch to it create the split with the `-d` syntax added (`tmux split-window -d -h -t opconsole:working`).
+Notice that when you create this new pane you are connected to it (i.e., your cursor moves to the new pane).  If you want to create a new pane but not switch to it create the split with the `-d` syntax added (`tmux split-window -d -h -t myconsole:working`).
 
 - [ ] Kill the newly created pane by typing `tmux kill-pane` (with your cursor in that pane).
 
@@ -151,7 +151,7 @@ You should now have just one pane.
 - [ ] Re-create the pane but keep your cursor detached from the new pane (keep the cursor in the current pane.)
 
 ```bash
-tmux split-window -d -h -t opconsole:working
+tmux split-window -d -h -t myconsole:working
 ```
 
 The new pane should open to the right and your cursor should remain in the left pane.
@@ -164,13 +164,13 @@ The new pane should open to the right and your cursor should remain in the left 
 
 ***
 
-- [ ] Kill the right pane (**89**) using `tmux kill-pane -t opconsole:working.89`
+- [ ] Kill the right pane (**89**) using `tmux kill-pane -t myconsole:working.89`
 
 ```bash
 # Syntax:
 # tmux kill pane -t session_name:windows_name.pane_index
 
-tmux kill-pane -t opconsole:working.89
+tmux kill-pane -t myconsole:working.89
 ```
 
 > Note: If your cursor was in pane **89** you could kill the pane with just `tmux kill-pane`.  Using the target (`-t`) syntax allows you to control the pane regardless of where your cursor is focused.
@@ -186,7 +186,7 @@ Note the following as you run the command below:
 * After the 8th ping, the pane closes.
 
 ```bash
-tmux split-window -d -h -t opconsole:working ping -c 8 1.1.1.1
+tmux split-window -d -h -t myconsole:working ping -c 8 1.1.1.1
 ```
 
 ***
@@ -194,7 +194,7 @@ tmux split-window -d -h -t opconsole:working ping -c 8 1.1.1.1
 - [ ] Recreate the pane with a command that runs indefinitely.
 
 ```bash
-tmux split-window -d -h -t opconsole:working htop
+tmux split-window -d -h -t myconsole:working htop
 ```
 
 ***
@@ -202,10 +202,10 @@ tmux split-window -d -h -t opconsole:working htop
 - [ ] Kill the pane when you don't need the [`htop`] command any longer.  Use `prefix q` to determine the pane index.  It should be **89**.
 
 ```bash
-tmux kill-pane -t opconsole:working.89
+tmux kill-pane -t myconsole:working.89
 ```
 
-> Important Note: When scripting there is no easy way to know what the pane index will be.  You have to think it through and know what the pane index for a given pane will be.  In scenarios where a window has multiple panes, this can become confusing and will requires some careful planning to avoid splitting, closing or running the wrong command in the incorrect pane.  You can get a list of currently active panes using `tmux list-panes -t target`.  For example: `tmux list-panes -t opconsole:working`.  If you are using the tmux window, `prefix q` temporarily displays the pane index(es) on screen.
+> Important Note: When scripting there is no easy way to know what the pane index will be.  You have to think it through and know what the pane index for a given pane will be.  In scenarios where a window has multiple panes, this can become confusing and will requires some careful planning to avoid splitting, closing or running the wrong command in the incorrect pane.  You can get a list of currently active panes using `tmux list-panes -t target`.  For example: `tmux list-panes -t myconsole:working`.  If you are using the tmux window, `prefix q` temporarily displays the pane index(es) on screen.
 
 ***
 
@@ -222,7 +222,7 @@ You are no at a regular CLI prompt.
 - [ ] Create variables to hold your session and window name.
 
 ```
-export SESSION_NAME="opconsole"
+export SESSION_NAME="myconsole"
 export WIN1="working"
 ```
 
@@ -444,7 +444,7 @@ Once you are successful in the creation of the layout in Challenge #1, continue 
 
 - [ ] Starting from scratch, write out the command-steps to create the layout below.  Write the commands in a text/code editor so you can work with the order before running them in a terminal.  Use the same session as you did in Challenge #1 (i.e. you are adding an additional window to an existing session.
 
-The Session should continue to be "opconsole".
+The Session should continue to be "myconsole".
 Window #2 should be named "monitor".
 
 ### Challenge #2: Goal
@@ -577,10 +577,10 @@ if tmux has-session -t $SESSION 2>/dev/null; then tmux kill-session -t $SESSION;
 
 ***
 
-### Challenge #1: Creating the **working** window and its panes in the **opconsole** session.
+### Challenge #1: Creating the **working** window and its panes in the **myconsole** session.
 
 ```bash
-SESSION="opconsole"
+SESSION="myconsole"
 WIN1="working"
 
 tmux new -d -s $SESSION -n $WIN1  -x $MAXCOLS -y $MAXLINES
