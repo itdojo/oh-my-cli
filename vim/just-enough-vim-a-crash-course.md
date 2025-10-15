@@ -174,7 +174,7 @@ Arrow keys (⬅️ ⬆️ ⬇️ ➡️) are a perfectly valid way of moving aro
 
 | vim command | What it does | Arrow Key Equivalent | Note 
 |:--:|:--|:--:|:--|
-| `h` | Moves LEFT | ⬅️ | Only works in **Normal **Mode**
+| `h` | Moves LEFT | ⬅️ | Only works in **Normal Mode**
 | `j` | Moves UP | ⬆️ | Only works in **Normal Mode**
 | `k` | Moves DOWN | ⬇️ | Only works in **Normal Mode**
 | `l` | Moves RIGHT | ➡️ | Only works in **Normal Mode**
