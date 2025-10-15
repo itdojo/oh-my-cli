@@ -138,7 +138,7 @@ In vim:
 | | `dd` | **Normal Mode** - Cut (delete) current line (into unnamed register).
 | | `d{motion}` | `d$` cut to end of line, `d^` cut to beginning of line.
 | | `"+d` | Cut text to ***system clipboard***.
-| Paste | `p` | Paste [unnamed] register ***after*** cursor
+| Put (Paste) | `p` | Paste [unnamed] register ***after*** cursor
 | | `P` | Paste before cursor
 | | `"+p` | Paste ***from*** system clipboard
 
