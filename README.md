@@ -38,4 +38,4 @@ A hands-on, [step-by-step guide](vim/just-enough-vim-a-crash-course.md) for gett
 
 ### tmux Guide
 
-A hands-on, [step-by-step guide](tmux/tmux-lab.md) to get you very comfortable with using tmux to enhance your workflows.  By the end of this lab you will appreciate the power and awesomeness of tmux and how it can help speed up your workflow.
+A hands-on, [step-by-step guide](tmux/00-tmux-lab.md) to get you very comfortable with using tmux to enhance your workflows.  By the end of this lab you will appreciate the power and awesomeness of tmux and how it can help speed up your workflow.
