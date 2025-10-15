@@ -214,7 +214,7 @@ Users in **Insert Mode** often press or hold arrow keys for long movements, whic
 
 ### Working with Insert Mode Commands
 
-**Normal Mode** commands are good for navigating around the document.  When you are ready to type additional text in your docuemnt, enter **Insert Mode**.
+**Normal Mode** commands are good for navigating around the document.  When you are ready to type additional text in your *file* (**buffer**, to be technical), enter **Insert Mode**.
 
 Many vim users only use `i` to enter **Insert Mode** for all use cases.  For instance, a user may be in the middle of a line, press `i` to enter **Insert Mode**, and then use arrow keys to move to the end of the line to begin typing new text.  This is inefficient.
 
