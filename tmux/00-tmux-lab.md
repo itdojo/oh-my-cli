@@ -1090,6 +1090,8 @@ There are at least three (3) ways to close a **window**.
 
 # Customizing tmux
 
+[Top](#table-of-contents)
+
 - [ ] Create a tmux folder in your `.config` directory.  In the `tmux` folder, create a `tmux.conf` file.
 
 ```bash
@@ -1161,11 +1163,15 @@ tmux
 
 ### tmux Window Numbering
 
+[Top](#table-of-contents)
+
 By default, tmux indexes (numbers) its **windows** starting at zero (0).  Because you can use `prefix <window #>` to cycle between windows (`prefix 0`, `prefix 1`, etc.), this creates an unnatural keyboard flow (because 0 is on the far right in the number row on the keyboard).  To fix this, you set `set -g base-index 1` in `~/.config/tmux/tmux.conf` to start window numbering at one (1).  Notice that your default window numbered one (1) in your new tmux session bar (green bar at bottom of screen).
 
 ***
 
 ### Changing the tmux Prefix
+
+[Top](#table-of-contents)
 
 - [ ] With the `set -g prefix ^A` setting in `tmux.conf`, your prefix key is now `C-a` (CTRL+a) rather than `C-b`.   This is personal preference.  Many people choose to switch to `C-a` or `C-s`; it's up to you.  If you don't like `prefix a`, set the `set -g prefix ^<value>` in `~/.config/tmux/tmux.conf` to whatever you want your prefix key to be.  If you prefer the default `C-b`, remove the `set -g prefic ^A` line from `tmux.conf` and refresh the config.
 
@@ -1174,6 +1180,8 @@ By default, tmux indexes (numbers) its **windows** starting at zero (0).  Becaus
 ***
 
 ### Config File Reload Options
+
+[Top](#table-of-contents)
 
 You do not have to exit tmux to update your config file.  You can update the config file using your tmux command line or from within the tmux session (using the CLI).  Try one of those options now.
 
@@ -1226,6 +1234,8 @@ prefix r
 
 ### Highlighting the Active Pane
 
+[Top](#table-of-contents)
+
 - [ ] Split the tmux window horizontally, then vertically.  You should see the active pane is a different color than the inactive pane(s).  Switch from pane to pane and see that the active pane is always a different color.
 
 > Note: These color difference may not show up very well if doing from the terminal windows of a virtual machine.  When doing them from an interface that supports more colors (iTerm, Alacritty, Terminator, etc.) you will see the difference.
@@ -1253,6 +1263,8 @@ prefix ⬅️, prefix ⬆️, prefix ⬇️, prefix ➡️     # Move between pa
 
 ### Further Highlighting the Active Pane
 
+[Top](#table-of-contents)
+
 - [ ] Edit `tmux.conf` and the following to the **CUSTOM SETTINGS** section.
 
 ```bash
@@ -1278,6 +1290,8 @@ prefix r
 
 ### Changing Key Bindings
 
+[Top](#table-of-contents)
+
 - [ ] Some people prefer to re-map their **window** split keys to something more intuitive than the default `prefix "` and `prefix %`.  Many prefer to use `prefix -` and `prefix \` (because `\` is the same key as `|`) to split horizontally and vertically, respectively.  Try that by adding the following to `tmux.conf`.  Add the following to the **KEY BINDINGS** section of `tmux.conf`:
 
 > Remember to update your `tmux.conf` file (`prefix r`) after making the changes.
@@ -1301,6 +1315,8 @@ bind-key '\' split-window -h      # '\' vertical window split
 
 ### Enabling Mouse Control
 
+[Top](#table-of-contents)
+
 > Note: This will not work if being done in the CLI window of a virtual machine (no mouse support).  It also will not work if your systemd target is multi-user.target (again, no mouse support).
 
 - [ ] The `set -g mouse on` setting you added to `tmux.conf` enables the ability to use your mouse to do the following:
@@ -1314,6 +1330,8 @@ Try it now.  In a terminal window with mouse support, create two or more windows
 ***
 
 ### Tweaking Pane Size
+
+[Top](#table-of-contents)
 
 Earlier in this lab you used `prefix <space>` to cycle through different pre-set **pane** layouts.  The pre-defined layouts are different depending on how many panes you have open in a **window**.
 
@@ -1362,6 +1380,8 @@ prefix L        # move pane right (repeat L to move more)
 
 ### Scrolling Through History
 
+[Top](#table-of-contents)
+
 - [ ] The `set -g history-limit 1000000` command enabled the ability for your to scroll back through your command history the way you can with a regular CLI.  Try that now.  Issue a command with a lot of output (`history`, `sudo dmesg`, `sudo cat /var/log/syslog`, etc.`) and scroll back through the command output.
 
 The ability to scroll back is per-pane.
@@ -1369,6 +1389,8 @@ The ability to scroll back is per-pane.
 ***
 
 ### Working in tmux Windows and Panes
+
+[Top](#table-of-contents)
 
 > `nano` users: If you are a `nano` user, stick with me.  It is worth it.
 
@@ -1407,6 +1429,8 @@ ls .alh ~
 
 ### Copying Output in tmux
 
+[Top](#table-of-contents)
+
 - [ ] To select text and copy (yank) it to the clipboard, do the following:
 
 - Select the left pane where you last ran `ls`.
@@ -1428,6 +1452,8 @@ Here is a visual representation of the steps to take to copy text from the CLI t
 
 ### Searching Command History  
 
+[Top](#table-of-contents)
+
 The `setw -g mode-keys vi` option also enables the ability to search your command history output.  Here is how:
 
 - [ ] Return to the tmux window pane where you ran the list of commands. Press `prefix [` to enter copy mode.
@@ -1446,9 +1472,13 @@ The `setw -g mode-keys vi` option also enables the ability to search your comman
 
 # Customizing tmux with Plugins and Themes
 
+[Top](#table-of-contents)
+
 If you have not already installed zsh and PowerLevel10k, it is recommended you do so now.  Refer to ***install-zsh-powerlevel10k-and-plugins.md*** for steps to do so.  After doing so, return to this lab and continue.
 
 ## Installing Required Fonts
+
+[Top](#table-of-contents)
 
 Tools like tmux, neovim and many of their themes (like Powerlevel10K) need, at most, two fonts for proper look and function.  They are:
 
@@ -1458,6 +1488,8 @@ Tools like tmux, neovim and many of their themes (like Powerlevel10K) need, at m
 The Linux script below has commented out sections that allow for downloading and installing all Nerd Fonts.  Be very careful if you do this; downloading all the fonts is well over 3GB and the uncompressed fonts are over 7GB.  Ask yourself if you really need all those fonts before downloading them.
 
 ### MacOS Nerd Font Installation
+
+[Top](#table-of-contents)
 
 If you ran the `install_zsh.sh` script from ITdojo's ***qol*** GitHub repo, Homebrew and Nerd Fonts are already installed and you can skip the font installation steps here.
 
@@ -1474,6 +1506,8 @@ brew install font-symbols-only-nerd-font font-meslo-lg-nerd-font font-meslo-for-
 ***
 
 ### Linux Nerd Font Installation
+
+[Top](#table-of-contents)
 
 If you ran the `install_zsh.sh` script from ITdojo's ***qol*** GitHub repo, the required Nerd Fonts are already installed and you can skip the font installation steps here.
 
@@ -1522,6 +1556,8 @@ sudo fc-cache -f
 
 ## Set $XDG_CONFIG_HOME Variable
 
+[Top](#table-of-contents)
+
 `$XDG_CONFIG_HOME` defines the base location of user-specific configuration files.  If it is not set, the default is usually `$HOME/.config`.  Setting this variable  allows you to specify an alternate location for your config files (based on your personal preferences).  However, unless you have a specific reason for doing so, leave `~/.config/` as your default config file location, many different programs use it.
 
 In this lab, you will set `${XDG_CONIFG_HOME}` but still point it to the default location of `$HOME/.config`.
@@ -1563,6 +1599,8 @@ source ~/.zshrc
 ***
 
 ## Installing tmux Plugin Manager
+
+[Top](#table-of-contents)
 
 tmux Plugin Manager (tpm) is a script that installs a wide array of tmux plugins.  It simplifies the addition of plugins to tmux.
 
@@ -1613,6 +1651,8 @@ prefix I
 
 ## For You, Moving Forward with tmux Plugins
 
+[Top](#table-of-contents)
+
 The tmux Plugin Manager simplifies the installation of a lot of different plugins.  The GitHub project page for tpm is here: https://github.com/tmux-plugins/tpm
 
 A list of many of the plugins that can be installed using tpm can be found here: https://github.com/tmux-plugins/list
@@ -1633,6 +1673,8 @@ prefix I
 ***
 
 ## Installing tmux Themes
+
+[Top](#table-of-contents)
 
 There are hundreds of themes available for tmux.  This lab demonstrates two:
 
