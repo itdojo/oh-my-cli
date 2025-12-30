@@ -1,3 +1,36 @@
+## tmux Lab
+
+## Table of Contents
+
+- [Customizing tmux](#customizing-tmux)
+    - [tmux Window Numbering](#tmux-window-numbering)
+    - [Changing the tmux Prefix](#changing-the-tmux-prefix)
+    - [Config File Reload Options](#config-file-reload-options)
+    - [Highlighting the Active Pane](#highlighting-the-active-pane)
+    - [Further Highlighting the Active Pane](#further-highlighting-the-active-pane)
+    - [Changing Key Bindings](#changing-key-bindings)
+    - [Enabling Mouse Control](#enabling-mouse-control)
+    - [Tweaking Pane Size](#tweaking-pane-size)
+    - [Scrolling Through History](#scrolling-through-history)
+    - [Working in tmux Windows and Panes](#working-in-tmux-windows-and-panes)
+    - [Copying Output in tmux](#copying-output-in-tmux)
+    - [Searching Command History](#searching-command-history)
+- [Customizing tmux with Plugins and Themes](#customizing-tmux-with-plugins-and-themes)
+  - [Installing Required Fonts](#installing-required-fonts)
+    - [MacOS Nerd Font Installation](#macos-nerd-font-installation)
+    - [Linux Nerd Font Installation](#linux-nerd-font-installation)
+  - [Set $XDG\_CONFIG\_HOME Variable](#set-xdg_config_home-variable)
+  - [Installing tmux Plugin Manager](#installing-tmux-plugin-manager)
+  - [For You, Moving Forward with tmux Plugins](#for-you-moving-forward-with-tmux-plugins)
+  - [Installing tmux Themes](#installing-tmux-themes)
+    - [Installing catppuccin for tmux](#installing-catppuccin-for-tmux)
+  - [Installing tmux Powerline Theme](#installing-tmux-powerline-theme)
+
+## Objectives
+
+- Learn core tmux concepts: sessions, windows, and panes.
+- Practice navigation, splitting, resizing, and session management.
+- Customize tmux via `tmux.conf`, plugins, and themes.
 
 - [ ] Check if tmux is installed.  Install if necessary.
 
@@ -19,7 +52,7 @@ if ! command -v tmux >/dev/null 2>&1; then brew install tmux; else echo "tmux is
 tmux
 ```
 
-<img src=../assets/tmux-basic.png>
+![tmux basic](../assets/tmux-basic.png)
 
 ***
 
@@ -31,10 +64,10 @@ Some simple navigation:
 
 ### Why You Care About Default Key Bindings
 
-| Truth # | Why
-|:--:|:--|
-| 1 | On your personal machine, you will likely customize these commands to your liking, making many of the default bindings irrelevant.
-| 2 | When connecting to remote machines you are unlikely to change the tmux commands from their defaults so knowing them is important.
+Truth # | Why
+:--: | :--
+1 | On your personal machine, you will likely customize these commands to your liking, making many of the default bindings irrelevant.
+2 | When connecting to remote machines you are unlikely to change the tmux commands from their defaults so knowing them is important.
 
 ***
 
@@ -45,10 +78,10 @@ Answers the question:
 
 - [ ] Split the window horizontally into two panes.
 
-```
+```text
 prefix "     # CTRL-b, then "
 ```
-<img src=../assets/tmux-horizontal-split.png>
+![tmux horizontal split](../assets/tmux-horizontal-split.png)
 
 ***
 
@@ -56,11 +89,11 @@ prefix "     # CTRL-b, then "
 
 - [ ] Split the pane vertically into two panes.
 
-```
+```text
 prefix %
 ```
 
-<img src=../assets/tmux-vertical-split.png>
+![tmux vertical split](../assets/tmux-vertical-split.png)
 
 ***
 
@@ -68,7 +101,7 @@ prefix %
 
 - [ ] Move between the panes using `prefix` and arrow keys. Try it.
 
-```
+```text
 prefix ⬅️
 prefix ➡️
 prefix ⬆️
@@ -81,17 +114,15 @@ prefix ⬇️
 
 - [ ] Using `prefix x` kill each of the bottom panes.  You will be prompted to confirm.
 
-```
+```text
 prefix x
 ```
 
-<img src=../assets/tmux-kill-pane-confirm.png>
-
-<br/>
+![tmux kill pane confirm](../assets/tmux-kill-pane-confirm.png)
 
 You once again have a single pane in your window.
 
-<img src=../assets/tmux-basic.png>
+![tmux basic](../assets/tmux-basic.png)
 
 ***
 
@@ -104,31 +135,29 @@ tmux has its own command line, which you access using `prefix :`
 
 > Note: This is just to demonstrate how the tmux command-line works: `prefix :`, then type a command.
 
-```
+```text
 prefix :
 
 # then
 set status off
 ```
 
-<img src=../assets/tmux-command-line.png>
+![tmux command line](../assets/tmux-command-line.png)
 
-<br/>
-
-<img src=../assets/tmux-set-status-off.png>
+![tmux status off](../assets/tmux-set-status-off.png)
 
 *** 
 
 - [ ] Turn the status bar back on using `prefix :`, then `set status on`.
 
-```
+```text
 prefix :
 
 # then
 set status on
 ```
 
-<img src=../assets/tmux-set-status-on.png>
+![tmux status on](../assets/tmux-set-status-on.png)
 
 ***
 
@@ -138,7 +167,7 @@ The tmux command-line will display menus to simplify entering commands.  Try the
 
 > Use the arrow keys to scroll through the menu options.
 
-```
+```text
 prefix :
 
 # then
@@ -147,11 +176,11 @@ new<tab>
 # Press ESC to close the command window without selecting anything.
 ```
 
-<img src=../assets/tmux-command-line-new.png>
+![tmux command line new](../assets/tmux-command-line-new.png)
 
 *** 
 
-```
+```text
 prefix :
 
 # then
@@ -160,37 +189,35 @@ kill<tab>
 # Press ESC to close the command window without selecting anything.
 ```
 
-<img src=../assets/tmux-command-line-kill.png>
+![tmux command line kill](../assets/tmux-command-line-kill.png)
 
 ***
 
 If you are not sure of the command you can type the first letter to get a list of commands that begin with that letter.
 
-```
+```text
 prefix :
 
 # then
 d<tab>
 ```
 
-<img src=../assets/tmux-command-line-d.png>
+![tmux command line d](../assets/tmux-command-line-d.png)
 
 ***
 
 - [ ] Use the tmux command-line to rename your current window to `first`.
 
-```
+```text
 prefix :
 
 # then
 rename-window first
 ```
 
-<img src=../assets/tmux-command-line-rename-window.png>
+![tmux rename window](../assets/tmux-command-line-rename-window.png)
 
-<br/>
-
-<img src=../assets/tmux-command-line-rename-window-first.png>
+![tmux rename window first](../assets/tmux-command-line-rename-window-first.png)
 
 ***
 
@@ -216,16 +243,16 @@ ping 1.1.1.1
 htop
 ```
 
-<img src=../assets/tmux-two-panes-ping-top.png>
+![two panes ping top](../assets/tmux-two-panes-ping-top.png)
 
 ***
 
 - [ ] Zoom in on the ***ping*** pane.  To zoom in on a pane:
-    * Navigate to the pane using `prefix` + ⬆️, ⬇️, ⬅️ or ➡️
-    * Zoom using `prefix z`.
-    * Zoom back out using `prefix z`.
+    - Navigate to the pane using `prefix` + ⬆️, ⬇️, ⬅️ or ➡️
+    - Zoom using `prefix z`.
+    - Zoom back out using `prefix z`.
 
-```
+```text
 prefix z    # zoom in on a pane
 
 prefix z    # zoom back out
@@ -233,16 +260,16 @@ prefix z    # zoom back out
 
 Zoomed in on ***ping*** pane:
 
-<img src=../assets/tmux-zoom-ping-pane.png>
+![zoomed ping pane](../assets/tmux-zoom-ping-pane.png)
 
 ***
 
 - [ ] Zoom in on the ***htop*** (command) pane.  To zoom in on a pane:
-    * Navigate to the pane using `prefix` + ⬆️, ⬇️, ⬅️ or ➡️
-    * Zoom using `prefix z`.
-    * Zoom back out using `prefix z`.
+    - Navigate to the pane using `prefix` + ⬆️, ⬇️, ⬅️ or ➡️
+    - Zoom using `prefix z`.
+    - Zoom back out using `prefix z`.
 
-```
+```text
 prefix z  # to zoom in on a pane
 
 prefix z  # to zoom back out
@@ -250,7 +277,7 @@ prefix z  # to zoom back out
 
 Zoomed in on ***htop*** pane:
 
-<img src=../assets/tmux-zoom-top-pane.png>
+![zoomed htop pane](../assets/tmux-zoom-top-pane.png)
 
 - [ ] Press `q` to stop `htop` and Press CTRL-c to stop ping.
 
@@ -264,7 +291,7 @@ The default session name is the number of the session the order in which it was 
 
 - [ ] Change the name of the current tmux session to **ssh-comms**.
 
-```
+```text
 prefix :
 
 # then
@@ -272,11 +299,9 @@ prefix :
 rename-session ssh-comms
 ```
 
-<img src=../assets/tmux-rename-session1.png>
+![rename session step 1](../assets/tmux-rename-session1.png)
 
-<br/>
-
-<img src=../assets/tmux-rename-session2.png>
+![rename session step 2](../assets/tmux-rename-session2.png)
 
 ***
 
@@ -298,7 +323,7 @@ tmux detach
 prefix d
 ```
 
-<img src=../assets/tmux-tmux-detach-session.png>
+![detach session](../assets/tmux-tmux-detach-session.png)
 
 ***
 
@@ -312,7 +337,7 @@ Answers the question: *What tmux sessions do I have running?*
 tmux ls
 ```
 
-<img src=../assets/tmux-tmux-ls.png>
+![tmux list sessions](../assets/tmux-tmux-ls.png)
 
 ***
 
@@ -328,11 +353,10 @@ tmux attach
 # or
 # tmux a
 ```
-<img src=../assets/tmux-tmux-attach.png>
+![attach session](../assets/tmux-tmux-attach.png)
 
-<br/>
 
-<img src=../assets/tmux-back-in-tmux-session.png>
+![back in tmux session](../assets/tmux-back-in-tmux-session.png)
 
 `tmux attach` connects you to your most recent tmux session.  If you have more than one tmux session, use `tmux attach -t <session_name>` to attach to the desired session.
 
@@ -348,11 +372,10 @@ tmux attach
 tmux new -s server
 ```
 
-<img src=../assets/tmux-new-named-session-creation.png>
+![new named session creation](../assets/tmux-new-named-session-creation.png)
 
-<br/>
 
-<img src=../assets/tmux-new-named-tmux-session.png>
+![new named tmux session](../assets/tmux-new-named-tmux-session.png)
 
 ***
 
@@ -362,13 +385,13 @@ tmux new -s server
 echo server session
 ```
 
-<img src=../assets/tmux-echo-server-session.png>
+![echo server session](../assets/tmux-echo-server-session.png)
 
 *** 
 
 - [ ] Detach from the **server** session.
 
-```
+```text
 prefix d
 ```
 
@@ -380,7 +403,7 @@ prefix d
 tmux ls
 ```
 
-<img src=../assets/tmux-two-tmux-sessions.png>
+![two tmux sessions](../assets/tmux-two-tmux-sessions.png)
 
 *** 
 
@@ -390,11 +413,10 @@ tmux ls
 tmux new -s local
 ```
 
-<img src=../assets/tmux-create-3rd-session.png>
+![create third session](../assets/tmux-create-3rd-session.png)
 
-<br/>
 
-<img src=../assets/tmux-new-local-session.png>
+![new local session](../assets/tmux-new-local-session.png)
 
 ***
 
@@ -404,7 +426,7 @@ tmux new -s local
 echo local session
 ```
 
-<img src=../assets/tmux-echo-local-session.png>
+![echo local session](../assets/tmux-echo-local-session.png)
 
 ***
 
@@ -422,11 +444,11 @@ Detach from a session (`tmux detach` or `prefix d`) then attach to the desired s
 
 - [ ] Now switch back to the **local** session.
 
-<img src=../assets/tmux-detaching-server-session.png>
+![detaching server session](../assets/tmux-detaching-server-session.png)
 
-<img src=../assets/tmux-switch-between-sessions.png>
+![switch between sessions](../assets/tmux-switch-between-sessions.png)
 
-<img src=../assets/tmux-attached-to-local-session.png>
+![attached to local session](../assets/tmux-attached-to-local-session.png)
 
 ***
 
@@ -452,7 +474,7 @@ Use `prefix )` to move to the 'right' a session.
 
 **tmux Session Manager**: Use `prefix s` to bring up the tmux Session Manager then use the arrow keys to select the session you want.  The bottom pane display a preview of what is running in the selected session.
 
-<img src=../assets/tmux-session-manager.png>
+![session manager](../assets/tmux-session-manager.png)
 
 ***
 
@@ -464,30 +486,30 @@ Use `prefix )` to move to the 'right' a session.
 
 - [ ] Divide the **server** session window into three (3) panes as shown below.
 
-<img src=../assets/tmux-server-3-panes.png>
+![server 3 panes](../assets/tmux-server-3-panes.png)
 
 ***
 
 - [ ] Task the **server** panes as follows:
-* Top right pane: `ping localhost`
-* Bottom pane: `htop`.
-* Top left pane:  free/nothing
 
-<img src=../assets/tmux-server-3-pane-tasks.png>
+- Top right pane: `ping localhost`
+- Bottom pane: `htop`.
+- Top left pane:  free/nothing
 
+![server 3 pane tasks](../assets/tmux-server-3-pane-tasks.png)
+![server 3 pane tasks](../assets/tmux-server-3-pane-tasks.png)
 ***
 
 - [ ] Leave the **server** tasks running.  Use tmux Session Manager (`prefix s`) to switch the **local** session.
 
 - [ ] Divide the **local** session window into two vertical panes.  Task the panes as follows:
-* Top pane: `watch ss -tn`
-* Bottom pane: `sudo tail -f /var/log/syslog`
 
-<img src=../assets/tmux-local-session-2-panes.png>
+- Top pane: `watch ss -tn`
+- Bottom pane: `sudo tail -f /var/log/syslog`
 
-<br/>
+![local session 2 panes](../assets/tmux-local-session-2-panes.png)
 
-<img src=../assets/tmux-local-session-2-panes-with-tasks.png>
+![local session 2 panes with tasks](../assets/tmux-local-session-2-panes-with-tasks.png)
 
 ***
 
@@ -495,7 +517,7 @@ Use `prefix )` to move to the 'right' a session.
 
 Your **local** session should look like this:
 
-<img src=../assets/tmux-local-session-3-panes.png>
+![local session 3 panes](../assets/tmux-local-session-3-panes.png)
 
 - [ ] Leave the tasks in the **local** session running.
 
@@ -503,13 +525,13 @@ Your **local** session should look like this:
 
 - [ ] Bring up the tmux Session Manager (`prefix s`).  Select the **server** session and press the right arrow key ➡️.  A sub-option will appear labeled `+ 0: bash*` (or possible `+ 0: htop`).  The `0` means this is ***window*** zero (0) in the **server** session. The word (`bash`, `htop`, etc.) is the name of the ***pane*** currently selected in that ***window***.  The preview window at the bottom will show you the panes (pane 0, 1, 2) in the **server** session.
 
-<img src=../assets/tmux-session-manager-layout.png>
+![session manager layout](../assets/tmux-session-manager-layout.png)
 
 ***
 
 - [ ] Arrow down ⬇️ to the **server** window zero (0) and press the right arrow ➡️.  This will expand each of the available panes in this window.  At the bottom you will see a preview of the different panes currently open in the **server** session.
 
-<img src=../assets/tmux-local-session-manager-3-panes.png>
+![local session manager 3 panes](../assets/tmux-local-session-manager-3-panes.png)
 
 If you select the ***window*** and press enter you will return to the window with all the panes. (your original view of the session).
 
@@ -520,7 +542,7 @@ When you select one of the panes, the session window will open with that pane se
 
 You should see this:
 
-<img src=../assets/tmux-server-session-window-selected.png>
+![server session window selected](../assets/tmux-server-session-window-selected.png)
 
 ***
 
@@ -528,18 +550,18 @@ You should see this:
 
 You should see a preview of the `htop` program running in the pane; similar to the image below:
 
-<img src=../assets/tmux-session-manager-top-pane-selected.png>
+![session manager top pane selected](../assets/tmux-session-manager-top-pane-selected.png)
 
 ***
 
 - [ ] Re-open tmux Session Manager and select the open window in the **local** session.  With the ***window*** selected you should see each of the three panes in the bottom preview.  Notice that each has a number in the center of the preview (0, 1, 2).  These are to help you ID the desired pane.
 
-<img src=../assets/tmux-local-session-pane-numbers.png>
+![local session pane numbers](../assets/tmux-local-session-pane-numbers.png)
 
 > Note: tmux Session Manager uses a relative indexing (numbering) system for its **sessions**, **windows** and **panes**.  These indexes are in parenthesis on the left margin of the Session Manager window.  
 In the screen shot below the index numbers are from `(0)` thru `(6)`.  You can press one of these number to go to that **session**, **window** or **pane**.  Note that these number are relative; they will change as more sessions are expanded in Session Manager.
 
-<img src=../assets/tmux-dynamic-index-values.png>
+![dynamic index values](../assets/tmux-dynamic-index-values.png)
 
 - [ ] Try that now.  Select the index number that will take you to the **bash** pane in window 0 in the **local** session.  In the image above, that number is ***5***.  Your index number may be different.  The end result is that you are taken to the **session** **window** and the desired **pane** is selected for your use.
 
@@ -555,10 +577,10 @@ You can also use `prefix q` to identify pane numbers and navigate between them.
 
 > Note: By default, numbers appear for one (1) second.  This can be annoying.  You can set the value using `tmux set-option display-panes-time <milliseconds>`.  For example, `tmux set-option display-panes-time 4000`.  Type it in the terminal window in any pane for the session.  Note that setting it this way is only for the session you are using.  The other session continue to have a one (1) second timer.  Later in the lab you will make this setting change a default value.
 
-<img src=../assets/tmux-display-pane-numbers.png>
+![display pane numbers](../assets/tmux-display-pane-numbers.png)
 
 - [ ] Try it:
-```
+```text
 prefix q, then 0
 
 prefix q, then 1
@@ -576,19 +598,19 @@ Sometimes your panes are not aligned in an optimal way.  This can crowd the outp
 
 - [ ] In the remaining pane, stop any command that is running, returning you to a command prompt.
 
-<img src=../assets/tmux-server-session-single-pane.png>
+![server session single pane](../assets/tmux-server-session-single-pane.png)
 
 ***
 
 - [ ] Divide your **server** session window into two horizontal panes.
 
-```
+```text
 prefix "
 ```
 
 - [ ] If not already there, move to the bottom pane (`prefix ⬇️`) and divide that pane into two horizontal panes (`prefix "`).
 
-```
+```text
 prefix ⬇️
 
 # then
@@ -600,7 +622,7 @@ prefix "
 
 - [ ] Move to the top pane and divide it into two vertical panes.
 
-```
+```text
 prefix %
 ```
 
@@ -608,34 +630,38 @@ prefix %
 
 - [ ] Your window should now be divided into panes that look like the image below:
 
-<img src=../assets/tmux-server-session-4-panes.png>
+
+![server session 4 panes](../assets/tmux-server-session-4-panes.png)
 
 ***
 
 - [ ] Move to pane zero (0) per the pane labels in the image below.  To do so, use `prefix + <arrow>` or `prefix q`, then `0`.
 
-<img src=../assets/tmux-show-4-pane-numbers.png>
+
+![show 4 pane numbers](../assets/tmux-show-4-pane-numbers.png)
 
 *** 
 
 - [ ] In pane `0`, run `htop`.  Move to pane `1` and run `watch ss -tn`.
 
-<img src=../assets/tmux-top-pane0-ss-pane1.png>
+
+![top pane0 ss pane1](../assets/tmux-top-pane0-ss-pane1.png)
 
 - [ ] Move to pane 0 and swap pane 0 with pane 1.  From pane 0, `prefix }` <--- curly brace, not a parenthesis.
 
-* `prefix }` - Moves a pane to the right
-* `prefix {` - Moves a pane to the left
+- `prefix }` - Moves a pane to the right
+- `prefix {` - Moves a pane to the left
 
 After the pane swap:
 
-<img src=../assets/tmux-top-panes-after-swap.png>
+
+![top panes after swap](../assets/tmux-top-panes-after-swap.png)
 
 ***
 
 - [ ] Move your focus to pane 3.
 
-```
+```text
 prefix q, then 3
 
 # or
@@ -656,19 +682,19 @@ tmux swap-pane -s 1 -t 3
 
 Before swap:
 
-<img src=../assets/tmux-before-pane-swap.png>
 
-<br/>
+![before pane swap](../assets/tmux-before-pane-swap.png)
 
 After swap:
 
-<img src=../assets/tmux-after-pane-swap.png>
+
+![after pane swap](../assets/tmux-after-pane-swap.png)
 
 ***
 
 - [ ] Using `prefix {`, attempt to swap pane 0 with pane 2.  To do this:
 
-```
+```text
 prefix q, then 0
 
 prefix {
@@ -678,11 +704,13 @@ prefix {
 
 Before swap:
 
-<img src=../assets/tmux-after-pane-swap.png>
+
+![after pane swap](../assets/tmux-after-pane-swap.png)
 
 After swap:
 
-<img src=../assets/tmux-pane-swap-gone-wrong.png>
+
+![pane swap gone wrong](../assets/tmux-pane-swap-gone-wrong.png)
 
 ***
 
@@ -698,7 +726,8 @@ After swap:
 
 - [ ] Pick one of those options and do it.  The end result should look like the screen shot below.
 
-<img src=../assets/tmux-panes-in-correct-layout.png>
+
+![panes in correct layout](../assets/tmux-panes-in-correct-layout.png)
 
 ***
 
@@ -710,7 +739,7 @@ There are a variety of ways to kill tmux sessions.  In the steps below you will 
 
 - [ ] From the **server** session, use either `exit` or `prefix x` from each pane to kill them all one-by-one.  When the last one is killed, the session will be killed and you will be returned to the CLI.  Once you are back to the CLI, use `tmux ls` to confirm your **server** tmux session is gone.
 
-<img src=../assets/tmux-server-session-killed.png>
+![server session killed](../assets/tmux-server-session-killed.png)
 
 ***
 
@@ -726,7 +755,7 @@ tmux attach -t ssh-comms
 
 - [ ] Back at the CLI, run `tmux ls` to confirm the **ssh-comms** session is gone.  Only the ***local*** session should remain.
 
-```
+```text
 prefix :
 
 # then
@@ -746,7 +775,7 @@ tmux ls
 
 - [ ] From the CLI, kill the **local** session using `tmux kill-session -t local`.
 
-<img src=../assets/tmux-kill-session-local.png>
+![kill session local](../assets/tmux-kill-session-local.png)
 
 - [ ] Confirm there are no sessions left running.
 
@@ -760,7 +789,7 @@ tmux ls
 
 ***
 
-## Sessions, Windows & Panes
+## Sessions, Windows and Panes
 
 When you run `tmux` a new **session** is created.  A session is the outermost portion of tmux running on your computer; think of it as a 'container' for a group of **windows** and **panes**.
 
@@ -778,9 +807,9 @@ How you use **sessions**, **windows** and **panes** is mostly a matter of person
 
 The image below is a single tmux **session**, showing one **window** that has three *panes**.
 
-```
 ## tmux Hierarchical Layout
 
+```text
 *** tmux session *************************************************************************
 *  --- tmux window --------------------------------------------------------------------  *
 *  | +++ tmux pane 0 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ |  *
@@ -812,7 +841,7 @@ The image below is a single tmux **session**, showing one **window** that has th
 
 ## tmux Visual Hierarchical
 
-<img src=../assets/tmux-session-window-pane.png width=75%>
+![session window pane](../assets/tmux-session-window-pane.png)
 
 - A tmux **session** is a collection of one or more **windows**.
   - You can have multiple **sessions**.
@@ -887,9 +916,9 @@ Window #1:
     Pane #3 (vertical pane #3): websocket connection to remote Kismet server #3
     Pane #4 (horizontal pane): CLI for running arbitrary commands.
 
-* You could vary this layout by moving the CLI pane to its own separate window.
-* You could also add an additional **windows** divided into three (3) panes, each an SSH connection to the three remote Kismet servers.
-* Alternately, you could have a window for each SSH connection.  It's up to you.
+- You could vary this layout by moving the CLI pane to its own separate window.
+- You could also add an additional **windows** divided into three (3) panes, each an SSH connection to the three remote Kismet servers.
+- Alternately, you could have a window for each SSH connection.  It's up to you.
 
 ***
 
@@ -911,7 +940,7 @@ In a majority of cases, however, running tmux on your local client is the least 
 tmux new -s RPis
 ```
 
-<img src=../assets/tmux-new-rpi-session.png>
+![new rpi session](../assets/tmux-new-rpi-session.png)
 
 ***
 
@@ -919,11 +948,11 @@ To reiterate, what you are looking at right now is a **session** with a single *
 
 - [ ] Divide the window into two (2) vertical panes (`prefix %`).
 
-```
+```text
 prefix %
 ```
 
-<img src=../assets/tmux-rpi-window1-2panes.png>
+![rpi window1 2panes](../assets/tmux-rpi-window1-2panes.png)
 
 ***
 
@@ -934,7 +963,7 @@ prefix %
 
 Pick one and rename the window.
 
-<img src=../assets/tmux-rpi-session-renamed-window.png>
+![rpi session renamed window](../assets/tmux-rpi-session-renamed-window.png)
 
 ***
 
@@ -949,7 +978,7 @@ Pick one and rename the window.
 1. `prefix c`
 2. `prefix :` to open a tmux command line, then `new-window`
 
-<img src=../assets/tmux-rpi-session-2windows.png>
+![rpi session 2 windows](../assets/tmux-rpi-session-2windows.png)
 
 ***
 
@@ -957,7 +986,7 @@ Pick one and rename the window.
 
 > Note: The asterisk (**\***) next to the **window** name indicates the current/active **window**.
 
-<img src=../assets/tmux-rpi-session-gateworks-window.png>
+![rpi gateworks window](../assets/tmux-rpi-session-gateworks-window.png)
 
 ***
 
@@ -971,17 +1000,17 @@ echo gateworks window
 
 - [ ] Split the **gateworks*** window into two horizontal panes.
 
-```
+```text
 prefix "
 ```
 
-<img src=../assets/tmux-rpi-gateworks-window-split.png>
+![rpi gateworks window split](../assets/tmux-rpi-gateworks-window-split.png)
 
 ***
 
 - [ ] Create a third **window** and name it ***digitalocean***.  Split the window into four (4) panes, forming a grid.
 
-```
+```text
 prefix c    # creates window
 
 prefix , then enter new name
@@ -995,7 +1024,7 @@ prefix ⬇️    # moves down to next pane
 prefix %    # splits vertically
 ```
 
-<img src=../assets/tmux-rpi-session-digitalocean-4-panes.png>
+![rpi digitalocean 4 panes](../assets/tmux-rpi-session-digitalocean-4-panes.png)
 
 ***
 
@@ -1016,7 +1045,7 @@ There are at least four (4) ways to move between windows.
 3.  `prefix s`  opens the tmux Session Manager. 
 4.  `prefix w`  opens the tmux Window Manager.  This is the Session Manager with the windows pre-expanded.
 
-<img src=../assets/tmux-rpi-session-prefix-manager.png>
+![rpi prefix manager](../assets/tmux-rpi-session-prefix-manager.png)
 
 - [ ] Try each option above, moving from window to window.  You should find one you prefer.
 
@@ -1030,7 +1059,7 @@ tmux can apply pre-defined **pane** layouts to simplify **window** appearance.
 
 - [ ] Create a new **window** and name it ***test***.  Divde the window into two (2) panes, vertical or horizontal.
 
-```
+```text
 prefix c    # creates a new window
 
 prefix "    # splits horizontally
@@ -1125,7 +1154,7 @@ tmux ls
 tmux
 ```
 
-<img src=../assets/tmux-custom-bg-color.png>
+![custom background color](../assets/tmux-custom-bg-color.png)
 
 ***
 
@@ -1149,7 +1178,7 @@ You do not have to exit tmux to update your config file.  You can update the con
 
 Example using the tmux command-line:
 
-```
+```text
 prefix :
 
 # then
@@ -1175,7 +1204,7 @@ tmux source /path/to/tmux.conf
 bind r source-file ~/.config/tmux/tmux.conf \; display "tmux Config Reloaded!"
 ```
 
-<img src=../assets/tmux-bind-r-reload-config.png>
+![bind r reload config](../assets/tmux-bind-r-reload-config.png)
 
 ***
 
@@ -1190,7 +1219,7 @@ bind r source-file ~/.config/tmux/tmux.conf \; display "tmux Config Reloaded!"
 prefix r
 ```
 
-<img src=../assets/tmux-tmux-config-reloaded.png>
+![tmux config reloaded](../assets/tmux-tmux-config-reloaded.png)
 
 ***
 
@@ -1209,7 +1238,7 @@ set -g window-active-style 'bg=#010101,fg=#ffffff'  # Active pane: black
 
 > Note: I set the color difference to be fairly subtle, just enough to be able to tell the difference between panes.  Feel free to tweak the RGB values to your liking.
 
-```
+```text
 prefix "        # Split horizontally
 
 prefix %        # Split vertically
@@ -1217,7 +1246,7 @@ prefix %        # Split vertically
 prefix ⬅️, prefix ⬆️, prefix ⬇️, prefix ➡️     # Move between panes
 ```
 
-<img src=../assets/tmux-custom-inactive-bg-color.png>
+![custom inactive background color](../assets/tmux-custom-inactive-bg-color.png)
 
 ***
 
@@ -1230,11 +1259,11 @@ set -g pane-active-border-style 'fg=yellow'
 set -g pane-border-style 'fg=brightblack'
 ```
 
-<img src=../assets/tmux-conf-pane-border-config.png>
+![pane border config](../assets/tmux-conf-pane-border-config.png)
 
 Reload the `tmux.conf` file.
 
-```
+```text
 prefix r
 ```
 
@@ -1242,7 +1271,7 @@ prefix r
 
 - [ ] Move from pane-to-pane or create new panes and you should now see additional highlighting around the border of the active pane.  This further helps to identify which pane is active.
 
-<img src=../assets/tmux-conf-pane-border-color.png>
+![pane border color](../assets/tmux-conf-pane-border-color.png)
 
 ***
 
@@ -1257,7 +1286,7 @@ bind-key '-' split-window -v      # '-' horizontal window split
 bind-key '\' split-window -h      # '\' vertical window split
 ```
 
-<img src=../assets/tmux-conf.split-window-bindings.png
+![conf split window bindings](../assets/tmux-conf.split-window-bindings.png)
 
 ***
 
@@ -1275,9 +1304,9 @@ bind-key '\' split-window -h      # '\' vertical window split
 
 - [ ] The `set -g mouse on` setting you added to `tmux.conf` enables the ability to use your mouse to do the following:
 
-* Resize frames
-* Select frames
-* Change between windows
+- Resize frames
+- Select frames
+- Change between windows
 
 Try it now.  In a terminal window with mouse support, create two or more windows (`prefix c`) and divide them into some panes (`prefix "`, `prefix %` or your newly bound `prefix \` and `prefix -`) then use your mouse to move between the windows (click on the window name in the status bar) and frames (click from frame to frame in a window).  Also try resizing the frames by clicking and dragging the frame borders.
 
@@ -1304,11 +1333,11 @@ bind -r K resize-pane -U                # Resize pane up
 bind -r L resize-pane -R                # Resize pane right
 ```
 
-<img src=../assets/tmux-conf-resize-pane-keys.png>
+![resize pane keys](../assets/tmux-conf-resize-pane-keys.png)
 
 Reload `tmux.conf`.
 
-```
+```text
 prefix r
 ```
 
@@ -1318,7 +1347,7 @@ prefix r
 
 > Note: Use capital `H`, `J`, `K` and `L`.
 
-```
+```text
 prefix H        # moves pane to the left (repeat H to move more)
 
 prefix J        # moves pane to down (repeat J to move more)
@@ -1360,16 +1389,16 @@ diskutil list
 sudo fdisk -l
 ls .alh ~
 ```
-<img src=../assets/tmux-ls-ping-localhost.png>
+![ls ping localhost](../assets/tmux-ls-ping-localhost.png)
 
 - [ ] Move to the ping pane, stop the ping and return to the `ls` pane.
 - [ ] Using the mouse, try to highlight the output of `ls` and copy it to your clipboard.  You should see that all text across panes is highlighted.
 
-<img src=../assets/tmux-select-across-panes.png>
+![select across panes](../assets/tmux-select-across-panes.png)
 
 - [ ] Open an external text editor and paste the clipboard.  You should see the paste contains data from both panes, which is not what you wanted.
 
-<img src=../assets/tmux-mouse-select-paste.png>
+![mouse select paste](../assets/tmux-mouse-select-paste.png)
 
 > Note: There are way to deal with this buy they often become terminal program specific (iTerm, Alacrity, etc.).
 
@@ -1379,10 +1408,10 @@ ls .alh ~
 
 - [ ] To select text and copy (yank) it to the clipboard, do the following:
 
-* Select the left pane where you last ran `ls`.
-* Press `prefix [` to enter copy mode.  This enables the vim keys motions defined in the `setw -g  mode-keys vi` option.  When in copy mode a yellow counter will appear in the pane.
+- Select the left pane where you last ran `ls`.
+- Press `prefix [` to enter copy mode.  This enables the vim keys motions defined in the `setw -g  mode-keys vi` option.  When in copy mode a yellow counter will appear in the pane.
 
-<img src=../assets/tmux-entered-copy-mode.png>
+![entered copy mode](../assets/tmux-entered-copy-mode.png)
 
 - [ ] Using vim navigation keys (`h`, `j`, `k`, `l`) move up to the beginning of your `ls` output.
 - [ ] Press the spacebar to begin copying.  Use arrow keys or vim navigation keys to select the `ls` output.
@@ -1392,7 +1421,7 @@ ls .alh ~
 
 Here is a visual representation of the steps to take to copy text from the CLI to a buffer then paste the text in an editor.
 
-<img src=../assets/tmux-cli-buffer-copy.png width=45%>
+![cli buffer copy](../assets/tmux-cli-buffer-copy.png)
 
 ***
 
@@ -1408,9 +1437,9 @@ The `setw -g mode-keys vi` option also enables the ability to search your comman
 - [ ] Press `Enter` to exit copy mode.
 - [ ] At the terminal prompt, type `ping -c 4 ` then press `prefix ]` to paste the copied string.  If all went well you should now have: `ping -c 4 alt4.aspmx.l.google.com.`.  Press enter to ping the server.
 
-<img src=../assets/tmux-ping-google-mx.png>
-<br/>
-<img src=../assets/tmux-ping-google-mx2.png>
+![ping google mx](../assets/tmux-ping-google-mx.png)
+
+![ping google mx2](../assets/tmux-ping-google-mx2.png)
 
 ***
 
@@ -1422,8 +1451,8 @@ If you have not already installed zsh and PowerLevel10k, it is recommended you d
 
 Tools like tmux, neovim and many of their themes (like Powerlevel10K) need, at most, two fonts for proper look and function.  They are:
 
-* MesloLG Nerd Font
-* Symbols Nerd Font
+- MesloLG Nerd Font
+- Symbols Nerd Font
 
 The Linux script below has commented out sections that allow for downloading and installing all Nerd Fonts.  Be very careful if you do this; downloading all the fonts is well over 3GB and the uncompressed fonts are over 7GB.  Ask yourself if you really need all those fonts before downloading them.
 
@@ -1450,9 +1479,9 @@ If you ran the `install_zsh.sh` script from ITdojo's ***qol*** GitHub repo, the 
 > Note: These steps will install the required fonts for the logged in user only.  If you want to install the fonts globally (available to all users), unzip the files to `/usr/share/fonts/truetype/` instead of `~/.fonts/` (uncomment the appropriate lines in the script below).
 
 The commands below do the following:
-* Creates a `/.fonts` folder in your home directory
-* Downloads and unzips the required font files into the `~/.fonts` folder
-* Runs `fonts-cache` to update the list of installed fonts.
+- Creates a `/.fonts` folder in your home directory
+- Downloads and unzips the required font files into the `~/.fonts` folder
+- Runs `fonts-cache` to update the list of installed fonts.
 
 - [ ] To install Nerd Fonts on Debian Linux, run the following:
 
@@ -1565,19 +1594,19 @@ set -g @plugin 'tmux-plugins/tmux-sensible'
 run '~/.config/tmux/plugins/tpm/tpm'
 ```
 
-<img src=../assets/tmux-config-file-tpm.png>
+![config file tpm](../assets/tmux-config-file-tpm.png)
 
 ***
 
 - [ ] Reload the tmux environment using `prefix I`.
 
-```
+```text
 prefix r
 
 prefix I
 ```
 
-<img src=../assets/tmux-reload-tmux-config.png>
+![reload tmux config](../assets/tmux-reload-tmux-config.png)
 
 ***
 
@@ -1598,7 +1627,7 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 prefix I
 ```
 
-<img src=../assets/tmux-tpm-install-tmux-yank.png>
+![tpm install tmux yank](../assets/tmux-tpm-install-tmux-yank.png)
 
 ***
 
@@ -1606,8 +1635,8 @@ prefix I
 
 There are hundreds of themes available for tmux.  This lab demonstrates two:
 
-* catppuccin
-* powerline
+- catppuccin
+- powerline
 
 - [ ] Make a copy/backup of your current `tmux.conf` file.
 
@@ -1636,13 +1665,13 @@ git clone -b v2.1.3 https://github.com/catppuccin/tmux.git ~/.config/tmux/plugin
 run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
 ```
 
-<img src=../assets/tmux-catppuccin-tmux-config.png>
+![catppuccin tmux config](../assets/tmux-catppuccin-tmux-config.png)
 
 ***
 
 - [ ] Run tmux or reload the `tmux.conf` file (`prefix r`, or `tmux source-file ~/.config/tmux/tmux.conf`).  The catppuccin theme should be loaded and the status bar at the bottom of the page will change color.
 
-<img src=../assets/tmux-catppuccin-loaded.png>
+![catppuccin loaded](../assets/tmux-catppuccin-loaded.png)
 
 ***
 
@@ -1797,7 +1826,7 @@ run '~/.config/tmux/plugins/tpm/tpm'
 
 - [ ] Save `.tmux.conf` and reload the tmux config.
 
-```
+```text
 prefix I
 
 prefix r
@@ -1807,7 +1836,7 @@ prefix r
 
 Your tmux session should now look like this:
 
-<img src=../assets/tmux-catppuccin-labels.png>
+![catppuccin labels](../assets/tmux-catppuccin-labels.png)
 
 ***
 
@@ -1815,7 +1844,7 @@ To illustrate how the labels are being displayed, do the following:
 
 - [ ] Name the session `kismet` (`prefix $`).
 
-```
+```text
 prefix :
 
 # then 
@@ -1824,7 +1853,7 @@ rename-session kismet
 
 - [ ] Rename window 1 to `server`. 
 
-```
+```text
 prefix ,
 
 # then enter a new name
@@ -1833,23 +1862,23 @@ prefix ,
 - [ ] Create two new windows and rename each to `remote1` and `remote2`
 
 - [ ] Run the following programs:
-* server window: `htop` or `top`
-* remote1 window: `python3`
-* remote2 window: `vim`
+- server window: `htop` or `top`
+- remote1 window: `python3`
+- remote2 window: `vim`
 
 - [ ] Switch between the windows using either your mouse to click on the window names, the window manager (`prefix w`) or `prefix 1`, `prefix 2` and `prefix 3`, you should see that the name of each program running is displayed along with the window names.  The active window is squared in the number on the status bar (rather than rounded).
 
-<img src=../assets/catppuccin-window1.png>
-<br/><br/>
-<img src=../assets/catppuccin-window2.png>
-<br/><br/>
-<img src=../assets/catppuccin-window3.png>
+![catppuccin window1](../assets/catppuccin-window1.png)
+
+![catppuccin window2](../assets/catppuccin-window2.png)
+
+![catppuccin window3](../assets/catppuccin-window3.png)
 
 ***
 
 - [ ] Go to window 2 (remote1) and split the window horizontally into two panes.
 
-```
+```text
 prefix "
 
 # or
@@ -1863,11 +1892,11 @@ prefix -
 
 - [ ] Zoom in on the python pane.  In the status bar the window name will now have a magnifying glass next to it to indicate the windows is zoomed.  When done, use `prefix z` to zoom back out.
 
-```
+```text
 prefix z
 ```
 
-<img src=../assets/catppuccin-zoomed-pane.png>
+![catppuccin zoomed pane](../assets/catppuccin-zoomed-pane.png)
 
 *** 
 
@@ -1885,13 +1914,13 @@ set -g status-position top
 
 - [ ] Save the changes and reload the config (`prefix r`).  The bar is now on top.  Some people prefer this layout.  You decide.  Leave it or change it back to the bottom.
 
-```
+```text
 prefix r
 
 Enter
 ```
 
-<img src=../assets/catppuccin-status-bar-top.png>
+![catppuccin status bar top](../assets/catppuccin-status-bar-top.png)
 
 ***
 
@@ -1926,7 +1955,7 @@ set -g @plugin 'erikw/tmux-powerline'
 
 - [ ] Save and close, then reload the config file.
 
-```
+```text
 prefix I
 
 prefix r
@@ -1934,7 +1963,7 @@ prefix r
 
 Your theme should change to something similar to what you see below.
 
-<img src=../assets/tmux-powerline-theme.png>
+![tmux powerline theme](../assets/tmux-powerline-theme.png)
 
 ***
 
@@ -1952,18 +1981,18 @@ vim ~/.config/tmux-powerline/config.sh
 ***
 
 This theme has a lot of different options available.  Each is in the form of a 'segment' you can configure.  This includes:
-* Weather
-* Now playing integration with your music player (Apple Music, etc.)
-* IP address info
-* Realtime upload/download data stats
-* Email integration (notifications)
-* System load (CPU, Memory, etc.)
-* Battery status, disk usage, 
-* Calendar
-* Air quality
-* Earthquake data
-* GitHub integration
-* ...and more
+- Weather
+- Now playing integration with your music player (Apple Music, etc.)
+- IP address info
+- Realtime upload/download data stats
+- Email integration (notifications)
+- System load (CPU, Memory, etc.)
+- Battery status, disk usage, 
+- Calendar
+- Air quality
+- Earthquake data
+- GitHub integration
+- ...and more
 
 > This theme can get really busy if you want it to.  Do you really need to see all of this information?
 
@@ -1999,7 +2028,7 @@ Change the left length to 160 and the right length to 190.  You may need to modi
 
 The network up/down stats should appear.
 
-<img src=../assets/powerline-network-up-down.png>
+![powerline network up down](../assets/powerline-network-up-down.png)
 
 ***
 
