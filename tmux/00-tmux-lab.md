@@ -1,5 +1,3 @@
-## tmux Lab
-
 ## Table of Contents
 
 - [Customizing tmux](#customizing-tmux)
@@ -34,10 +32,15 @@
 
 - [ ] Check if tmux is installed.  Install if necessary.
 
+
+### Linux
 ```bash
 # Linux
 if ! command -v tmux >/dev/null 2>&1; then sudo apt update && sudo apt install -y tmux; else echo "tmux is already installed."; fi
+```
 
+### MacOS
+```bash
 # MacOS (assumes Homebrew is installed. Visit brew.sh if not.
 if ! command -v tmux >/dev/null 2>&1; then brew install tmux; else echo "tmux is already installed."; fi
 ```
