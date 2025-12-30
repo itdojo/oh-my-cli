@@ -19,7 +19,7 @@
     - [Linux Nerd Font Installation](#linux-nerd-font-installation)
   - [Set $XDG\_CONFIG\_HOME Variable](#set-xdg_config_home-variable)
   - [Installing tmux Plugin Manager](#installing-tmux-plugin-manager)
-  - [For You, Moving Forward with tmux Plugins](#for-you-moving-forward-with-tmux-plugins)
+  - [Moving Forward with tmux Plugins](#moving-forward-with-tmux-plugins)
   - [Installing tmux Themes](#installing-tmux-themes)
     - [Installing catppuccin for tmux](#installing-catppuccin-for-tmux)
   - [Installing tmux Powerline Theme](#installing-tmux-powerline-theme)
@@ -1649,11 +1649,11 @@ prefix I
 
 ***
 
-## For You, Moving Forward with tmux Plugins
+## Moving Forward with tmux Plugins
 
 [Top](#table-of-contents)
 
-The tmux Plugin Manager simplifies the installation of a lot of different plugins.  The GitHub project page for tpm is here: https://github.com/tmux-plugins/tpm
+The tmux Plugin Manager simplifies the installation of a lot of different plugins.  The GitHub project page for tpm is here: https://github.com/tmux-plugins/tpm.  Visit that link for quick installation steps and then return here.
 
 A list of many of the plugins that can be installed using tpm can be found here: https://github.com/tmux-plugins/list
 
