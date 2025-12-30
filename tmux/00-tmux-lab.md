@@ -47,8 +47,10 @@ if ! command -v tmux >/dev/null 2>&1; then brew install tmux; else echo "tmux is
 
 - [ ] Open a terminal and start a new tmux session.
 
+> [!Important]
 > MacOS users: Don't use the builtin terminal.  Use iTerm2 (my choice) or Alacritty.
 
+> [!Note]
 > You can visually tell the tmux session is running because the bottom of the terminal shows a green bar with `[0] 0:bash*` on the left-hand side.
 
 ```bash
@@ -136,7 +138,8 @@ tmux has its own command line, which you access using `prefix :`
 - [ ] Open the tmux command line using `prefix :`.
 - [ ] From the tmux command line, use a command to turn the status bar off with `set status off`.  The green status bar disappears.
 
-> Note: This is just to demonstrate how the tmux command-line works: `prefix :`, then type a command.
+> [!Note]
+> This is just to demonstrate how the tmux command-line works: `prefix :`, then type a command.
 
 ```text
 prefix :
@@ -168,6 +171,7 @@ set status on
 
 The tmux command-line will display menus to simplify entering commands.  Try the following:
 
+> [!Tip]
 > Use the arrow keys to scroll through the menu options.
 
 ```text
@@ -316,6 +320,7 @@ Detaching from a tmux session returns you to your shell (bash, zsh, etc.) but **
 
 - [ ] From ***within*** a tmux session, run `tmux detach` to detach from the session.
 
+> [!Tip]
 > You can also use `prefix d` to detach from a session.
 
 ```bash
@@ -417,7 +422,6 @@ tmux new -s local
 ```
 
 ![create third session](../assets/tmux-create-3rd-session.png)
-
 
 ![new local session](../assets/tmux-new-local-session.png)
 
@@ -583,6 +587,7 @@ You can also use `prefix q` to identify pane numbers and navigate between them.
 ![display pane numbers](../assets/tmux-display-pane-numbers.png)
 
 - [ ] Try it:
+
 ```text
 prefix q, then 0
 
@@ -633,20 +638,17 @@ prefix %
 
 - [ ] Your window should now be divided into panes that look like the image below:
 
-
 ![server session 4 panes](../assets/tmux-server-session-4-panes.png)
 
 ***
 
 - [ ] Move to pane zero (0) per the pane labels in the image below.  To do so, use `prefix + <arrow>` or `prefix q`, then `0`.
 
-
 ![show 4 pane numbers](../assets/tmux-show-4-pane-numbers.png)
 
 *** 
 
 - [ ] In pane `0`, run `htop`.  Move to pane `1` and run `watch ss -tn`.
-
 
 ![top pane0 ss pane1](../assets/tmux-top-pane0-ss-pane1.png)
 
@@ -656,7 +658,6 @@ prefix %
 - `prefix {` - Moves a pane to the left
 
 After the pane swap:
-
 
 ![top panes after swap](../assets/tmux-top-panes-after-swap.png)
 
@@ -685,11 +686,9 @@ tmux swap-pane -s 1 -t 3
 
 Before swap:
 
-
 ![before pane swap](../assets/tmux-before-pane-swap.png)
 
 After swap:
-
 
 ![after pane swap](../assets/tmux-after-pane-swap.png)
 
@@ -707,11 +706,9 @@ prefix {
 
 Before swap:
 
-
 ![after pane swap](../assets/tmux-after-pane-swap.png)
 
 After swap:
-
 
 ![pane swap gone wrong](../assets/tmux-pane-swap-gone-wrong.png)
 
@@ -728,7 +725,6 @@ After swap:
 **Choice #4** - Arguably the least confusing.  Pick a pane with an available prompt and use `tmux swap-pane -s <src> -t <target>` to move panes exactly where you want them to be.  Despite the extra keystrokes, this is my preferred method.
 
 - [ ] Pick one of those options and do it.  The end result should look like the screen shot below.
-
 
 ![panes in correct layout](../assets/tmux-panes-in-correct-layout.png)
 
@@ -863,29 +859,29 @@ How you use **sessions**, **windows** and **panes** is ultimately a matter of pe
 
 Multiple **sessions**, each dedicated to a specific remote system.  For example, you can create three (3) sessions named ***RPi-1**, **RPi-2** and **wg-server**.
 
-Session #1: **RPi-1**
-Windows: 1
-    Window #1 is an SSH connection to the device.
-Panes: 2
-    Windows #1 is divided into two (3) panes.  Panes are split horizontally, then one of those is split vertically.
-        Pane #1: Runs a custom, long-running, script that displays SSIDs being probed for in the 802.11 RF environment.
-        Pane #2: Displays realtime GPS data
-        Pane #3: A terminal window for executing other commands.
+- Session #1: **RPi-1**
+  * Windows: 1
+    * Window #1 is an SSH connection to the device.
+  * Panes: 2
+    * Windows #1 is divided into two (3) panes.  Panes are split horizontally, then one of those is split vertically.
+        * Pane #1: Runs a custom, long-running, script that displays SSIDs being probed for in the 802.11 RF environment.
+        * Pane #2: Displays realtime GPS data
+        * Pane #3: A terminal window for executing other commands.
 
-Session #2: **RPi-2** 
-    1 Window, 2 panes, just like in Session #1.
+- Session #2: **RPi-2** 
+    * 1 Window, 2 panes, just like in Session #1.
 
-Session #3: **wg-server** 
-Windows: 3
-    Window #1 - 2 Panes, split horizontally
-        Pane #1: A continuously running display of wireguard statistics (`sudo watch pivpn -c`)
-        Pane #2: A continuously running tool like `bmon -p wg0` or `sudo vnstat -l -i wg0` to monitor network traffic on the wg0 interface.
-    Window #2 - 2 Panes, split horizontally
-        Pane #1 - `sudo tail -f  /var/log/auth.log | grep -i user` to watch who is attempting to run command on the system (and what command they are running)
-        Pane #2 - `sudo tail -f /var/log/syslog` to watch system events.
-    Window #3 - 2 Panes, split horizontally
-        Pane #1 - a CLI to run arbitrary commands
-        Pane #2 - `sudo watch ss -tnp` to display active connections and the proccesses involved in the connection.
+- Session #3: **wg-server** 
+  * Windows: 3
+    * Window #1 - 2 Panes, split horizontally
+      * Pane #1: A continuously running display of wireguard statistics (`sudo watch pivpn -c`)
+      * Pane #2: A continuously running tool like `bmon -p wg0` or `sudo vnstat -l -i wg0` to monitor network traffic on the wg0 interface.
+    * Window #2 - 2 Panes, split horizontally
+      * Pane #1 - `sudo tail -f  /var/log/auth.log | grep -i user` to watch who is attempting to run command on the system (and what command they are running)
+      * Pane #2 - `sudo tail -f /var/log/syslog` to watch system events.
+    * Window #3 - 2 Panes, split horizontally
+      * Pane #1 - a CLI to run arbitrary commands
+      *  Pane #2 - `sudo watch ss -tnp` to display active connections and the proccesses involved in the connection.
 
 
 ## Use-Case Example #2
@@ -894,30 +890,32 @@ Managing/Configuring AutoSSH
 
 One **session** with multiple named **windows**, each divided into multiple panes.
 Session name: autossh
-Windows #1:
-    Name: digitalocean
-        Pane #1: `watch ss -tn`
-        Pane #2: `watch ss -tln`
-        Pane #3: CLI for arbitrary commands
-Window #2: 
-    Name: autossh-server
-        Pane #1: `watch -ss tn`
-        Pane #2: CLI for arbitrary commands
-Window #3:
-    Name: ssh-client
-        Pane #1: `watch ss -tn`
-        Pane #2: `CLI for arbitrary commands
+
+- Windows #1:
+  - Name: digitalocean
+   - Pane #1: `watch ss -tn`
+   - Pane #2: `watch ss -tln`
+   - Pane #3: CLI for arbitrary commands
+- Window #2: 
+  - Name: autossh-server
+   - Pane #1: `watch -ss tn`
+   - Pane #2: CLI for arbitrary commands
+- Window #3:
+  - Name: ssh-client
+   - Pane #1: `watch ss -tn`
+   - Pane #2: `CLI for arbitrary commands
 
 ## Use-Case Example #3
 
 Monitoring multiple remote Kismet servers using Kismet API websockets
 
 One **session** with one **window** divided into four (4) panes: 2 horizontal panes, one of which is divided into three vertical panes.
-Window #1: 
-    Pane #1 (vertical pane #1): websocket connection to remote Kismet server #1
-    Pane #2 (vertical pane #2): websocket connection to remote Kismet server #2
-    Pane #3 (vertical pane #3): websocket connection to remote Kismet server #3
-    Pane #4 (horizontal pane): CLI for running arbitrary commands.
+
+- Window #1: 
+  - Pane #1 (vertical pane #1): websocket connection to remote Kismet server #1
+  - Pane #2 (vertical pane #2): websocket connection to remote Kismet server #2
+  - Pane #3 (vertical pane #3): websocket connection to remote Kismet server #3
+  - Pane #4 (horizontal pane): CLI for running arbitrary commands.
 
 - You could vary this layout by moving the CLI pane to its own separate window.
 - You could also add an additional **windows** divided into three (3) panes, each an SSH connection to the three remote Kismet servers.
