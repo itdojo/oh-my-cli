@@ -18,7 +18,7 @@ sudo apt update && sudo apt install -y bat
 
 #### Linux Install Test/Fix
 
-After installing, run `bat`.  If you get a **command not found** error, do this:
+After installing, run `bat`.  If you get a **command not found** error, it is because Debian/Ubuntu install the binary as `batcat` (a package name conflict).  Fix it with a symlink:
 
 ```shell
 mkdir -p ~/.local/bin
@@ -41,7 +41,7 @@ Edit `~/.zshrc` or `~/.bashrc` and add this to bottom of file:
 alias cat="bat"
 ```
 
-> Important Note: You can safely pipe bat's output into other programs.  However, the STDOUT shows line numbers on the left side and this does not work if you use your mouse to copy the output of cat to your clipboard.  The added line numbers in bat also get copied and are unlikely to be what you want if trying to copy that way.
+> Important Note: You can safely pipe bat's output into other programs — when bat detects its output is not a terminal, it automatically drops the line numbers, colors and frame.  The one gotcha is *mouse-copying from the screen*: the displayed line numbers and frame get copied along with the text, which is rarely what you want.  For copy-friendly output, use `bat -p <file>` (plain style).
 
 ***
 
@@ -95,4 +95,6 @@ export BAT_THEME=<theme_name>
 # Example
 export BAT_THEME=DarkNeon
 ```
+
+> Tip: bat 0.25+ can auto-switch between a light and dark theme to match your terminal: set `export BAT_THEME_LIGHT=<theme>` and `export BAT_THEME_DARK=<theme>` (and leave `BAT_THEME` unset).
 

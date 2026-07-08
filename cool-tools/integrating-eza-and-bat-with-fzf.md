@@ -25,12 +25,14 @@ _fzf_comprun() {
 
   case "$command" in
     cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
-    export|unset) fzf --preview "eval 'echo ${}'"         "$@" ;;
+    export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
     ssh)          fzf --preview 'dig {}'                   "$@" ;;
     *)            fzf --preview "$show_file_or_dir_preview" "$@" ;;
   esac
 }
 ```
+
+> Note the `\$'{}` in the `export|unset` line — the backslash matters.  fzf replaces `{}` with the selected (quoted) variable name, so the preview becomes `eval 'echo $'VAR_NAME'` → `echo $VAR_NAME`, which shows the variable's value.  Without the backslash the preview breaks.
 
 Then run:
 

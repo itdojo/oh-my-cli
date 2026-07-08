@@ -14,6 +14,7 @@ set -g status-interval 5                # refresh status bars every 5s (rather t
 set -g focus-events on                  # focus events enabled for terminals that support them
 set -g display-panes-time 4000          # time (ms) pane numbers are shown for `prefix q`
 setw -g mode-keys vi
+setw -g pane-base-index 1               # Start pane numbering at 1 rather than 0
 set -g window-style 'bg=#0c0c0c,fg=#ffffff'         # Inactive panes: light black
 set -g window-active-style 'bg=#010101,fg=#ffffff'  # Active pane: black
 set -g pane-active-border-style 'fg=yellow'
@@ -24,6 +25,7 @@ set -g status-position bottom           # position status bar on top/bottom of w
 # KEY BINDINGS
 ###########################################################################################
 bind r source-file ~/.config/tmux/tmux.conf \; display "tmux Config Reloaded!"
+bind ^A send-prefix                     # prefix twice sends a literal CTRL-a to the pane
 bind-key '-' split-window -v            # '-' horizontal window split
 bind-key '\' split-window -h            # '\' vertical window split
 bind -r H resize-pane -L                # Resize pane left
@@ -37,32 +39,22 @@ bind -r L resize-pane -R                # Resize pane right
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-cpu'
-#set -g @plugin 'robhurring/tmux-uptime'
+set -g @plugin 'robhurring/tmux-uptime'
 set -g @plugin 'tmux-plugins/tmux-battery'
 
 ###########################################################################################
-# CATPPUCCIN THEME SETTINGS
+# CATPPUCCIN THEME SETTINGS (v2.x syntax)
 ###########################################################################################
-set -g @catppuccin_flavor "mocha"  # latte, frappe, macchiato or mocha
-set -g @catppuccin_window_current_text "#{window_name}"
-set -g @catppuccin_window_text "#{window_name}"
+# Theme options must be set BEFORE the theme is loaded (the run line below)
+set -g @catppuccin_flavor "mocha"                # latte, frappe, macchiato or mocha
 set -g @catppuccin_window_status_style "rounded"
-set -g @catppuccin_window_left_separator ""
-set -g @catppuccin_window_right_separator " "
-set -g @catppuccin_window_middle_separator " █"
-set -g @catppuccin_window_number_position "right"
-set -g @catppuccin_window_default_fill "number"
-set -g @catppuccin_window_default_text "#W"
-set -g @catppuccin_window_current_fill "number"
-set -g @catppuccin_window_current_text "#W#{?window_zoomed_flag,(),}"
-set -g @catppuccin_status_modules_right "directory date_time"
-set -g @catppuccin_status_modules_left "session"
-set -g @catppuccin_status_left_separator  " "
-set -g @catppuccin_status_right_separator " "
-set -g @catppuccin_status_right_separator_inverse "no"
-set -g @catppuccin_status_fill "icon"
-set -g @catppuccin_status_connect_separator "no"
-set -g @catppuccin_directory_text "#{b:pane_current_path}"
+set -g @catppuccin_window_text " #W"
+set -g @catppuccin_window_current_text " #W#{?window_zoomed_flag,(),}"
+
+# Load the catppuccin theme
+run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
+
+# Status line modules are added AFTER the theme is loaded
 set -g status-right-length 100
 set -g status-left-length 100
 set -g status-left ""
@@ -74,6 +66,5 @@ set -agF status-right "#{E:@catppuccin_status_battery}"
 set -g default-terminal "tmux-256color"
 
 ###########################################################################################
-run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.config/tmux/plugins/tpm/tpm'

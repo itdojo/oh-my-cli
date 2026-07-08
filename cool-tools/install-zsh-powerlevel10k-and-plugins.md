@@ -1,5 +1,8 @@
 ## Installing zsh and PowerLevel10k Theme
 
+> [!Note]
+> Powerlevel10k's author has placed the project in maintenance mode ("very limited support, no new features planned").  It still works great with current zsh and remains hugely popular, but if you prefer an actively developed prompt, look at [Starship](https://starship.rs) or [Oh My Posh](https://ohmyposh.dev) as alternatives.
+
 - [ ] Run the following commands.
 
 > Note: The `install_zsh.sh` script below will install required fonts, any necessary tools (git, curl, wget, etc.), install oh-my-zsh, PowerLevel10k and change your shell to zsh.
@@ -7,20 +10,20 @@
 > When needed, the script will prompt you to enter your password.
 
 ```shell
-git clone https://github.com/itdojo/qol
+git clone https://github.com/itdojo/oh-my-cli.git
 
-cd qol
+cd oh-my-cli/scripts
 
 chmod +x install_zsh.sh
 
 ./install_zsh.sh
 
-cd && rm -rf qol
+cd
 ```
 
 *** 
 
-- [ ] After the script completes, reboot  your computer.  Log back in to a terminal.  The PowerLevel10k wizard will run.  Answer the questions to your liking.  
+- [ ] After the script completes, log out and log back in (or reboot).  Open a terminal.  The PowerLevel10k wizard will run.  Answer the questions to your liking.  
 
 <img src=../assets/p10k-configure.png> 
 

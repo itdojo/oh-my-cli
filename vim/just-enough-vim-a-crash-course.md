@@ -4,7 +4,7 @@
 
 The overview section is comprised of tables describing various keystrokes used with vim.  They are intended to be a reference as you work through this lab exercise.
 
-Please also refer to the quick reference guide located at `reference-guides/vim-qrq-concise.md`.
+Please also refer to the quick reference guide located at `reference-guides/vim-qrg-concise.md`.
 The lab steps begin with the **Lab Steps** section.
 
 ## Overview
@@ -40,13 +40,14 @@ Most of your time will be spent in **Normal** and **Insert** modes, followed clo
         * `$` - goto end of line
         * `gg` - goto first line of file 
         * `G` - goto last line of file
-        * `J` - jump to top of visible screen
-        * `L` - jump to bottom of visible screen
-        * `M` - jump to middle of visible screen
+        * `H` - jump to top of visible screen (**H**igh)
+        * `L` - jump to bottom of visible screen (**L**ow)
+        * `M` - jump to middle of visible screen (**M**iddle)
         * `{` - Jump backward a paragraph (or beginning of current paragraph)
         * `}` - Jump forward a paragraph (or end of current paragraph)
     * Edit commands (`d` (delete), `y` (yank), `p` (paste), `x` (delete character))
         * See below for more detail
+    * Undo/Redo (`u` (undo), `CTRL-r` (redo), `.` (repeat last change))
 * **Mode Entry**: ESC from any other mode
 
 ***
@@ -93,7 +94,7 @@ Most of your time will be spent in **Normal** and **Insert** modes, followed clo
         * `n` next instance
         * `N` previous instance
     * `?<string>` - backward search (up document)
-    * `%s:/old/new/g` - search for `old` and replace with `new` globally (`g`)
+    * `:%s/old/new/g` - search for `old` and replace with `new` globally (`g`)
 * **Mode Exit**: ESC
 
 ***
@@ -131,8 +132,8 @@ In vim:
 | Yank (Copy) | `y` | **Visual Mode** - Yank (copy) selected text to unnamed register
 | | `yy` | **Normal Mode** - Yank (copy) current line to unnamed register
 | | `y{motion}` | `y$` yank to end of line, `y^` yank to beginning of line).
-| | `y#y` | Yank `#` lines down.  Ex: `y8y` = yank (copy) 8 lines down from current line (including current line)
-| | `y#k` | Yant `#` lines up. Ex: `y20k` = yank (copy) 20 lines up from current line (including current line)
+| | `y#y` | Yank `#` lines down.  Ex: `y8y` (or `8yy`) = yank (copy) 8 lines down from current line (including current line)
+| | `y#k` | Yank `#` lines up. Ex: `y20k` = yank (copy) 20 lines up from current line (including current line)
 | | `"+y` | Yank (Copy) to ***system clipboard*** (+ register).
 | Cut (Delete) | `d` | **Visual Mode** - Cut (delete) selected text to unnamed register
 | | `dd` | **Normal Mode** - Cut (delete) current line (into unnamed register).
@@ -174,10 +175,10 @@ Arrow keys (⬅️ ⬆️ ⬇️ ➡️) are a perfectly valid way of moving aro
 
 | vim command | What it does | Arrow Key Equivalent | Note 
 |:--:|:--|:--:|:--|
-| `h` | Moves LEFT | ⬅️ | Only works in **Normal Mode**
-| `j` | Moves UP | ⬆️ | Only works in **Normal Mode**
-| `k` | Moves DOWN | ⬇️ | Only works in **Normal Mode**
-| `l` | Moves RIGHT | ➡️ | Only works in **Normal Mode**
+| `h` | Moves LEFT | ⬅️ | Only works in **Normal Mode** (and **Visual Mode**)
+| `j` | Moves DOWN | ⬇️ | Only works in **Normal Mode** (and **Visual Mode**)
+| `k` | Moves UP | ⬆️ | Only works in **Normal Mode** (and **Visual Mode**)
+| `l` | Moves RIGHT | ➡️ | Only works in **Normal Mode** (and **Visual Mode**)
 
 > When in **Insert Mode**, `h`, `j`, `k`, and `l` do not function for movement. While many users revert to arrow keys during **Insert Mode**, it is worth considering efficient transitions between modes (e.g., returning to **Normal Mode** for extended navigation).
 
@@ -197,12 +198,14 @@ Try combining them:
 |:--:|:--|:--|:--|
 | `w` | Moves forward one word | None | Hold the key down to continuously jump forward
 | `b` | Move back a word | None | Hold the key down to continuously jump backward
-| `^` | Goto beginning of line | `0` or `Home` key | You see this same logic with tools like `grep`. `^` usually means '*starts with*'; in this case, a line.
+| `^` | Goto first non-blank character of line | `0` (true beginning of line) or `Home` key | You see this same logic with tools like `grep`. `^` usually means '*starts with*'; in this case, a line.  On an indented line, `^` lands on the first character of text while `0` lands on column 1.
 | `$` | Goto end of line | `End` key | You see same logic with tools like `grep`. `$` often means '*ends with*' (but not with bash, zsh, etc.)
 | `gg` | Goto first line of file  | `:1` in **Command Mode** |  
 | `G` | Goto last line of file | `:<really_big_number>` in **Command Mode**, Ex: `:999999` | 
 | `{` | Goto beginning of paragraph | None | When editing code, often used in **Visual Mode** to select entire function
 | `}` | Goto end of paragraph | None | When editing code, often used in **Visual Mode** to select entire function
+
+> Tip: Nearly all motions accept a ***count***.  `5j` moves down five (5) lines, `3w` jumps forward three (3) words, `2}` jumps forward two (2) paragraphs.  Typing a number before a motion is one of the fastest ways to move exactly where you want.
 
 #### Why Use These Commands?
 Users in **Insert Mode** often press or hold arrow keys for long movements, which can slow down work. It is painfully inefficient.  Instead, consider:
@@ -228,7 +231,7 @@ Using `constitution.md`, do the following:
 
 ***
 
-- [ ] Press `j` three (3) times to move down to the ***We the People** line of the Preamble.
+- [ ] Press `j` three (3) times to move down to the ***We the People*** line of the Preamble.
 
 ***
 
@@ -236,11 +239,11 @@ Using `constitution.md`, do the following:
 
 ***
 
-- [ ] Press `j` and/or `l` to position your cursor in the middle of a word.
+- [ ] Press `h` and/or `l` to position your cursor in the middle of a word.
 
 ***
 
-- [ ] Press `i` to enter **Insert Mode** (the text `INSERT` will appear on the command bar at the bottom of the window).  You cursor is at the left of the character you were on.
+- [ ] Press `i` to enter **Insert Mode** (the text `INSERT` will appear on the command bar at the bottom of the window).  Your cursor is at the left of the character you were on.
 
 ***
 
@@ -270,12 +273,12 @@ Using `constitution.md`, do the following:
 
 - [ ] Press ESC to return to **Normal Mode**.
 
-> Important Note:  The "end of the line" is where the next carriage return (CR) is.  This means your cursor may jump to what is visually a different line.  This can be confusing and frustrating as it is not always what you are expecting.
+> Important Note:  The "end of the line" is where the next line break (newline) is.  This means your cursor may jump to what is visually a different line.  This can be confusing and frustrating as it is not always what you are expecting.
 
 To illustrate: 
 Enter `:20` to jump to line 20.  This line should begin with ***Representatives and direct Taxes shall...***.
 
-Press `$` to jump to the end of the line.  Depending on the width of your window, the end of the line is visually several lines down (ending in ***...and Georgia three***).  This is because that is the location of the next carriage return.
+Press `$` to jump to the end of the line.  Depending on the width of your window, the end of the line is visually several lines down (ending in ***...and Georgia three***).  This is because that is the location of the next line break.
 
 ***
 
@@ -321,7 +324,7 @@ Press `$` to jump to the end of the line.  Depending on the width of your window
 
 **Objective**: Move the `Usage` comment to a different place in the script.
 
-- [ ] Using `j`, move down the the `Usage:` comment (~ line #7).
+- [ ] Using `j`, move down to the `Usage:` comment (~ line #7).
 
 ***
 
@@ -362,7 +365,7 @@ Press `$` to jump to the end of the line.  Depending on the width of your window
 
 ***
 
-- [ ] Press `n` to locate the next instance of `check_for_root`).  You will not find any other instances.
+- [ ] Press `n` to locate the next instance of `check_for_root`.  You will not find any other instances.
 
 > Note: There could have been many instances of `check_for_root` in the script.  If so, searching for them one at a time would be tedious and time consuming.  If you know there are many instances of a string you need to change, the better syntax would be to do a global search & replace like this:  `:` to enter **Command Mode** then `%s/check_for_root/check_root/g`.  This would search for all instances of `check_for_root` and change them to `check_root`.
 
@@ -390,7 +393,7 @@ In this script, there is a function named **download_fonts** that is no longer n
 
 ***
 
-The relative line number of `download_fonts() \{` is the actual line number (#123).  The closing curly brace for the function (`}`) is nine (9) lines below it.  The relative numbering shows you that.  You want to delete the entire commented out function so you need to delete the current line plus the next nine lines (10 lines total).  
+The relative line number of `download_fonts() {` is the actual line number (#123).  The closing curly brace for the function (`}`) is nine (9) lines below it.  The relative numbering shows you that.  You want to delete the entire commented out function so you need to delete the current line plus the next nine lines (10 lines total).  
 
 - [ ] Using `d10d`, delete all ten lines of `download_fonts` function.
 
@@ -426,7 +429,7 @@ dd
 
 ***
 
-- [ ] Using `k` and `l`, move down to the printline that will print a line of dots (`∙∙∙∙`).
+- [ ] Using `j` and `l`, move down to the printline that will print a line of dots (`∙∙∙∙`).
 
 ```bash
 # printf "%.s∙" $(seq 1 "$(tput cols)")  # line style ∙∙∙∙∙∙∙
@@ -441,7 +444,7 @@ dd
 
 ***
 
-- [ ] Repeat the above process on the line of stars (`☆☆☆☆`)using `h`, `j`, `k`, `l`, `$`, `v`, `y`, and `p` as needed.   The end result should look like the image below:
+- [ ] Repeat the above process on the line of stars (`☆☆☆☆`) using `h`, `j`, `k`, `l`, `$`, `v`, `y`, and `p` as needed.   The end result should look like the image below:
 
 > People with OCD will understand.
 
@@ -449,7 +452,7 @@ dd
 
 ***
 
-- [ ] In the same `printline()` function use `h`, `j`, `k` and `l` to move up to the first `printf` line in the function. Move your cursor the the beginning of the `# line style ─────────` comment .  Your cursor should be on the `#` at the beginning of the comment, not the beginning of the line.
+- [ ] In the same `printline()` function use `h`, `j`, `k` and `l` to move up to the first `printf` line in the function. Move your cursor to the beginning of the `# line style ─────────` comment.  Your cursor should be on the `#` at the beginning of the comment, not the beginning of the line.
 
 <img src=../assets/vim-line-comment-cursor.png>
 
@@ -507,6 +510,20 @@ dd
 
 - [ ] Press `u` to undo the paste.
 
+### Undo, Redo & Repeat
+
+You just used `u` for the first time.  These three commands are essential and will save you constantly:
+
+| Command | What it Does
+|:--:|:--|
+| `u` | Undo the last change.  Press repeatedly to keep undoing (vim keeps a deep undo history).
+| `CTRL-r` | Redo (undo the undo).
+| `.` | Repeat the last change.  Ex: after `dd`, pressing `.` deletes another line.
+
+- [ ] Try it now: press `CTRL-r` to redo the paste you just undid, then press `u` to undo it again.
+
+***
+
 This inability to paste text copied in vim to an external program is because vim has its own 'registers' (clipboards) which are separate from the OS' clipboard.  This can be overcome once you understand some of the nuances of how vim stores yanked/cut strings.
 
 ***
@@ -520,6 +537,13 @@ This inability to paste text copied in vim to an external program is because vim
 <img src=../assets/vim-select-entire-function.png>
 
 ***
+
+> [!Important]
+> The `+` (system clipboard) register only works if your vim was built with clipboard support.  Check with `:echo has('clipboard')` (1 = yes, 0 = no) or from the shell with `vim --version | grep clipboard` (look for `+clipboard`).
+> * **Ubuntu/Debian**: the default `vim` package is built ***without*** clipboard support.  Install a clipboard-enabled build with `sudo apt install vim-gtk3`.
+> * **MacOS**: the built-in `/usr/bin/vim` also lacks clipboard support.  Install with `brew install vim`.
+>
+> If `has('clipboard')` returns `0`, the `"+y` steps below will not reach your system clipboard.
 
 - [ ] Type `"+y` to copy/yank the selected lines to the ***system clipboard***.
 
@@ -550,10 +574,16 @@ The keystrokes `"+y` (and `"+d` and `"+p`) can be cumbersome.  To make the featu
 ```vim
 let mapleader = " "
 nnoremap <leader>t :echo "Leader key works!"<CR>
-vnoremap <leader>y "+y  " Yank to clipboard in Visual Mode
-vnoremap <leader>d "+d  " Cut to clipboard in Visual Mode
-noremap <leader>p "+p   " Paste from clipboard in Normal Mode
+" Yank to system clipboard in Visual Mode
+vnoremap <leader>y "+y
+" Cut to system clipboard in Visual Mode
+vnoremap <leader>d "+d
+" Paste from system clipboard
+noremap <leader>p "+p
 ```
+
+> [!Important]
+> In a `.vimrc`, comments ***cannot*** go at the end of a `map`/`noremap` line.  Vim treats everything after the mapped keys — including a trailing `" comment` — as part of the mapping itself, which silently breaks it.  Always put comments for mappings on their own line, as shown above.
 
 ***
 
@@ -567,7 +597,7 @@ noremap <leader>p "+p   " Paste from clipboard in Normal Mode
 
 The entries you entered into `~/.vimrc` set new mappings for yanking to, cutting to and pasting from the system clipboard.  The are:
 
-| Action | Default | `~/.vimrc mapped sequence | 
+| Action | Default | `~/.vimrc` mapped sequence | 
 |--|--|--|
 | Yank/Copy to System Clipboard | `"+y` | `<space>y` (spacebar + `y`)
 | Cut to System Clipboard | `"+d` | `<space>d` (spacebar + `d`)
@@ -587,7 +617,7 @@ The entries you entered into `~/.vimrc` set new mappings for yanking to, cutting
 
 ***
 
-- [ ] Use your newly mapped yank-to-clipboard `<space>y` to copy the selected text to the system clipboard.  You should see a message of ***12 lines yanked to "+*** at the bottom of the window.
+- [ ] Use your newly mapped yank-to-clipboard `<space>y` to copy the selected text to the system clipboard.  You should see a message of ***12 lines yanked into "+*** at the bottom of the window.
 
 <img src=../assets/vim-yanked-to-system-clipboard.png>
 
@@ -695,7 +725,12 @@ The entries you entered into `~/.vimrc` set new mappings for yanking to, cutting
 
 ***
 
-- [ ] Using your mouse. select the entire `check_for_oh_my_zsh` function.  You ***DO NOT*** need to right-click to choose Copy; just highlighting the text automatically copies it to the clipboard.
+- [ ] Using your mouse, select the entire `check_for_oh_my_zsh` function.  You ***DO NOT*** need to right-click to choose Copy; just highlighting the text automatically copies it to the clipboard.
+
+> [!Note]
+> How well this works depends on your vim build and platform.  With `set mouse=a`, a mouse selection is a vim **Visual Mode** selection.  On Linux builds with clipboard support (`vim-gtk3`), the selection is placed in the X11 *primary selection* — paste it elsewhere with a **middle-click** (CTRL-v paste may not work).  If mouse-copy does not work on your system:
+> * After selecting with the mouse (you are in **Visual Mode**), press `<space>y` (or `"+y`) to copy the selection to the clipboard, **or**
+> * Hold **Shift** (Linux) or **Option/⌥** (MacOS iTerm2) while dragging — this bypasses vim and lets the *terminal* handle the selection/copy the way it normally would.
 
 <img src=../assets/vim-mouse-selected-text.png>
 
@@ -739,7 +774,7 @@ cd && vim
 
 ***
 
-- [ ] Use the ⬆️ and ⬇️ arrow keys or `j` and `k` to move up and down through the files and folder.  When you to open one, press **Enter**.  Test that now by navigating the `.bashrc` and opening it.
+- [ ] Use the ⬆️ and ⬇️ arrow keys or `j` and `k` to move up and down through the files and folders.  To open one, press **Enter**.  Test that now by navigating to `.bashrc` (or `.zshrc`) and opening it.
 
 ***
 
@@ -761,11 +796,11 @@ cd && vim
 
 ***
 
-- [ ] Now navigate back to your home folder and into the `.ssh` folder.  Open the `authorized_keys` file.  Review its contents then return to the vim explorer and go to your home directory.
+- [ ] Now navigate back to your home folder and into the `.ssh` folder.  Open the `authorized_keys` file (or `known_hosts`, or any other file present).  Review its contents then return to the vim explorer and go to your home directory.
 
 ***
 
-In the vim explorer view of the home folder, press `d` to create a new director named `vimexplore`.  Navigate to that director and press `%` to create a new file named `fileA.txt`.  Edit `fileA.txt`, adding some dummy text (`"This is fileA.txt!"`).  Save the file (ESC to enter command mode, then `:w`) but do not close it.  Return to the vim explorer.
+In the vim explorer view of the home folder, press `d` to create a new directory named `vimexplore`.  Navigate to that directory and press `%` to create a new file named `fileA.txt`.  Edit `fileA.txt`, adding some dummy text (`"This is fileA.txt!"`).  Save the file (ESC to return to **Normal Mode**, then `:w`) but do not close it.  Return to the vim explorer.
 
 ```vim
 d
@@ -810,7 +845,7 @@ Because `fileB.txt` is not saved, a split window is opened.  `fileB.txt` is on t
 
 ***
 
-- [ ] Navigate back to the `fileA.txt` window and close it (`:q`).  The window will close leaving only `fileB.txt`.  Save `fileB.txt` and return to the vim explorer (`Ex:`).
+- [ ] Navigate back to the `fileA.txt` window and close it (`:q`).  The window will close leaving only `fileB.txt`.  Save `fileB.txt` and return to the vim explorer (`:Ex`).
 
 If you leave a file with unsaved changes, the screen will open in a split window.  If the changes are saved before moving to the new file the window does not split.
 
@@ -818,7 +853,7 @@ If you leave a file with unsaved changes, the screen will open in a split window
 
 ## Using Buffers to Work on Multiple Files Simultaneously
 
-- [ ] Exit vim (back to the shell) (`:q`) then re-open vim and open vim explorer (`Ex:`).
+- [ ] Exit vim (back to the shell) (`:q`) then re-open vim and open vim explorer (`:Ex`).
 
 ***
 
@@ -880,19 +915,19 @@ Do that now.  Open `fileC.txt`.  It is likely at `vimexplore/fileC.txt` assuming
 
 There are three ways to switch between buffers (between files).
 
-> Note: If you have unsaved changes in a buffer you will get a warning and you will have to force the switch by adding a `!` (`bnext!`, `bprev!`, and `b!#`).
+> Note: If you have unsaved changes in a buffer you will get a warning and you will have to force the switch by adding a `!` (`:bnext!`, `:bprev!`, and `:b! <num>`).
 
 * `:bnext` - Goes to the next buffer
 * `:bprev` - Goes to the previous buffer
-* `:b #` -  Goes to buffer #.  Buffer number comes from the left column in `:ls` output.
+* `:b <num>` -  Goes to buffer number `<num>`.  The buffer number comes from the left column in `:ls` output.  Ex: `:b 3`
 
 - [ ] Do that now.  Use the three options above to cycle through the available buffers.
 
 ***
 
-- [ ] using `:bd#`, close the buffer for `fileA.txt` (`#`) is the buffer number for `fileA.txt`.  View your buffers after closing the file to confirm it is closed.
+- [ ] Using `:bd <num>` (where `<num>` is the buffer number for `fileA.txt`), close the buffer for `fileA.txt`.  View your buffers after closing the file to confirm it is closed.
 
-> Like above, if you are closing a file with unsaved edits, you have to add a `!` (`bd!#`).
+> Like above, if you are closing a file with unsaved edits, you have to add a `!` (`:bd! <num>`).
 
 ***
 
@@ -945,12 +980,12 @@ cd && vim
 
 ***
 
-> Note: Change the interface as appropriate for your computer.
+> Note: Change the interface name (`ens160`) as appropriate for your computer (use the output of `ip route` above to identify it).  `resolvectl` is a Linux (systemd) command; MacOS users can substitute `:!scutil --dns | grep nameserver`.
 
-- [ ] Run another command: `resolvectl -i ens160`
+- [ ] Run another command: `resolvectl dns ens160`
 
 ```
-:!resolvect -i ens160
+:!resolvectl dns ens160
 ```
 The output should be similar to this (your DNS server will be different):
 
@@ -960,7 +995,7 @@ Link 2 (ens160): 192.168.86.53
 
 ***
 
-Using `:r !<command>` you can take the results of the command you run and paste them into your document (buffer) at the position of your mouse.
+Using `:r !<command>` you can take the results of the command you run and insert them into your document (buffer) at the position of your cursor.
 
 - [ ] Add a new line to your document (buffer) as shown below. 
 
@@ -971,7 +1006,7 @@ My DNS server IP is:
 - [ ] Run the `resolvectl` command from above again, this time using `awk` to extract just the IP address and paste into the file (buffer) at the position of the cursor.
 
 ```
-:r !resolvectl -i ens160 dns | awk '{print $4}'
+:r !resolvectl dns ens160 | awk '{print $4}'
 ```
 
 ![](../assets/vim-resolvectl-paste.png)
@@ -1000,13 +1035,13 @@ w w w w
 
 ***
 
-- [ ] Press CTRL-v to enter copy mode and use either the right arrow key or `l` (lowercase L) to select the enter ip address.  With the entire address selected, press `y` to yank (copy) the address to a buffer.
+- [ ] Press CTRL-v to enter **Visual Block Mode** and use either the right arrow key or `l` (lowercase L) to select the entire IP address.  With the entire address selected, press `y` to yank (copy) the address to the unnamed register.
 
 ***
 
 - [ ] Run the following command.  You should run 4 successful pings to 8.8.8.8.
 
-> Note `<C-r>` is pressing CTRL-r followed by a `"`.
+> Note: `<C-r>"` means press CTRL-r, then `"` (a double quote).  In **Command-Line Mode**, this inserts the contents of the unnamed register (your yanked IP address) into the command line.
 
 ```
 :! ping -c 4 <C-r>"
@@ -1022,7 +1057,7 @@ Below is a table with some additional actions you can test out on your own.
 | `:r !<command>` | Read shell command output into the current buffer
 | `:w !<command>` | Write the buffer (or a selection) as input to a shell command
 | `:!ls %` | Pass the current file (%) to a shell command
-| `:n, m !<command>` | Run shell command on lines n to m and replace with output
+| `:n,m !<command>` | Run shell command on lines n to m and replace with output (Ex: `:5,10 !sort`)
 | `:w >> output.txt` | Append current file to output.txt (shell redirection)
 | `:r /path/to/file.txt` | Read and insert contents of a file into the buffer
 | `:!chmod +x %` | Make the current file executable
@@ -1032,9 +1067,33 @@ Below is a table with some additional actions you can test out on your own.
 
 ***
 
+## A Taste of What's Next: The Change Operator & Text Objects
+
+You now know the `d` (delete) and `y` (yank) operators.  The third big operator is `c` (**change**): it deletes the target text and drops you straight into **Insert Mode**.  Combined with vim's *text objects* (`iw` = "inner word", `i"` = "inside quotes", `i(` = "inside parentheses", etc.), this is where vim editing gets genuinely fast.  Try these on any file:
+
+| Command | What it Does
+|:--|:--|
+| `cw` | Change from cursor to end of word
+| `ciw` | Change the entire word under the cursor (no matter where in the word the cursor is)
+| `ci"` | Change the text inside the surrounding double quotes
+| `ci(` | Change the text inside the surrounding parentheses
+| `diw` | Delete the entire word under the cursor
+| `dap` | Delete the paragraph the cursor is in (including trailing blank line)
+| `yi"` | Yank the text inside the surrounding double quotes
+
+***
+
+## Commenting & Uncommenting Code
+
+Commenting/uncommenting blocks of code is such a common task it has its own short guide in this repo: [vim-comment-uncomment.md](vim-comment-uncomment.md).  It covers the classic **Visual Block** technique plus the built-in comment plugin (`gcc`) available in newer versions of vim.
+
+***
+
 That's it! You now know enough to be dangerous with vim.
 
-If you commit to using vim for a brief period you will quickly internalize all of these commands (and more) and you will have a better, faster workflow as a result. 
+If you commit to using vim for a brief period you will quickly internalize all of these commands (and more) and you will have a better, faster workflow as a result.
+
+> Want more structured practice?  Run `vimtutor` from your shell — a ~30 minute interactive tutorial that ships with vim and reinforces everything you did here.
 
 ***
 

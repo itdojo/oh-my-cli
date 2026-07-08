@@ -8,7 +8,8 @@
 | `l` | right (right arrow)
 | `w` | forward a word
 | `b` | back a word
-| `^` | goto beginning of line
+| `0` | goto beginning of line (column 1)
+| `^` | goto first non-blank character of line
 | `$` | goto end of line
 | `gg` | goto first line 
 | `G` | goto last line
@@ -17,6 +18,18 @@
 | `M` | jump to middle of visible screen
 | `{` | jump backward a paragraph/block of code
 | `}` | jump forward a paragraph/block of code
+
+> Most motions accept a count: `5j` = down 5 lines, `3w` = forward 3 words
+
+***
+
+## Undo, Redo & Repeat
+
+| Command | What it Does... |
+|:--:|:--|
+| `u` | undo last change (repeat to keep undoing)
+| `Ctrl-r` | redo (undo the undo)
+| `.` | repeat last change
 
 ***
 
@@ -47,7 +60,7 @@
 
 ## Command-Line Mode
 
-| Command | What is Does...
+| Command | What it Does...
 |:--|:--|
 | `:#` | go to line `#`
 | `:w` | write (save file)
@@ -57,7 +70,7 @@
 | `/<string>` | forward search (down document)  `n` next instance, `N` previous instance
 | `?<string>` | backward search (up document)
 | `:!<command>` | run a shell command without leaving vim (Ex: `:!ip addr show`)
-| `%s:/old/new/g` | search for all `old` and replace with `new` globally (`g`)
+| `:%s/old/new/g` | search for all `old` and replace with `new` globally (`g`)
 | `:set number` | turn on line numbers
 | `:set nonumber` | turn off line numbers
 | `:set relativenumber` | numbers lines above/below relative to cursor position
@@ -72,7 +85,7 @@
 | Copy (Yank) | `yy` | Yank (copy) current line to unnamed register
 | | `y{motion}` | `y$` yank to end of line, `y^` yank to beginning of line).
 | | `y#y` | Yank `#` lines down.  Ex: `y8y` = yank (copy) 8 lines down from current line (including current line)
-| | `y#k` | Yant `#` lines up. Ex: `y20k` = yank (copy) 20 lines up from current line (including current line)
+| | `y#k` | Yank `#` lines up. Ex: `y20k` = yank (copy) 20 lines up from current line (including current line)
 | | `"+y` | Yank (Copy) to ***system clipboard*** (+ register).
 | Cut (Delete) | `dd` | Cut (delete) current line (into unnamed register).
 | | `d{motion}` | `d$` cut to end of line, `d^` cut to beginning of line.

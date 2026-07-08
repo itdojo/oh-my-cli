@@ -1,5 +1,9 @@
 # eza - Better ls
 
+Project Page: https://github.com/eza-community/eza
+
+> eza is the community-maintained successor to `exa` (which is unmaintained).
+
 ## Installation
 
 ### MacOS
@@ -9,6 +13,14 @@ brew install eza
 ```
 
 ### Linux
+
+On Ubuntu 24.04+ and Debian 13+, eza is in the standard repositories — try this first:
+
+```shell
+sudo apt update && sudo apt install -y eza
+```
+
+If your distro release doesn't have it (or you want a newer version than your distro ships), use the project's third-party apt repo:
 
 ```shell
 sudo apt update

@@ -1,5 +1,17 @@
 ## Table of Contents
 
+- [Working with Default Key Bindings](#working-with-default-key-bindings)
+- [tmux Command Line](#tmux-command-line)
+- [Pane Zoom](#pane-zoom)
+- [Renaming tmux Sessions](#renaming-tmux-sessions)
+- [Detaching from a tmux Session](#detaching-from-a-tmux-session)
+- [Attaching to a Running tmux Session](#attaching-to-a-running-tmux-session)
+- [Moving Between tmux Sessions](#moving-between-tmux-sessions)
+- [Swapping Panes in a tmux Window](#swapping-panes-in-a-tmux-window)
+- [Killing tmux Sessions](#killing-tmux-sessions)
+- [Sessions, Windows and Panes](#sessions-windows-and-panes)
+- [tmux Windows](#tmux-windows)
+- [More Useful tmux Tricks](#more-useful-tmux-tricks)
 - [Customizing tmux](#customizing-tmux)
     - [tmux Window Numbering](#tmux-window-numbering)
     - [Changing the tmux Prefix](#changing-the-tmux-prefix)
@@ -41,14 +53,14 @@ if ! command -v tmux >/dev/null 2>&1; then sudo apt update && sudo apt install -
 
 ### MacOS
 ```bash
-# MacOS (assumes Homebrew is installed. Visit brew.sh if not.
+# MacOS (assumes Homebrew is installed. Visit brew.sh if not.)
 if ! command -v tmux >/dev/null 2>&1; then brew install tmux; else echo "tmux is already installed."; fi
 ```
 
 - [ ] Open a terminal and start a new tmux session.
 
 > [!Important]
-> MacOS users: Don't use the builtin terminal.  Use iTerm2 (my choice) or Alacritty.
+> MacOS users: Don't use the builtin terminal.  Use iTerm2 (my choice) or another modern terminal like Ghostty, Kitty, WezTerm or Alacritty.
 
 > [!Note]
 > You can visually tell the tmux session is running because the bottom of the terminal shows a green bar with `[0] 0:bash*` on the left-hand side.
@@ -81,7 +93,10 @@ Truth # | Why
 Answers the question: 
 *How do I visually divide my session window so I can see multiple things happening at once?*
 
-- [ ] Split the window horizontally into two panes.
+> [!Note]
+> Terminology alert: This lab calls a split that creates a *horizontal divider* (two panes stacked top/bottom) a **horizontal split**, and a split that creates a *vertical divider* (two panes side-by-side) a **vertical split**.  Be aware that the tmux man page uses the opposite naming (`split-window -v` produces top/bottom panes).  When in doubt, think "top/bottom" (`prefix "`) vs. "left/right" (`prefix %`).
+
+- [ ] Split the window horizontally (top/bottom) into two panes.
 
 ```text
 prefix "     # CTRL-b, then "
@@ -92,7 +107,7 @@ prefix "     # CTRL-b, then "
 
 ### Vertical Split
 
-- [ ] Split the pane vertically into two panes.
+- [ ] Split the pane vertically (left/right) into two panes.
 
 ```text
 prefix %
@@ -437,11 +452,11 @@ echo local session
 
 ***
 
-## Moving Between tmux Session
+## Moving Between tmux Sessions
 
 Sessions are independent of each other but you can move between them.
 
-There are a few ways to move between tmux session.  They are:
+There are a few ways to move between tmux sessions.  They are:
 
 ### Session Switch Method #1
 
@@ -463,11 +478,11 @@ Detach from a session (`tmux detach` or `prefix d`) then attach to the desired s
 
 From within a session, switch between sessions using `prefix )` and `prefix (`.  This syntax will move you 'left' and 'right' through your sessions.
 
-- [ ] Do that now.  You should currently be in your **local** session.  Use `prefix (` to move the the session on your 'left'.  This should take you to your **ssh-comms** session (look in bottom left corner for the session name).
+- [ ] Do that now.  You should currently be in your **local** session.  Use `prefix (` to move to the session on your 'left'.  This should take you to your **ssh-comms** session (look in bottom left corner for the session name).
 
-Ues `prefix (` again move to the next session. This should take you to the **server** session.
+Use `prefix (` again to move to the next session. This should take you to the **server** session.
 
-Ues `prefix (` again to move to the next session. This will take you to the **local** session.  Notice that you are looping around the sessions.
+Use `prefix (` again to move to the next session. This will take you to the **local** session.  Notice that you are looping around the sessions.
 
 Use `prefix )` to move to the 'right' a session.
 
@@ -530,7 +545,7 @@ Your **local** session should look like this:
 
 ***
 
-- [ ] Bring up the tmux Session Manager (`prefix s`).  Select the **server** session and press the right arrow key ➡️.  A sub-option will appear labeled `+ 0: bash*` (or possible `+ 0: htop`).  The `0` means this is ***window*** zero (0) in the **server** session. The word (`bash`, `htop`, etc.) is the name of the ***pane*** currently selected in that ***window***.  The preview window at the bottom will show you the panes (pane 0, 1, 2) in the **server** session.
+- [ ] Bring up the tmux Session Manager (`prefix s`).  Select the **server** session and press the right arrow key ➡️.  A sub-option will appear labeled `+ 0: bash*` (or possibly `+ 0: htop`).  The `0` means this is ***window*** zero (0) in the **server** session. The word (`bash`, `htop`, etc.) is the name of the ***pane*** currently selected in that ***window***.  The preview window at the bottom will show you the panes (pane 0, 1, 2) in the **server** session.
 
 ![session manager layout](../assets/tmux-session-manager-layout.png)
 
@@ -566,7 +581,7 @@ You should see a preview of the `htop` program running in the pane; similar to t
 ![local session pane numbers](../assets/tmux-local-session-pane-numbers.png)
 
 > Note: tmux Session Manager uses a relative indexing (numbering) system for its **sessions**, **windows** and **panes**.  These indexes are in parenthesis on the left margin of the Session Manager window.  
-In the screen shot below the index numbers are from `(0)` thru `(6)`.  You can press one of these number to go to that **session**, **window** or **pane**.  Note that these number are relative; they will change as more sessions are expanded in Session Manager.
+In the screen shot below the index numbers are from `(0)` thru `(6)`.  You can press one of these numbers to go to that **session**, **window** or **pane**.  Note that these numbers are relative; they will change as more sessions are expanded in Session Manager.
 
 ![dynamic index values](../assets/tmux-dynamic-index-values.png)
 
@@ -804,7 +819,7 @@ How you use **sessions**, **windows** and **panes** is mostly a matter of person
 
 ## tmux Visual Hierarchy
 
-The image below is a single tmux **session**, showing one **window** that has three *panes**.
+The image below is a single tmux **session**, showing one **window** that has three **panes**.
 
 ## tmux Hierarchical Layout
 
@@ -853,7 +868,7 @@ The image below is a single tmux **session**, showing one **window** that has th
   - Each **window** can have multiple **panes**.
   - Each **window** always has at least one **pane**.
 
-How you use **sessions**, **windows** and **panes** is ultimately a matter of personal preference. Shows below are some possible ways in which they can be used. 
+How you use **sessions**, **windows** and **panes** is ultimately a matter of personal preference. Shown below are some possible ways in which they can be used. 
 
 ## Use-Case Example #1
 
@@ -862,14 +877,14 @@ Multiple **sessions**, each dedicated to a specific remote system.  For example,
 - Session #1: **RPi-1**
   * Windows: 1
     * Window #1 is an SSH connection to the device.
-  * Panes: 2
-    * Windows #1 is divided into two (3) panes.  Panes are split horizontally, then one of those is split vertically.
+  * Panes: 3
+    * Window #1 is divided into three (3) panes.  Panes are split horizontally, then one of those is split vertically.
         * Pane #1: Runs a custom, long-running, script that displays SSIDs being probed for in the 802.11 RF environment.
         * Pane #2: Displays realtime GPS data
         * Pane #3: A terminal window for executing other commands.
 
 - Session #2: **RPi-2** 
-    * 1 Window, 2 panes, just like in Session #1.
+    * 1 Window, 3 panes, just like in Session #1.
 
 - Session #3: **wg-server** 
   * Windows: 3
@@ -881,7 +896,7 @@ Multiple **sessions**, each dedicated to a specific remote system.  For example,
       * Pane #2 - `sudo tail -f /var/log/syslog` to watch system events.
     * Window #3 - 2 Panes, split horizontally
       * Pane #1 - a CLI to run arbitrary commands
-      *  Pane #2 - `sudo watch ss -tnp` to display active connections and the proccesses involved in the connection.
+      *  Pane #2 - `sudo watch ss -tnp` to display active connections and the processes involved in the connection.
 
 
 ## Use-Case Example #2
@@ -898,12 +913,12 @@ Session name: autossh
    - Pane #3: CLI for arbitrary commands
 - Window #2: 
   - Name: autossh-server
-   - Pane #1: `watch -ss tn`
+   - Pane #1: `watch ss -tn`
    - Pane #2: CLI for arbitrary commands
 - Window #3:
   - Name: ssh-client
    - Pane #1: `watch ss -tn`
-   - Pane #2: `CLI for arbitrary commands
+   - Pane #2: CLI for arbitrary commands
 
 ## Use-Case Example #3
 
@@ -999,7 +1014,7 @@ echo gateworks window
 
 ***
 
-- [ ] Split the **gateworks*** window into two horizontal panes.
+- [ ] Split the ***gateworks*** window into two horizontal panes.
 
 ```text
 prefix "
@@ -1058,7 +1073,7 @@ There are at least four (4) ways to move between windows.
 
 tmux can apply pre-defined **pane** layouts to simplify **window** appearance.
 
-- [ ] Create a new **window** and name it ***test***.  Divde the window into two (2) panes, vertical or horizontal.
+- [ ] Create a new **window** and name it ***test***.  Divide the window into two (2) panes, vertical or horizontal.
 
 ```text
 prefix c    # creates a new window
@@ -1072,7 +1087,7 @@ prefix "    # splits horizontally
 
 - [ ] Use `prefix <SPACE>` to cycle through different two-pane layouts.
 
-- [ ] Experiment with diving your window into different combination of vertical and horizontal panes and then use `prefix <SPACE>` to cycle through the various pre-defined **pane** layouts.
+- [ ] Experiment with dividing your window into different combinations of vertical and horizontal panes and then use `prefix <SPACE>` to cycle through the various pre-defined **pane** layouts.
 
 ***
 
@@ -1085,6 +1100,64 @@ There are at least three (3) ways to close a **window**.
 3.  `prefix :` to open the tmux command line, then `kill-window`
 
 - [ ] When you are done, delete/close the ***test*** window.
+
+***
+
+## More Useful tmux Tricks
+
+[Top](#table-of-contents)
+
+Before moving on to customization, here are three commonly used features worth knowing.
+
+### Breaking a Pane Out into its Own Window
+
+Sometimes a pane 'outgrows' its window (e.g. a log you started tailing in a small side pane becomes the thing you actually care about).  `prefix !` breaks the current **pane** out into its own new **window**.
+
+- [ ] Try it:
+1. Split a window into two panes (`prefix "`).
+2. From one of the panes, press `prefix !`.  That pane becomes a new window and the remaining pane fills the original window.
+3. Close the new window when done (`exit` or `prefix &`).
+
+<!-- TODO screenshot: ![break pane into window](../assets/tmux-break-pane-after.png) -->
+
+
+> Tip: The reverse operation is `join-pane`.  For example, from the tmux command line: `join-pane -s 2` will move the pane from window 2 into the current window.
+
+***
+
+### Typing in All Panes at Once (synchronize-panes)
+
+If you manage multiple machines, this one is a game changer: with one SSH session per pane, you can type a command ***once*** and have it run in ***every pane simultaneously***.
+
+- [ ] Try it:
+1. Split a window into three or four panes.
+2. Open the tmux command line (`prefix :`) and run `setw synchronize-panes on`.
+3. Type any command (e.g. `echo hello`).  Every keystroke is duplicated to all panes in the window.
+4. Turn it off with `prefix :`, then `setw synchronize-panes off` (or run `setw synchronize-panes` again to toggle).
+
+<!-- TODO screenshot: ![synchronized panes](../assets/tmux-synchronize-panes.png) -->
+
+
+> [!Warning]
+> Be careful with synchronized panes — every pane receives *everything* you type, including destructive commands.  Turn it off as soon as you are done.
+
+***
+
+### Popup Windows (tmux 3.2+)
+
+tmux can open a temporary 'popup' window floating over your panes — great for quick one-off commands without disturbing your layout.
+
+- [ ] Try it from the shell in any pane:
+
+```bash
+# -E closes the popup when the command exits
+tmux display-popup -E "htop"
+```
+
+- [ ] For a quick throwaway shell in a popup, run `tmux display-popup -E` with no command (exit the shell to close it), and try sizing it with `-w` and `-h` (Ex: `tmux display-popup -w 80% -h 75% -E`).
+
+<!-- TODO screenshot: ![tmux popup running htop](../assets/tmux-display-popup.png) -->
+
 
 ***
 
@@ -1143,7 +1216,7 @@ set -g window-active-style 'bg=#010101,fg=#ffffff'  # Active pane: black
 
 ***
 
-- [ ] If tmux is running, exit all sessions and then re-open it.  Confirm no sessions are running.  If there are any sessions running, kill them with `tmux kill-server -t <session_name>`.
+- [ ] If tmux is running, exit all sessions and then re-open it.  Confirm no sessions are running.  If there are any sessions running, kill them with `tmux kill-session -t <session_name>` (or kill everything at once with `tmux kill-server`).
 
 ```bash
 tmux ls
@@ -1165,7 +1238,9 @@ tmux
 
 [Top](#table-of-contents)
 
-By default, tmux indexes (numbers) its **windows** starting at zero (0).  Because you can use `prefix <window #>` to cycle between windows (`prefix 0`, `prefix 1`, etc.), this creates an unnatural keyboard flow (because 0 is on the far right in the number row on the keyboard).  To fix this, you set `set -g base-index 1` in `~/.config/tmux/tmux.conf` to start window numbering at one (1).  Notice that your default window numbered one (1) in your new tmux session bar (green bar at bottom of screen).
+By default, tmux indexes (numbers) its **windows** starting at zero (0).  Because you can use `prefix <window #>` to cycle between windows (`prefix 0`, `prefix 1`, etc.), this creates an unnatural keyboard flow (because 0 is on the far right in the number row on the keyboard).  To fix this, you set `set -g base-index 1` in `~/.config/tmux/tmux.conf` to start window numbering at one (1).  Notice that your default window is now numbered one (1) in your new tmux session bar (green bar at bottom of screen).
+
+> Tip: The companion setting for **panes** is `setw -g pane-base-index 1`, which makes pane numbering (`prefix q`) start at one (1) as well.  Add it if you want windows and panes to number consistently.
 
 ***
 
@@ -1173,7 +1248,9 @@ By default, tmux indexes (numbers) its **windows** starting at zero (0).  Becaus
 
 [Top](#table-of-contents)
 
-- [ ] With the `set -g prefix ^A` setting in `tmux.conf`, your prefix key is now `C-a` (CTRL+a) rather than `C-b`.   This is personal preference.  Many people choose to switch to `C-a` or `C-s`; it's up to you.  If you don't like `prefix a`, set the `set -g prefix ^<value>` in `~/.config/tmux/tmux.conf` to whatever you want your prefix key to be.  If you prefer the default `C-b`, remove the `set -g prefic ^A` line from `tmux.conf` and refresh the config.
+- [ ] With the `set -g prefix ^A` setting in `tmux.conf`, your prefix key is now `C-a` (CTRL+a) rather than `C-b`.   This is personal preference.  Many people choose to switch to `C-a` or `C-s`; it's up to you.  If you don't like `prefix a`, set the `set -g prefix ^<value>` in `~/.config/tmux/tmux.conf` to whatever you want your prefix key to be.  If you prefer the default `C-b`, remove the `set -g prefix ^A` line from `tmux.conf` and refresh the config.
+
+> Tip: `C-a` is also the readline/shell shortcut for 'go to beginning of line'.  If you remap the prefix to `C-a`, add `bind ^A send-prefix` to `tmux.conf` — then pressing `prefix` twice (`C-a C-a`) passes a literal `C-a` through to the program in the pane.
 
 > Note: It is good to always remember what the defaults are so you can still use tmux on remote/new systems.
 
@@ -1191,7 +1268,7 @@ Example using the tmux command-line:
 prefix :
 
 # then
-source-file .config/tmux/tmux.conf
+source-file ~/.config/tmux/tmux.conf
 ```
 
 Example using the CLI:
@@ -1307,7 +1384,7 @@ bind-key '\' split-window -h      # '\' vertical window split
 
 - [ ] Test the new `prefix -` and `prefix \` bindings.  
 
-> Note: The old key bindings are still in place so you can use either `prefix "` or `prefix -` to split horizontally and `prefix %` or `prefix \` to split vertically.  If you want to unbind the old keys, add `unbind '%'` and `unbind "` to `tmux.conf`.
+> Note: The old key bindings are still in place so you can use either `prefix "` or `prefix -` to split horizontally and `prefix %` or `prefix \` to split vertically.  If you want to unbind the old keys, add `unbind '%'` and `unbind '"'` to `tmux.conf`.
 
 > Note: Some people (e.g. tmux super-nerds) get aggressive with tmux and unbind all keys using `unbind-key -a` and then manually bind everything to their personal preferences.   This is well beyond the scope of this lab.  Your takeaway is that you can selectively bind and unbind (i.e. change) keys to better match how you use your keyboard, what seems intuitive to you, etc.  You are not locked in to using the default, and often ambiguous, key bindings.
 
@@ -1317,7 +1394,7 @@ bind-key '\' split-window -h      # '\' vertical window split
 
 [Top](#table-of-contents)
 
-> Note: This will not work if being done in the CLI window of a virtual machine (no mouse support).  It also will not work if your systemd target is multi-user.target (again, no mouse support).
+> Note: This will not work in environments without mouse support, such as a bare virtual-machine console or a text-only (multi-user.target) system.  Any modern graphical terminal (iTerm2, GNOME Terminal, Ghostty, Alacritty, etc.) supports it.
 
 - [ ] The `set -g mouse on` setting you added to `tmux.conf` enables the ability to use your mouse to do the following:
 
@@ -1341,7 +1418,7 @@ With `set -g mouse on` in your `tmux.conf` you can use the mouse to change **pan
 
 Some people prefer to keep their fingers on the keyboard as much as possible (it speeds up your workflow).  There are key bindings for that.
 
-- [ ] Add the following to `tmux.conf` in the the **KEY BINDINGS** section:
+- [ ] Add the following to `tmux.conf` in the **KEY BINDINGS** section:
 
 > Note: the `-r` means the command can be repeated.  For example, `prefix H H H H`. Each `H` press will resize the window a little more.
 
@@ -1382,7 +1459,7 @@ prefix L        # move pane right (repeat L to move more)
 
 [Top](#table-of-contents)
 
-- [ ] The `set -g history-limit 1000000` command enabled the ability for your to scroll back through your command history the way you can with a regular CLI.  Try that now.  Issue a command with a lot of output (`history`, `sudo dmesg`, `sudo cat /var/log/syslog`, etc.`) and scroll back through the command output.
+- [ ] By default, tmux keeps only 2,000 lines of scrollback per pane.  The `set -g history-limit 1000000` setting increases that dramatically so you can scroll back through long command output the way you can with a regular CLI.  Try that now.  Issue a command with a lot of output (`history`, `sudo dmesg`, `sudo cat /var/log/syslog`, etc.) and scroll back through the command output.
 
 The ability to scroll back is per-pane.
 
@@ -1410,7 +1487,7 @@ ip addr show
 ip link
 diskutil list
 sudo fdisk -l
-ls .alh ~
+ls -alh ~
 ```
 ![ls ping localhost](../assets/tmux-ls-ping-localhost.png)
 
@@ -1423,7 +1500,7 @@ ls .alh ~
 
 ![mouse select paste](../assets/tmux-mouse-select-paste.png)
 
-> Note: There are way to deal with this buy they often become terminal program specific (iTerm, Alacrity, etc.).
+> Note: There are ways to deal with this but they often become terminal program specific (iTerm2, Alacritty, etc.).
 
 - [ ] Using the mouse notice you can scroll up and down the command history of each pane.  The behavior is typical of what you expect from a terminal.
 
@@ -1440,8 +1517,7 @@ ls .alh ~
 
 - [ ] Using vim navigation keys (`h`, `j`, `k`, `l`) move up to the beginning of your `ls` output.
 - [ ] Press the spacebar to begin copying.  Use arrow keys or vim navigation keys to select the `ls` output.
-- [ ] After selecting all the values, use `y` to yank/copy the data.
-- [ ] Press `Enter` to leave copy mode.
+- [ ] After selecting all the values, use `y` to yank/copy the data.  Yanking also exits copy mode automatically.  (`Enter` does the same thing: copy the selection and exit copy mode.  If you ever want to leave copy mode *without* copying, press `q`.)
 - [ ] Press `prefix ]` to paste the yanked text.
 
 Here is a visual representation of the steps to take to copy text from the CLI to a buffer then paste the text in an editor.
@@ -1457,11 +1533,10 @@ Here is a visual representation of the steps to take to copy text from the CLI t
 The `setw -g mode-keys vi` option also enables the ability to search your command history output.  Here is how:
 
 - [ ] Return to the tmux window pane where you ran the list of commands. Press `prefix [` to enter copy mode.
-- [ ] Type `?MX` then **Enter** (e.g. `?<string>`) to search backward through your history for any instances of `MX` in your command history output.  Use vim navigation keys to mode down to the line for `alt4.aspmx.l.google.com`.  Place your cursor on the `a` in `alt4`.
+- [ ] Type `?MX` then **Enter** (e.g. `?<string>`) to search backward through your history for any instances of `MX` in your command history output.  Use vim navigation keys to move down to the line for `alt4.aspmx.l.google.com`.  Place your cursor on the `a` in `alt4`.
 - [ ] Press SPACE to begin copying.  
-- [ ] Press `SHIFT $` to highlight to the end of the line.
-- [ ] Press `y` to yank the string to the clipboard.
-- [ ] Press `Enter` to exit copy mode.
+- [ ] Press `$` (SHIFT-4) to highlight to the end of the line.
+- [ ] Press `y` to yank the string to the buffer (this also exits copy mode).
 - [ ] At the terminal prompt, type `ping -c 4 ` then press `prefix ]` to paste the copied string.  If all went well you should now have: `ping -c 4 alt4.aspmx.l.google.com.`.  Press enter to ping the server.
 
 ![ping google mx](../assets/tmux-ping-google-mx.png)
@@ -1491,7 +1566,7 @@ The Linux script below has commented out sections that allow for downloading and
 
 [Top](#table-of-contents)
 
-If you ran the `install_zsh.sh` script from ITdojo's ***qol*** GitHub repo, Homebrew and Nerd Fonts are already installed and you can skip the font installation steps here.
+If you ran this repo's `scripts/install_zsh.sh` script, Homebrew and Nerd Fonts are already installed and you can skip the font installation steps here.
 
 MacOS users, install Homebrew if necessary.  Visit https://brew.sh for install instructions.
 
@@ -1499,8 +1574,10 @@ MacOS users, install Homebrew if necessary.  Visit https://brew.sh for install i
 
 - [ ] To install the fonts on MacOS, run:
 
+> Note: Fonts are installed via Homebrew *casks* (note the `--cask` flag).
+
 ```shell
-brew install font-symbols-only-nerd-font font-meslo-lg-nerd-font font-meslo-for-powerlevel10k
+brew install --cask font-meslo-lg-nerd-font font-symbols-only-nerd-font
 ```
 
 ***
@@ -1509,47 +1586,49 @@ brew install font-symbols-only-nerd-font font-meslo-lg-nerd-font font-meslo-for-
 
 [Top](#table-of-contents)
 
-If you ran the `install_zsh.sh` script from ITdojo's ***qol*** GitHub repo, the required Nerd Fonts are already installed and you can skip the font installation steps here.
+If you ran this repo's `scripts/install_zsh.sh` script, the required Nerd Fonts are already installed and you can skip the font installation steps here.
 
-> Note: These steps will install the required fonts for the logged in user only.  If you want to install the fonts globally (available to all users), unzip the files to `/usr/share/fonts/truetype/` instead of `~/.fonts/` (uncomment the appropriate lines in the script below).
+> Note: These steps will install the required fonts for the logged in user only.  If you want to install the fonts globally (available to all users), unzip the files to `/usr/share/fonts/truetype/` instead of `~/.local/share/fonts/` (uncomment the appropriate lines in the script below).
+
+> Note: `~/.local/share/fonts` is the modern (XDG) per-user font location.  The older `~/.fonts` location still works but is deprecated by fontconfig.
 
 The commands below do the following:
-- Creates a `/.fonts` folder in your home directory
-- Downloads and unzips the required font files into the `~/.fonts` folder
-- Runs `fonts-cache` to update the list of installed fonts.
+- Creates a `.local/share/fonts` folder in your home directory
+- Downloads and unzips the required font files into that folder
+- Runs `fc-cache` to update the list of installed fonts.
 
 - [ ] To install Nerd Fonts on Debian Linux, run the following:
 
+> Note: v3.4.0 was the latest Nerd Fonts release at the time of this writing.  Check https://github.com/ryanoasis/nerd-fonts/releases for the most up-to-date release.
+
 ```shell
-BASE_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0"
+NF_VERSION="v3.4.0"
+BASE_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/${NF_VERSION}"
 FONTS=("Meslo" "NerdFontsSymbolsOnly" "FiraCode" "Hack" "SourceCodePro")
 TMP_DIR="/tmp"
+FONT_DIR="$HOME/.local/share/fonts"
 
-if [[ ! $(command -v fc-cache) ]]; then echo "Installing fontconfig..." && sudo apt install fontconfig; fi
+if ! command -v fc-cache >/dev/null; then echo "Installing fontconfig..." && sudo apt install -y fontconfig; fi
 
-if [[ ! $(command -v unzip) ]]; then echo "Installing unzip..." && sudo apt install unzip; fi
+if ! command -v unzip >/dev/null; then echo "Installing unzip..." && sudo apt install -y unzip; fi
 
-mkdir -p ~/.fonts
+mkdir -p "$FONT_DIR"
 
 for FONT in "${FONTS[@]}"; do
   wget -q "${BASE_URL}/${FONT}.zip" -O "${TMP_DIR}/${FONT}.zip"
-  unzip -oq "${TMP_DIR}/${FONT}.zip" -d ~/.fonts/
+  unzip -oq "${TMP_DIR}/${FONT}.zip" -d "${FONT_DIR}/${FONT}"
   # For global install (all users)
-  # sudo unzip -oq "${TMP_DIR}/${FONT}.zip" -d /usr/share/fonts/truetype/
-  
+  # sudo unzip -oq "${TMP_DIR}/${FONT}.zip" -d "/usr/share/fonts/truetype/${FONT}"
+  rm "${TMP_DIR}/${FONT}.zip"
 done
 
-rm /tmp/Meslo.zip /tmp/NerdFontsSymbolsOnly.zip /tmp/FiraCode.zip /tmp/SourceCodePro.zip /tmp/Hack.zip
-
 # For ALL Nerd fonts (Be careful! HUGE!!! >3.2GB file)
-# Check https://github.com/ryanoasis/nerd-fonts/tags for most up-to-date release
+# wget -q https://github.com/ryanoasis/nerd-fonts/archive/refs/tags/${NF_VERSION}.zip -O /tmp/${NF_VERSION}.zip
+# unzip -oq /tmp/${NF_VERSION}.zip -d "$FONT_DIR"                     # Local User Only
+# sudo unzip -oq /tmp/${NF_VERSION}.zip -d /usr/share/fonts/truetype  # All Users
+# rm /tmp/${NF_VERSION}.zip
 
-# wget -q https://github.com/ryanoasis/nerd-fonts/archive/refs/tags/v3.3.0.zip -O /tmp/v3.3.0.zip
-# sudo unzip -oq /tmp/v3.3.0.zip -d ~/.fonts                    # Local User Only
-# sudo unzip -oq /tmp/v3.3.0.zip -d /usr/share/fonts/truetype   # All Users
-# rm /tmp/v3.3.0.zip
-
-sudo fc-cache -f
+fc-cache -f
 ```
 
 ***
@@ -1560,11 +1639,11 @@ sudo fc-cache -f
 
 `$XDG_CONFIG_HOME` defines the base location of user-specific configuration files.  If it is not set, the default is usually `$HOME/.config`.  Setting this variable  allows you to specify an alternate location for your config files (based on your personal preferences).  However, unless you have a specific reason for doing so, leave `~/.config/` as your default config file location, many different programs use it.
 
-In this lab, you will set `${XDG_CONIFG_HOME}` but still point it to the default location of `$HOME/.config`.
+In this lab, you will set `${XDG_CONFIG_HOME}` but still point it to the default location of `$HOME/.config`.
 
 ***
 
-- [ ] Confirm `${XDG_CONIFG_HOME}` is not already set.
+- [ ] Confirm `${XDG_CONFIG_HOME}` is not already set.
 
 ```shell
 echo $XDG_CONFIG_HOME   # Should return nothing
@@ -1574,7 +1653,7 @@ echo $XDG_CONFIG_HOME   # Should return nothing
 
 - [ ] Add an export for the variable to your `~/.bashrc` or `~/.zshrc`.
 
-> Note: If your shell is bash, change `.zshrrc` to `.bashrc` in the code snippet below.
+> Note: If your shell is bash, change `.zshrc` to `.bashrc` in the code snippet below.
 
 ```shell
 cat >> ~/.zshrc << 'EOL'
@@ -1626,7 +1705,7 @@ set -g @plugin 'tmux-plugins/tmux-sensible'
 
 - [ ] Add the following as the last line of the file:
 
-> Important Note: `run '~/.tmux/plugins/tpm/tpm'` must always be at the end of the `.tmux.conf` file.
+> Important Note: The `run '~/.config/tmux/plugins/tpm/tpm'` line must always be at the end of the `tmux.conf` file.
 
 ```
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
@@ -1637,13 +1716,15 @@ run '~/.config/tmux/plugins/tpm/tpm'
 
 ***
 
-- [ ] Reload the tmux environment using `prefix I`.
+- [ ] Reload your tmux config, then tell tpm to install the plugins:
 
 ```text
-prefix r
+prefix r    # reload tmux.conf (your custom binding)
 
-prefix I
+prefix I    # capital I: tpm fetches/installs any plugins listed in tmux.conf
 ```
+
+> Note: `prefix I` (install) is a tpm keybinding.  Its siblings are `prefix U` (update plugins) and `prefix alt-u` (uninstall plugins removed from tmux.conf).
 
 ![reload tmux config](../assets/tmux-reload-tmux-config.png)
 
@@ -1698,9 +1779,12 @@ Project Page: https://github.com/catppuccin/tmux
 ```bash
 mkdir -p ~/.config/tmux/plugins/catppuccin
 
-# Check the repo page for the most up-to-date release (v2.1.2 at the time of writing)
-git clone -b v2.1.3 https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux
+# Check the repo page for the most up-to-date release (v2.3.0 at the time of writing)
+git clone -b v2.3.0 https://github.com/catppuccin/tmux.git ~/.config/tmux/plugins/catppuccin/tmux
 ```
+
+> [!Important]
+> catppuccin for tmux went through major breaking changes between its v0.x and v2.x releases (many option names were renamed or removed — e.g. `@catppuccin_flavour` became `@catppuccin_flavor` and the `@catppuccin_status_modules_right` option was replaced entirely).  If you find older catppuccin config snippets online, they likely will not work with current releases.  This lab uses the current (v2.x) syntax.
 
 - [ ] Add the following at the bottom of your `tmux.conf` file (just above the tpm run script):
 
@@ -1718,35 +1802,27 @@ run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
 
 ***
 
-Most themes are highly customizable.  Catppuccin is no exception.  Add the following to `tmux.conf`:
+Most themes are highly customizable.  Catppuccin is no exception.  Replace the `run` line you added in the previous step with the full **CATPPUCCIN THEME SETTINGS** section below:
 
-> Note: The run line to load catppuccin is included twice in my config.  I have found that it sometimes does not load correctly unless loaded before applying catppuccin-specific settings and then again afterward.  Until I figure out why, this workaround consistently works.
+> [!Important]
+> Ordering matters with this theme:
+> * Theme *options* (`@catppuccin_...`) must be set ***before*** the `run` line that loads the theme.
+> * The *status line module* lines (`set -g status-right ...`) must come ***after*** the `run` line (the `-F` flag on some of those lines expands the module option immediately, so the theme must already be loaded).
 
 ```vim
 ###########################################################################################
 # CATPPUCCIN THEME SETTINGS
 ###########################################################################################
-run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
-set -g @catppuccin_flavor "mocha"  # latte, frappe, macchiato or mocha
-set -g @catppuccin_window_current_text "#{window_name}"
-set -g @catppuccin_window_text "#{window_name}"
+# Theme options must be set BEFORE the theme is loaded (the run line below)
+set -g @catppuccin_flavor "mocha"                # latte, frappe, macchiato or mocha
 set -g @catppuccin_window_status_style "rounded"
-set -g @catppuccin_window_left_separator ""
-set -g @catppuccin_window_right_separator " "
-set -g @catppuccin_window_middle_separator " █"
-set -g @catppuccin_window_number_position "right"
-set -g @catppuccin_window_default_fill "number"
-set -g @catppuccin_window_default_text "#W"
-set -g @catppuccin_window_current_fill "number"
-set -g @catppuccin_window_current_text "#W#{?window_zoomed_flag,(),}"
-set -g @catppuccin_status_modules_right "directory date_time"
-set -g @catppuccin_status_modules_left "session"
-set -g @catppuccin_status_left_separator  " "
-set -g @catppuccin_status_right_separator " "
-set -g @catppuccin_status_right_separator_inverse "no"
-set -g @catppuccin_status_fill "icon"
-set -g @catppuccin_status_connect_separator "no"
-set -g @catppuccin_directory_text "#{b:pane_current_path}"
+set -g @catppuccin_window_text " #W"
+set -g @catppuccin_window_current_text " #W#{?window_zoomed_flag,(),}"
+
+# Load the catppuccin theme
+run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
+
+# Status line modules are added AFTER the theme is loaded
 set -g status-right-length 100
 set -g status-left-length 100
 set -g status-left ""
@@ -1826,27 +1902,16 @@ set -g @plugin 'tmux-plugins/tmux-battery'
 ###########################################################################################
 # CATPPUCCIN THEME SETTINGS
 ###########################################################################################
-run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
-set -g @catppuccin_flavor "mocha"  # latte, frappe, macchiato or mocha
-set -g @catppuccin_window_current_text "#{window_name}"
-set -g @catppuccin_window_text "#{window_name}"
+# Theme options must be set BEFORE the theme is loaded (the run line below)
+set -g @catppuccin_flavor "mocha"                # latte, frappe, macchiato or mocha
 set -g @catppuccin_window_status_style "rounded"
-set -g @catppuccin_window_left_separator ""
-set -g @catppuccin_window_right_separator " "
-set -g @catppuccin_window_middle_separator " █"
-set -g @catppuccin_window_number_position "right"
-set -g @catppuccin_window_default_fill "number"
-set -g @catppuccin_window_default_text "#W"
-set -g @catppuccin_window_current_fill "number"
-set -g @catppuccin_window_current_text "#W#{?window_zoomed_flag,(),}"
-set -g @catppuccin_status_modules_right "directory date_time"
-set -g @catppuccin_status_modules_left "session"
-set -g @catppuccin_status_left_separator  " "
-set -g @catppuccin_status_right_separator " "
-set -g @catppuccin_status_right_separator_inverse "no"
-set -g @catppuccin_status_fill "icon"
-set -g @catppuccin_status_connect_separator "no"
-set -g @catppuccin_directory_text "#{b:pane_current_path}"
+set -g @catppuccin_window_text " #W"
+set -g @catppuccin_window_current_text " #W#{?window_zoomed_flag,(),}"
+
+# Load the catppuccin theme
+run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
+
+# Status line modules are added AFTER the theme is loaded
 set -g status-right-length 100
 set -g status-left-length 100
 set -g status-left ""
@@ -1858,21 +1923,18 @@ set -agF status-right "#{E:@catppuccin_status_battery}"
 set -g default-terminal "tmux-256color"
 
 ###########################################################################################
-# SCRIPTS
-###########################################################################################
-run ~/.config/tmux/plugins/catppuccin/tmux/catppuccin.tmux
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.config/tmux/plugins/tpm/tpm'
 ```
 
 ***
 
-- [ ] Save `.tmux.conf` and reload the tmux config.
+- [ ] Save `tmux.conf`, reload the tmux config, and install the newly added plugins.
 
 ```text
-prefix I
+prefix r    # reload tmux.conf
 
-prefix r
+prefix I    # tpm installs the new plugins (tmux-cpu, tmux-uptime, tmux-battery)
 ```
 
 ***
@@ -1885,7 +1947,7 @@ Your tmux session should now look like this:
 
 To illustrate how the labels are being displayed, do the following:
 
-- [ ] Name the session `kismet` (`prefix $`).
+- [ ] Name the session `kismet` (use `prefix $`, or the tmux command line as shown below).
 
 ```text
 prefix :
@@ -1933,7 +1995,7 @@ prefix -
 
 ***
 
-- [ ] Zoom in on the python pane.  In the status bar the window name will now have a magnifying glass next to it to indicate the windows is zoomed.  When done, use `prefix z` to zoom back out.
+- [ ] Zoom in on the python pane.  In the status bar the window name will now have a magnifying glass next to it to indicate the window is zoomed.  When done, use `prefix z` to zoom back out.
 
 ```text
 prefix z
@@ -1973,7 +2035,7 @@ Enter
 
 ***
 
-My suggestion:  Make a GitHub repo that holds your personal config preferences like this tmux config file.  Add to a README.md or other markdown file to document the few steps involved in installing the required fonts & packages (font install, repos to clone, .zshrc entries, etc.) and save it all in a concise script that you can clone to any computer, run the script to download and install everything and place this `tmux.conf` file in `/.config/tmux/`.  Everything you need is in this document.  Once you have this available you can install tmux with all of your preferred settings on any new device in a few seconds.
+My suggestion:  Make a GitHub repo that holds your personal config preferences like this tmux config file.  Add a README.md or other markdown file to document the few steps involved in installing the required fonts & packages (font install, repos to clone, .zshrc entries, etc.) and save it all in a concise script that you can clone to any computer, run the script to download and install everything and place this `tmux.conf` file in `~/.config/tmux/`.  Everything you need is in this document.  Once you have this available you can install tmux with all of your preferred settings on any new device in a few seconds.
 
 
 Catppuccin is one choice for a tmux theme.  There are others.  In the next steps you will test out a different theme you have more than one to choose from.
@@ -1996,12 +2058,12 @@ set -g @plugin 'erikw/tmux-powerline'
 
 ***
 
-- [ ] Save and close, then reload the config file.
+- [ ] Save and close, then reload the config file and install the plugin.
 
 ```text
-prefix I
+prefix r    # reload tmux.conf
 
-prefix r
+prefix I    # tpm installs the tmux-powerline plugin
 ```
 
 Your theme should change to something similar to what you see below.

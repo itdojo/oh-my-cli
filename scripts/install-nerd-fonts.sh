@@ -1,31 +1,49 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#
+# Install a selection of Nerd Fonts for the current user.
+# Fonts land in ~/.local/share/fonts (the modern XDG location; ~/.fonts is deprecated).
+# Check https://github.com/ryanoasis/nerd-fonts/releases for the newest release.
 
-BASE_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0"
+set -euo pipefail
+
+NF_VERSION="v3.4.0"
+BASE_URL="https://github.com/ryanoasis/nerd-fonts/releases/download/${NF_VERSION}"
 FONTS=("Meslo" "NerdFontsSymbolsOnly" "FiraCode" "Hack" "SourceCodePro")
-TMP_DIR="/tmp"
+TMP_DIR="$(mktemp -d)"
+FONT_DIR="${HOME}/.local/share/fonts"
 
-if [[ ! $(command -v fc-cache) ]]; then echo "Installing fontconfig..." && sudo apt install fontconfig; fi
+trap 'rm -rf "$TMP_DIR"' EXIT
 
-if [[ ! $(command -v unzip) ]]; then echo "Installing unzip..." && sudo apt install unzip; fi
+if ! command -v fc-cache >/dev/null 2>&1; then
+    echo "Installing fontconfig..."
+    sudo apt-get update && sudo apt-get install -y fontconfig
+fi
 
-mkdir -p ~/.fonts
+if ! command -v unzip >/dev/null 2>&1; then
+    echo "Installing unzip..."
+    sudo apt-get install -y unzip
+fi
+
+mkdir -p "$FONT_DIR"
 
 for FONT in "${FONTS[@]}"; do
-  wget -q "${BASE_URL}/${FONT}.zip" -O "${TMP_DIR}/${FONT}.zip"
-  unzip -oq "${TMP_DIR}/${FONT}.zip" -d ~/.fonts/
-  # Global install
-  # sudo unzip -oq "${TMP_DIR}/${FONT}.zip" -d /usr/share/fonts/truetype/
-  
+    echo "Installing ${FONT}..."
+    if ! wget -q "${BASE_URL}/${FONT}.zip" -O "${TMP_DIR}/${FONT}.zip"; then
+        echo "ERROR: Failed to download ${FONT}.zip -- skipping." >&2
+        continue
+    fi
+    # Unzip each font family into its own folder to keep FONT_DIR tidy
+    unzip -oq "${TMP_DIR}/${FONT}.zip" -d "${FONT_DIR}/${FONT}"
+    # Global install (all users) instead:
+    # sudo unzip -oq "${TMP_DIR}/${FONT}.zip" -d "/usr/share/fonts/truetype/${FONT}"
 done
 
-rm /tmp/Meslo.zip /tmp/NerdFontsSymbolsOnly.zip /tmp/FiraCode.zip /tmp/SourceCodePro.zip /tmp/Hack.zip
+# For ALL Nerd fonts (Be careful! HUGE!!! >3.2GB download)
+# wget -q "https://github.com/ryanoasis/nerd-fonts/archive/refs/tags/${NF_VERSION}.zip" -O "${TMP_DIR}/${NF_VERSION}.zip"
+# unzip -oq "${TMP_DIR}/${NF_VERSION}.zip" -d "$FONT_DIR"                     # Local user only
+# sudo unzip -oq "${TMP_DIR}/${NF_VERSION}.zip" -d /usr/share/fonts/truetype  # All users
 
-# For ALL Nerd fonts (Be careful! HUGE!!! >3.2GB file)
-# Check https://github.com/ryanoasis/nerd-fonts/tags for most up-to-date release
+echo "Refreshing font cache..."
+fc-cache -f
 
-# wget -q https://github.com/ryanoasis/nerd-fonts/archive/refs/tags/v3.3.0.zip -O /tmp/v3.3.0.zip
-# sudo unzip -oq /tmp/v3.3.0.zip -d ~/.fonts                    # Local User Only
-# sudo unzip -oq /tmp/v3.3.0.zip -d /usr/share/fonts/truetype   # All Users
-# rm /tmp/v3.3.0.zip
-
-sudo fc-cache -f
+echo "Done. Installed fonts are in ${FONT_DIR}."

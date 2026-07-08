@@ -7,11 +7,12 @@
 | Move between windows | `n`, `p` <br/>  window # 
 | Rename current window | `,`
 | Open Window Manager | `w`
-| Split window horizontally | `"`
-| Split window vertically | `%`
+| Split window horizontally (top/bottom panes) | `"`
+| Split window vertically (left/right panes) | `%`
 | Move between panes | `→`, `←`, `↑`, `↓`
 | Close a pane | `x`
 | Zoom in on pane (maximize) | `z`
+| Break pane out into its own window | `!`
 | Swap panes left/right | `{` & `}`
 | Show/Select pane numbers | `q` or `q #`
 | Rename session | `$`
@@ -33,7 +34,8 @@
 | Rename window | `rename-window new_name`
 | Detach from session | `detach`
 | Reload a tmux config | `source path/to/file`
-| 
+| Type into all panes at once | `setw synchronize-panes on` / `off`
+| Kill current session | `kill-session`
 
 ***
 
@@ -44,10 +46,12 @@ From Linux shell
 | Action | How to do | 
 |:--|:--|
 | New session | `tmux` or `tmux new` <br/> `tmux new-session`
-| List sessions | `:tmux ls`
+| New named session | `tmux new -s session_name`
+| List sessions | `tmux ls`
 | Attach most recent session | `tmux a` <br/> `tmux attach`
 | Attach session by name | `tmux a -t session_name` <br/> `tmux attach -t session_name`
 | Kill session | `tmux kill-session -t session_name`
+| Kill all sessions (the server) | `tmux kill-server`
 
 ## tmux copy mode
 
@@ -56,9 +60,11 @@ From Linux shell
 | Action | How (`prefix + ___`) | 
 |:--|:--|
 | Enter copy mode | `[`
-| Search for string | `/string` (down) <br/> `&string` (up)
+| Search for string | `/string` (down) <br/> `?string` (up)
+| Next / previous search match | `n` / `N`
 | Start selecting text | spacebar
-| Copy selection | `y` or Enter
+| Copy selection (and exit copy mode) | `y` or Enter
+| Exit copy mode without copying | `q`
 | Paste selection | `]`
 | Goto top / bottom | `g` (top) <br/> `G` (bottom)
 | Cursor left, down, up, right | `h`, `j`, `k`, `l`<br/>⬅️, ⬇️, ⬆️, ➡️

@@ -50,14 +50,14 @@ echo $MAXCOLS
 
 - [ ] Edit your `tmux.conf` file to include:
 ```
-set -g base-index 44                     # Start window numbering at 1 rather than 0
-setw -g pane-base-index 88               # Start pane numbering at 1 rather than 0
+set -g base-index 44                    # Start window numbering at 44 (see note below)
+setw -g pane-base-index 88              # Start pane numbering at 88 (see note below)
 set -g renumber-windows on              # renumber all windows when any window is closed
 ```
 
 > Note: The **base-index** and **pane-base-index** values above are intentionally exaggerated for illustration.  At the end of this exercise you will set them to more appropriate values.
 
-Make sure there are not tmux sessions running.
+Make sure there are no tmux sessions running.
 
 ```bash
 tmux kill-server
@@ -126,7 +126,7 @@ tmux new -s myconsole -n working
 
 ***
 
-- [ ] Now, split the working window into two horizontal panes.
+- [ ] Now, split the working window into two side-by-side (left/right) panes.
 
 > Note: While tmux `split-window -h` works when you're in the right window, we'll use the `-t` flag to specify exactly which window to split. This is especially important when scripting or working with detached sessions or multiple windows.
 
@@ -168,7 +168,7 @@ The new pane should open to the right and your cursor should remain in the left 
 
 ```bash
 # Syntax:
-# tmux kill pane -t session_name:windows_name.pane_index
+# tmux kill-pane -t session_name:window_name.pane_index
 
 tmux kill-pane -t myconsole:working.89
 ```
@@ -215,7 +215,7 @@ tmux kill-pane -t myconsole:working.89
 tmux kill-session
 ```
 
-You are no at a regular CLI prompt.
+You are now at a regular CLI prompt.
 
 ***
 
@@ -235,6 +235,7 @@ export WIN1="working"
 
 ```bash
 tmux new -s $SESSION_NAME -n $WIN1
+```
 
 ***
 
@@ -283,7 +284,7 @@ echo $first_pane
 tmux select-pane -t "${SESSION_NAME}:${WIN1}.${first_pane}"
 ```
 
-> Note: Your cursor is was already in the desired pane so nothing appears to have happened when the command above was run.  Remember this these lab steps are focused on scripting the use of sessions, windows and panes so this step is more to illustrate how to select panes.
+> Note: Your cursor was already in the desired pane so nothing appears to have happened when the command above was run.  Remember, these lab steps are focused on scripting the use of sessions, windows and panes so this step is more to illustrate how to select panes.
 
 ***
 
@@ -299,7 +300,7 @@ echo $OPCON1
 - [ ] Using your new variable, split the selected pane vertically.
 
 ```bash
-tmux split pane -v -d -t "${OPCON1}.${first_pane}"
+tmux split-pane -v -d -t "${OPCON1}.${first_pane}"
 ```
 
 ![](assets/images/tmux-vertical-split-pane.png)
@@ -317,7 +318,7 @@ tmux list-panes -t "${OPCON1}"
 tmux list-panes -t "${SESSION_NAME}:${WIN1}"
 ```
 
-The panes have been re-indexed.  Pane 88 is the same value but the new pane has been numbered 89 and the previous 89 has been pushed down to 90.  YOu can confirm this using `prefix q`.
+The panes have been re-indexed.  Pane 88 is the same value but the new pane has been numbered 89 and the previous 89 has been pushed down to 90.  You can confirm this using `prefix q`.
 
 ```bash
 prefix q
@@ -333,7 +334,7 @@ Using `tmux send-keys` you can send keystrokes (commands) to panes.  To test thi
 
 ```bash
 # Send command to pane 90
-tmux send-keys -t "${OPCON1}.90" "clear; ip addr show >&2" C-m
+tmux send-keys -t "${OPCON1}.90" "clear; ip addr show" C-m
 
 # Send command to pane 89
 tmux send-keys -t "${SESSION_NAME}:${WIN1}.89" "clear; arp --help" C-m
@@ -410,7 +411,7 @@ In this challenge, create your session, window and panes in detached mode.  Also
 ---------------------------------------------
 ```
 
-- [ ] After creating the session, window and panes, use `tmux send-keys` to send an `echo <location>` command to each pane to tag the position of the pane in the window (Ex: `tmux send-keys -t "${SESSION}:${WIN1}.1 echo top-left C-m"`).
+- [ ] After creating the session, window and panes, use `tmux send-keys` to send an `echo <location>` command to each pane to tag the position of the pane in the window (Ex: `tmux send-keys -t "${SESSION}:${WIN1}.1" "echo top-left" C-m`).
 
 *** 
 
@@ -442,7 +443,7 @@ Once you are successful in the creation of the layout in Challenge #1, continue 
 
 ## tmux Challenge #2
 
-- [ ] Starting from scratch, write out the command-steps to create the layout below.  Write the commands in a text/code editor so you can work with the order before running them in a terminal.  Use the same session as you did in Challenge #1 (i.e. you are adding an additional window to an existing session.
+- [ ] Starting from scratch, write out the command-steps to create the layout below.  Write the commands in a text/code editor so you can work with the order before running them in a terminal.  Use the same session as you did in Challenge #1 (i.e. you are adding an additional window to an existing session).
 
 The Session should continue to be "myconsole".
 Window #2 should be named "monitor".
@@ -468,7 +469,7 @@ Window #2 should be named "monitor".
 ---------------------------------------------
 ```
 
-- [ ] After creating the session, window and panes, use `tmux send-keys` to send an `echo <location>` command to each pane to tag the position of the pane in the window (Ex: `tmux send-keys -t "${SESSION}:${WIN1}.1 echo top-left C-m"`).
+- [ ] After creating the session, window and panes, use `tmux send-keys` to send an `echo <location>` command to each pane to tag the position of the pane in the window (Ex: `tmux send-keys -t "${SESSION}:${WIN2}.1" "echo top-left" C-m`).
 
 *** 
 
@@ -530,7 +531,7 @@ Window #3, named **survey**, should look like this:
 # Set variables (SESSION, WIN1, WIN2, etc.)
 
 # Kill pre-existing session.  Use:
-if tmux has-session -t $SESSION 2>/dev/null; then tmux kill-session -t $SESSION; fi
+if tmux has-session -t "$SESSION" 2>/dev/null; then tmux kill-session -t "$SESSION"; fi
 
 # Create new session and name window #1
 
@@ -618,7 +619,8 @@ tmux attach -t "${SESSION}"
 
 ```bash
 WIN2="monitor"
-tmux kill-window -t $SESSION -n $WIN2 
+# Remove the window if it already exists (ignore the error if it does not)
+tmux kill-window -t "${SESSION}:${WIN2}" 2>/dev/null
 
 tmux new-window -d -t $SESSION -n $WIN2
 tmux split-pane -d -v -t "${SESSION}:${WIN2}.1"
@@ -637,7 +639,7 @@ tmux send-keys -t "${SESSION}:${WIN2}.6" "clear; echo Bottom" C-m
 tmux attach -t "${SESSION}:${WIN2}"
 ```
 
-### Challenge #1: Result
+### Challenge #2: Result
 
 <img src=assets/images/tmux-challenge-2.png width=90%>
 

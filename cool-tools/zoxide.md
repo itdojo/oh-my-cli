@@ -20,11 +20,16 @@ brew install zoxide
 
 ```shell
 curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
+
+# or (distro packages tend to be older versions)
+# sudo apt install zoxide
 ```
 
 ***
 
-Add to `~/.zsrhc` or `~/.bashrc`:
+Add to `~/.zshrc` or `~/.bashrc`:
+
+> Note: Put this near the ***end*** of your config file (in zsh, it must come after `compinit` runs — which oh-my-zsh handles for you).
 
 ```shell
 eval "$(zoxide init zsh)"
@@ -143,7 +148,10 @@ z ~/ztest/windows/crypto/cardano/wallet
 z
 
 # Use zoxide with fzf to pick which wallet folder to go back to
-z wallet <tab>      # use arrow keys to pick folder you want
+z wallet<SPACE><tab>    # note: a space before TAB; use arrow keys to pick the folder you want
+
+# or use zoxide's built-in interactive mode (also uses fzf)
+zi wallet
 ```
 
 ***
@@ -156,6 +164,15 @@ Add to `~/.zshrc` or `~/.bashrc`:
 
 ```shell
 alias cd="z"
+```
+
+Alternatively, zoxide can replace `cd` natively (this also gives you `cdi` for interactive mode).  Instead of the alias, change your init line to:
+
+```shell
+eval "$(zoxide init --cmd cd zsh)"
+
+# or
+# eval "$(zoxide init --cmd cd bash)"
 ```
 
 Then run:
