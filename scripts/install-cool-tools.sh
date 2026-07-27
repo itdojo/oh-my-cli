@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Installs the "cool tools" covered in this repo: eza, fzf, bat, zoxide and tldr.
+# Installs the "cool tools" covered in this repo: eza, fzf, bat and zoxide.
 # Safe to re-run: installs are skipped if a tool is present and shell-config lines
 # are only appended once.
 #
@@ -333,28 +333,6 @@ install_zoxide() {
 }
 
 
-# Function to install a tldr client
-install_tldr() {
-    fstring "Installing tldr (tealdeer client)... " "install"
-    printline
-    if ! command_exists tldr; then
-        # The apt 'tldr' package is an outdated client; tealdeer is a maintained Rust
-        # client that provides the same 'tldr' command.
-        if ! sudo apt-get install -y tealdeer; then
-            printf "tealdeer not available via apt; trying pipx...\n"
-            if ! { sudo apt-get install -y pipx && pipx install tldr; }; then
-                fstring "ERROR:  Failed to install a tldr client\n" "failure" >&2
-                return $FAILURE
-            fi
-        fi
-    fi
-    # Populate/refresh the page cache (non-fatal if offline)
-    tldr --update >/dev/null 2>&1 || true
-    echo ""
-    printf "✅  tldr installed successfully.\n\n"
-}
-
-
 # Main function
 main() {
     # Download base functions (fstring, printline, check_if_linux, not_as_root).
@@ -390,7 +368,6 @@ main() {
     if ! install_fzf; then printf "❌ fzf installation failed\n" >&2; fi
     if ! install_bat; then printf "❌ bat installation failed\n" >&2; fi
     if ! install_zoxide; then printf "❌ zoxide installation failed\n" >&2; fi
-    if ! install_tldr; then printf "❌ tldr installation failed\n" >&2; fi
 
     printline
     printf "🏁 Installation complete.\n"
