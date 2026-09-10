@@ -65,3 +65,20 @@ Also worth a quick check (content unchanged, but referenced steps were reworded)
 
 - `tmux/assets/excalidraw/Unconfirmed 969228.crdownload.excalidraw` looks like a stray partial Chrome download (`.crdownload`).  If it is a real diagram you want to keep, rename it to something meaningful; otherwise it can be deleted.
 - `assets/install_zsh.sh` and `assets/install_zsh.sh.orig` were deliberately **left untouched** — they are the vim crash course's practice file (the lab references specific line numbers in them, e.g. `download_fonts` at line 123, `check_for_oh_my_zsh` at line 109), and the `.orig` copy lets you restore the file after doing the lab.  `scripts/install_zsh.sh` (the one people actually run) was refactored.
+
+***
+
+## 5. Starship migration (2026-09-10)
+
+The shell guide moved from Oh My Zsh + Powerlevel10k to Starship, which orphaned two screenshots and left the new guide with none.
+
+| Screenshot | Status | Action |
+|:--|:--|:--|
+| `assets/p10k-configure.png` | orphaned | Nothing references it. Delete, or replace with a shot of `~/.config/starship.toml` open in an editor. |
+| `assets/p10k-layout-colin.png` | orphaned | Delete, or re-take as `assets/starship-layout-colin.png` showing the prompt the installer writes. |
+
+**New screenshots that would help** (none are referenced yet, so nothing is broken without them):
+
+- `assets/starship-prompt.png` — the prompt in a git repo with unstaged changes, so the git branch and status modules are both visible. Would slot into `cool-tools/install-zsh-starship-and-plugins.md` under *Configuring the prompt*.
+- `assets/zsh-autosuggestion.png` — a half-typed command with the greyed-out suggestion behind the cursor. Currently described in prose only.
+- `assets/ghostty-splits.png` — Ghostty with two or three splits and the Catppuccin Mocha theme, for `cool-tools/ghostty.md`.

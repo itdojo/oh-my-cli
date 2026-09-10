@@ -15,12 +15,15 @@ The list below are setup steps for some cool CLI tools, including:
 
 > Note: This list is also the recommended order of installation.
 
-* **[oh-my-zsh](cool-tools/install-zsh-powerlevel10k-and-plugins.md)** and **[Powerlevel10k](cool-tools/install-zsh-powerlevel10k-and-plugins.md)** - a zsh framework and great zsh theme
+* **[Starship](cool-tools/install-zsh-starship-and-plugins.md)** - a fast, framework-free prompt, plus zsh and the three plugins worth having
+* **[Ghostty](cool-tools/ghostty.md)** - a GPU-accelerated terminal that is quick out of the box
 * **[bat](cool-tools/bat.md)** - a better **`cat`**
 * **[eza](cool-tools/eza.md)** - a better **`ls`**
 * **[zoxide](cool-tools/zoxide.md)** - a better **`cd`**
 * **[fzf](cool-tools/fzf.md)** - a fuzzy finder for the CLI
   * [integrating eza & bat with fzf](cool-tools/integrating-eza-and-bat-with-fzf.md)
+
+Everything here works on both macOS and Linux. Where the two differ, the guide says so.
 
 ***
 

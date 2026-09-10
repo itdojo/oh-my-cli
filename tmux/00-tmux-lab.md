@@ -1549,13 +1549,13 @@ The `setw -g mode-keys vi` option also enables the ability to search your comman
 
 [Top](#table-of-contents)
 
-If you have not already installed zsh and PowerLevel10k, it is recommended you do so now.  Refer to ***install-zsh-powerlevel10k-and-plugins.md*** for steps to do so.  After doing so, return to this lab and continue.
+If you have not already installed zsh and Starship, it is recommended you do so now.  Refer to ***install-zsh-starship-and-plugins.md*** for steps to do so.  After doing so, return to this lab and continue.
 
 ## Installing Required Fonts
 
 [Top](#table-of-contents)
 
-Tools like tmux, neovim and many of their themes (like Powerlevel10K) need, at most, two fonts for proper look and function.  They are:
+Tools like tmux, neovim and prompts like Starship need, at most, two fonts for proper look and function.  They are:
 
 - MesloLG Nerd Font
 - Symbols Nerd Font

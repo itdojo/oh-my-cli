@@ -29,7 +29,7 @@ curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh 
 
 Add to `~/.zshrc` or `~/.bashrc`:
 
-> Note: Put this near the ***end*** of your config file (in zsh, it must come after `compinit` runs — which oh-my-zsh handles for you).
+> Note: Put this near the ***end*** of your config file (in zsh, it must come after `compinit` runs).
 
 ```shell
 eval "$(zoxide init zsh)"
